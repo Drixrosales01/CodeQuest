@@ -1,0 +1,3839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0d14">
+<title>CodeQuest: Coding Adventure</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+ --bg:#080b12;
+ --panel:#10151f;
+ --panel2:#151c28;
+ --panel3:#1b2330;
+ --line:#293344;
+
+ --text:#f5f7fb;
+ --muted:#8e9aaa;
+
+ --orange:#ff8a3d;
+ --pink:#ff4f9a;
+ --lime:#8bea52;
+ --cyan:#45d9ff;
+ --yellow:#ffd166;
+ --red:#ff5c72;
+ --purple:#a978ff;
+
+ --shadow:0 12px 35px #0007;
+}
+
+html{
+ scroll-behavior:smooth
+}
+
+body{
+ margin:0;
+ min-height:100vh;
+ background:#060910;
+ color:var(--text);
+ font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+button,input,textarea{
+ font:inherit;
+ color:inherit;
+}
+
+button{
+ border:0;
+ cursor:pointer;
+}
+
+button:disabled{
+ opacity:.45;
+ cursor:not-allowed;
+}
+
+.app-shell{
+ width:100%;
+ max-width:540px;
+ min-height:100vh;
+ margin:auto;
+ background:#090d15;
+ position:relative;
+ padding-bottom:82px;
+ overflow:hidden;
+}
+
+/* =========================
+   AUTH
+========================= */
+
+#authScreen{
+ position:fixed;
+ inset:0;
+ z-index:1000;
+ display:grid;
+ place-items:center;
+ padding:20px;
+ background:#070a10;
+}
+
+.auth-box{
+ width:min(420px,100%);
+ background:#111722;
+ border:1px solid #2c3748;
+ border-radius:26px;
+ padding:28px;
+ box-shadow:0 30px 90px #000b;
+ animation:rise .45s ease;
+}
+
+.logo{
+ text-align:center;
+ margin-bottom:24px;
+}
+
+.logo-mark{
+ display:inline-grid;
+ place-items:center;
+ width:66px;
+ height:66px;
+ border-radius:20px;
+ background:#ff8a3d;
+ color:#111;
+ font-family:monospace;
+ font-size:25px;
+ font-weight:900;
+ box-shadow:0 10px 30px #ff8a3d33;
+}
+
+.logo h1{
+ margin:14px 0 5px;
+ font-size:29px;
+}
+
+.logo p{
+ margin:0;
+ color:var(--muted);
+ font-size:13px;
+}
+
+.auth-tabs{
+ display:flex;
+ gap:5px;
+ padding:5px;
+ background:#090d14;
+ border:1px solid #252f3e;
+ border-radius:13px;
+ margin-bottom:20px;
+}
+
+.auth-tabs button{
+ flex:1;
+ padding:10px;
+ background:none;
+ color:var(--muted);
+ border-radius:9px;
+ font-weight:900;
+}
+
+.auth-tabs button.active{
+ background:#202a38;
+ color:var(--orange);
+}
+
+.input-group{
+ margin-bottom:13px;
+}
+
+.input-group label{
+ display:block;
+ font-size:10px;
+ text-transform:uppercase;
+ letter-spacing:1.5px;
+ color:var(--muted);
+ font-weight:900;
+ margin-bottom:6px;
+}
+
+.input{
+ width:100%;
+ padding:13px;
+ background:#090d14;
+ border:1px solid #303b4b;
+ border-radius:12px;
+ outline:none;
+}
+
+.input:focus{
+ border-color:var(--orange);
+ box-shadow:0 0 0 3px #ff8a3d15;
+}
+
+.auth-error{
+ min-height:18px;
+ color:var(--red);
+ font-size:12px;
+ margin:4px 0;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+ height:66px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 15px;
+ border-bottom:1px solid #202936;
+ background:#0b1018;
+ position:sticky;
+ top:0;
+ z-index:20;
+}
+
+.icon-btn{
+ width:38px;
+ height:38px;
+ border-radius:11px;
+ background:#151c27;
+ border:1px solid #283342;
+ font-size:18px;
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ font-weight:950;
+ letter-spacing:.2px;
+}
+
+.brand-mark{
+ color:var(--orange);
+ font-family:monospace;
+}
+
+.header-right{
+ display:flex;
+ align-items:center;
+ gap:6px;
+}
+
+.resource{
+ background:#151c27;
+ border:1px solid #283342;
+ border-radius:10px;
+ padding:7px 8px;
+ font-size:10px;
+}
+
+.avatar{
+ width:34px;
+ height:34px;
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ background:var(--pink);
+ color:#160812;
+ font-weight:950;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+#main{
+ padding:19px 15px 26px;
+}
+
+.hero{
+ padding:4px 0 17px;
+ animation:rise .4s ease;
+}
+
+.eyebrow{
+ font-size:10px;
+ color:var(--orange);
+ font-weight:950;
+ letter-spacing:2px;
+ text-transform:uppercase;
+}
+
+.hero h1{
+ font-size:30px;
+ line-height:1.05;
+ margin:8px 0;
+}
+
+.hero p{
+ color:var(--muted);
+ font-size:14px;
+ line-height:1.55;
+ margin:0;
+}
+
+.grid{
+ display:grid;
+ gap:10px;
+}
+
+.two{
+ grid-template-columns:1fr 1fr;
+}
+
+.card{
+ background:#111722;
+ border:1px solid #293445;
+ border-radius:19px;
+ padding:15px;
+ box-shadow:var(--shadow);
+ animation:rise .4s ease both;
+}
+
+.card h2,
+.card h3{
+ margin:0 0 7px;
+}
+
+.muted{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+ width:100%;
+ padding:13px 15px;
+ margin-top:11px;
+ border-radius:12px;
+ background:#1a2330;
+ border:1px solid #344154;
+ font-weight:950;
+ transition:.15s;
+}
+
+.btn:hover{
+ transform:translateY(-2px);
+ background:#202b3a;
+}
+
+.btn:active{
+ transform:scale(.97);
+}
+
+.btn.primary{
+ background:var(--orange);
+ color:#130d08;
+ border-color:var(--orange);
+ box-shadow:0 8px 22px #ff8a3d25;
+}
+
+.btn.pink{
+ background:var(--pink);
+ color:#180811;
+ border-color:var(--pink);
+}
+
+.btn.green{
+ background:var(--lime);
+ color:#0b1307;
+ border-color:var(--lime);
+}
+
+.btn.blue{
+ background:var(--cyan);
+ color:#071116;
+ border-color:var(--cyan);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stat{
+ min-height:105px;
+ position:relative;
+ overflow:hidden;
+}
+
+.stat:before{
+ content:"";
+ position:absolute;
+ width:4px;
+ left:0;
+ top:17px;
+ bottom:17px;
+ border-radius:5px;
+ background:var(--orange);
+}
+
+.stat:nth-child(2):before{
+ background:var(--yellow);
+}
+
+.stat:nth-child(3):before{
+ background:var(--pink);
+}
+
+.stat:nth-child(4):before{
+ background:var(--lime);
+}
+
+.stat span{
+ display:block;
+ padding-left:5px;
+ font-size:10px;
+ color:var(--muted);
+ font-weight:900;
+}
+
+.stat b{
+ display:block;
+ padding-left:5px;
+ font-size:27px;
+ margin-top:8px;
+}
+
+.stat small{
+ padding-left:5px;
+}
+
+/* =========================
+   XP
+========================= */
+
+.xp-row{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ font-size:12px;
+ font-weight:900;
+}
+
+.xp-bar{
+ height:9px;
+ margin:10px 0 5px;
+ background:#202834;
+ border-radius:99px;
+ overflow:hidden;
+}
+
+.xp-fill{
+ height:100%;
+ background:var(--orange);
+ border-radius:99px;
+ transition:width .7s ease;
+}
+
+.level-label{
+ color:var(--orange);
+}
+
+/* =========================
+   QUESTS
+========================= */
+
+.section{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:21px 0 10px;
+}
+
+.section h2{
+ margin:0;
+ font-size:18px;
+}
+
+.section button{
+ background:none;
+ color:var(--orange);
+ font-size:11px;
+ font-weight:950;
+}
+
+.quest{
+ width:100%;
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:13px;
+ margin-bottom:9px;
+ background:#111722;
+ border:1px solid #293445;
+ border-radius:17px;
+ text-align:left;
+ transition:.15s;
+}
+
+.quest:hover{
+ transform:translateY(-2px);
+ border-color:#46566d;
+}
+
+.quest-icon{
+ width:47px;
+ height:47px;
+ flex:none;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:#1c2532;
+ font-size:21px;
+}
+
+.quest-info{
+ flex:1;
+ min-width:0;
+}
+
+.quest-info b{
+ display:block;
+ font-size:13px;
+}
+
+.quest-info p{
+ margin:4px 0 0;
+ color:var(--muted);
+ font-size:11px;
+}
+
+.reward{
+ color:var(--yellow);
+ font-size:10px;
+ font-weight:950;
+ white-space:nowrap;
+}
+
+/* =========================
+   QUICK PLAY
+========================= */
+
+.play-card{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+}
+
+.play{
+ background:#161e2a;
+ border:1px solid #2e3a4c;
+ border-radius:15px;
+ padding:13px;
+ text-align:left;
+ transition:.15s;
+}
+
+.play:hover{
+ transform:translateY(-2px);
+ border-color:#53647c;
+}
+
+.play-icon{
+ font-size:22px;
+ margin-bottom:7px;
+}
+
+.play b{
+ display:block;
+ font-size:12px;
+}
+
+.play small{
+ color:var(--muted);
+ font-size:10px;
+ display:block;
+ margin-top:4px;
+}
+
+.play .reward{
+ display:block;
+ margin-top:8px;
+}
+
+/* =========================
+   FACT
+========================= */
+
+.fact{
+ background:#131b25;
+ border:1px solid #344355;
+ border-left:4px solid var(--cyan);
+ border-radius:18px;
+ padding:16px;
+}
+
+.fact-top{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:8px;
+}
+
+.fact-tag{
+ color:var(--cyan);
+ font-size:10px;
+ font-weight:950;
+ letter-spacing:1px;
+}
+
+.fact h3{
+ margin:0 0 7px;
+ font-size:16px;
+}
+
+.fact p{
+ margin:0;
+ color:#b5bfcc;
+ font-size:12px;
+ line-height:1.6;
+}
+
+/* =========================
+   COMBO
+========================= */
+
+.combo{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:12px 14px;
+ border-radius:14px;
+ background:#201a10;
+ border:1px solid #57451f;
+ margin-bottom:10px;
+}
+
+.combo strong{
+ color:var(--yellow);
+}
+
+.combo span{
+ font-size:11px;
+ color:#b8a875;
+}
+
+/* =========================
+   WORLD MAP
+========================= */
+
+.world{
+ position:relative;
+}
+
+.node{
+ position:relative;
+ display:flex;
+ align-items:center;
+ gap:12px;
+ margin-bottom:15px;
+}
+
+.node:not(:last-child):after{
+ content:"";
+ position:absolute;
+ left:23px;
+ top:51px;
+ width:3px;
+ height:32px;
+ background:#2a3442;
+}
+
+.node-icon{
+ width:48px;
+ height:48px;
+ display:grid;
+ place-items:center;
+ border-radius:15px;
+ background:#171f2b;
+ border:2px solid #303c4d;
+ z-index:2;
+}
+
+.node.unlocked .node-icon{
+ border-color:var(--orange);
+ background:#211b18;
+ box-shadow:0 0 20px #ff8a3d15;
+}
+
+.node.locked{
+ opacity:.42;
+}
+
+.node-info{
+ flex:1;
+}
+
+.node-info b{
+ font-size:13px;
+}
+
+.node-info small{
+ display:block;
+ color:var(--muted);
+ font-size:10px;
+ margin-top:3px;
+}
+
+/* =========================
+   LESSON
+========================= */
+
+.lesson-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ margin-bottom:17px;
+}
+
+.back{
+ background:#151d28;
+ border:1px solid #293545;
+ padding:9px 12px;
+ border-radius:10px;
+}
+
+.lesson-number{
+ color:var(--muted);
+ font-size:10px;
+ font-weight:900;
+}
+
+.concept{
+ background:#131a25;
+ border:1px solid #344154;
+ border-radius:19px;
+ padding:17px;
+ margin-bottom:12px;
+}
+
+.code{
+ background:#080b10;
+ border:1px solid #293445;
+ border-radius:12px;
+ padding:13px;
+ font:12px/1.7 "Courier New",monospace;
+ color:#dce3ed;
+ overflow:auto;
+}
+
+.kw{color:#d29cff}
+.str{color:#aaf27b}
+.num{color:#ff9a64}
+.comment{color:#697789}
+.fn{color:#ff80b5}
+
+/* =========================
+   CHOICES
+========================= */
+
+.choice{
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ background:#111822;
+ border:2px solid #2c3849;
+ border-radius:13px;
+ text-align:left;
+ font-size:12px;
+ font-weight:800;
+ transition:.15s;
+}
+
+.choice:hover{
+ border-color:#506078;
+}
+
+.choice.selected{
+ border-color:var(--orange);
+ background:#241a13;
+}
+
+.choice.correct{
+ border-color:var(--lime);
+ background:#172315;
+}
+
+.choice.wrong{
+ border-color:var(--red);
+ background:#25151a;
+}
+
+/* =========================
+   EDITOR
+========================= */
+
+.editor{
+ background:#080b10;
+ border:1px solid #2d3949;
+ border-radius:14px;
+ overflow:hidden;
+}
+
+.editor-top{
+ display:flex;
+ justify-content:space-between;
+ padding:9px 12px;
+ border-bottom:1px solid #252f3d;
+ color:var(--muted);
+ font-size:10px;
+}
+
+.editor textarea{
+ width:100%;
+ min-height:190px;
+ resize:vertical;
+ border:0;
+ outline:0;
+ background:#080b10;
+ color:#dce5ef;
+ padding:14px;
+ font:13px/1.65 "Courier New",monospace;
+}
+
+.output{
+ min-height:45px;
+ margin-top:9px;
+ padding:12px;
+ border-radius:11px;
+ background:#0b0f15;
+ border:1px solid #2c3747;
+ color:var(--lime);
+ font:12px monospace;
+ white-space:pre-wrap;
+}
+
+/* =========================
+   QUIZ ARENA
+========================= */
+
+.quiz-header{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.difficulty{
+ display:inline-block;
+ padding:5px 8px;
+ border-radius:7px;
+ font-size:9px;
+ font-weight:950;
+}
+
+.easy{
+ color:#091207;
+ background:var(--lime);
+}
+
+.medium{
+ color:#171006;
+ background:var(--yellow);
+}
+
+.hard{
+ color:#17070d;
+ background:var(--pink);
+}
+
+/* =========================
+   ACHIEVEMENTS
+========================= */
+
+.achievement{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ margin-bottom:9px;
+}
+
+.badge{
+ width:48px;
+ height:48px;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:#1d2531;
+ font-size:22px;
+ flex:none;
+}
+
+.achievement.locked{
+ opacity:.4;
+ filter:grayscale(1);
+}
+
+/* =========================
+   DRAWER
+========================= */
+
+#drawer{
+ position:fixed;
+ z-index:40;
+ top:0;
+ bottom:0;
+ left:max(calc(50% - 270px),0px);
+ width:min(290px,82vw);
+ padding:24px 14px;
+ background:#0d121a;
+ border-right:1px solid #2b3646;
+ transform:translateX(-105%);
+ transition:.3s;
+ box-shadow:20px 0 50px #0009;
+}
+
+.drawer-open #drawer{
+ transform:translateX(0);
+}
+
+#overlay{
+ position:fixed;
+ inset:0;
+ background:#0009;
+ z-index:30;
+ opacity:0;
+ pointer-events:none;
+ transition:.3s;
+}
+
+.drawer-open #overlay{
+ opacity:1;
+ pointer-events:auto;
+}
+
+.drawer-title{
+ color:var(--muted);
+ font-size:10px;
+ letter-spacing:2px;
+ font-weight:950;
+ margin:10px 12px 17px;
+}
+
+.drawer-item{
+ width:100%;
+ display:flex;
+ align-items:center;
+ gap:12px;
+ padding:13px 12px;
+ margin-bottom:4px;
+ background:none;
+ border-radius:11px;
+ color:#aab3c0;
+ text-align:left;
+}
+
+.drawer-item.active{
+ background:#211a16;
+ color:var(--orange);
+}
+
+/* =========================
+   NAV
+========================= */
+
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ left:50%;
+ transform:translateX(-50%);
+ width:100%;
+ max-width:540px;
+ height:78px;
+ display:flex;
+ background:#0c1119;
+ border-top:1px solid #293445;
+ z-index:25;
+}
+
+.bottom-nav button{
+ flex:1;
+ background:none;
+ color:#657083;
+ font-size:18px;
+}
+
+.bottom-nav button.active{
+ color:var(--orange);
+}
+
+.bottom-nav small{
+ display:block;
+ font-size:9px;
+ margin-top:4px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast{
+ position:fixed;
+ left:50%;
+ bottom:94px;
+ transform:translate(-50%,20px);
+ z-index:100;
+ opacity:0;
+ pointer-events:none;
+ background:#f6f8fb;
+ color:#0b1017;
+ border-radius:12px;
+ padding:11px 15px;
+ font-size:12px;
+ font-weight:950;
+ box-shadow:0 10px 35px #0009;
+ transition:.25s;
+ white-space:nowrap;
+}
+
+#toast.show{
+ opacity:1;
+ transform:translate(-50%,0);
+}
+
+/* =========================
+   XP FLOAT
+========================= */
+
+.xp-float{
+ position:fixed;
+ left:50%;
+ top:48%;
+ z-index:300;
+ pointer-events:none;
+ color:var(--yellow);
+ font-size:24px;
+ font-weight:950;
+ animation:floatXP 1s ease forwards;
+ text-shadow:0 3px 15px #000;
+}
+
+@keyframes floatXP{
+ 0%{
+  opacity:0;
+  transform:translate(-50%,20px) scale(.7);
+ }
+ 20%{
+  opacity:1;
+  transform:translate(-50%,0) scale(1.1);
+ }
+ 100%{
+  opacity:0;
+  transform:translate(-50%,-100px) scale(1);
+ }
+}
+
+/* =========================
+   LEVEL UP
+========================= */
+
+#levelup{
+ position:fixed;
+ inset:0;
+ z-index:200;
+ display:none;
+ place-items:center;
+ background:#05070bd9;
+ backdrop-filter:blur(6px);
+ padding:20px;
+}
+
+.levelup-box{
+ width:min(350px,100%);
+ padding:30px;
+ border-radius:24px;
+ text-align:center;
+ background:#111722;
+ border:1px solid #465469;
+ box-shadow:0 30px 100px #000b;
+ animation:levelPop .45s ease;
+}
+
+.levelup-icon{
+ font-size:65px;
+}
+
+.levelup-box h1{
+ color:var(--orange);
+ font-size:38px;
+ margin:8px 0;
+}
+
+.levelup-box p{
+ color:var(--muted);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes rise{
+ from{
+  opacity:0;
+  transform:translateY(10px);
+ }
+ to{
+  opacity:1;
+  transform:translateY(0);
+ }
+}
+
+@keyframes levelPop{
+ 0%{
+  opacity:0;
+  transform:scale(.7);
+ }
+ 70%{
+  transform:scale(1.05);
+ }
+ 100%{
+  opacity:1;
+  transform:scale(1);
+ }
+}
+
+@media(min-width:541px){
+ body{
+  padding:20px 0;
+ }
+
+ .app-shell{
+  border-radius:24px;
+  box-shadow:0 25px 80px #000a;
+ }
+
+ .bottom-nav{
+  bottom:20px;
+  border-radius:0 0 24px 24px;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     AUTH
+========================= -->
+
+<div id="authScreen">
+
+ <div class="auth-box">
+
+  <div class="logo">
+
+   <div class="logo-mark">&lt;/&gt;</div>
+
+   <h1>CodeQuest</h1>
+
+   <p>Turn programming into an adventure.</p>
+
+  </div>
+
+  <div class="auth-tabs">
+
+   <button id="loginTab" class="active">
+    LOGIN
+   </button>
+
+   <button id="registerTab">
+    REGISTER
+   </button>
+
+  </div>
+
+  <div id="authForm"></div>
+
+ </div>
+
+</div>
+
+
+<!-- =========================
+     LEVEL UP
+========================= -->
+
+<div id="levelup">
+
+ <div class="levelup-box">
+
+  <div class="levelup-icon">🏆</div>
+
+  <h1>LEVEL UP!</h1>
+
+  <p id="levelupText">
+   New abilities unlocked.
+  </p>
+
+  <button
+   class="btn primary"
+   onclick="closeLevelUp()">
+
+   CONTINUE
+
+  </button>
+
+ </div>
+
+</div>
+
+
+<!-- =========================
+     APP
+========================= -->
+
+<div class="app-shell">
+
+ <header class="topbar">
+
+  <button class="icon-btn" id="menuBtn">
+   ☰
+  </button>
+
+  <div class="brand">
+   <span class="brand-mark">&lt;/&gt;</span>
+   <span>CodeQuest</span>
+  </div>
+
+  <div class="header-right">
+
+   <span class="resource">
+    🪙 <b id="coins">0</b>
+   </span>
+
+   <span class="resource">
+    🔥 <b id="streak">0</b>
+   </span>
+
+   <span class="avatar" id="avatar">
+    ?
+   </span>
+
+  </div>
+
+ </header>
+
+
+ <aside id="drawer">
+
+  <div class="drawer-title">
+   CODEQUEST
+  </div>
+
+  <button class="drawer-item active" data-page="home">
+   🏠 <span>Home Base</span>
+  </button>
+
+  <button class="drawer-item" data-page="courses">
+   🗺️ <span>Adventure Map</span>
+  </button>
+
+  <button class="drawer-item" data-page="quiz">
+   🧠 <span>Quiz Arena</span>
+  </button>
+
+  <button class="drawer-item" data-page="facts">
+   💡 <span>Codex</span>
+  </button>
+
+  <button class="drawer-item" data-page="playground">
+   💻 <span>Code Lab</span>
+  </button>
+
+  <button class="drawer-item" data-page="progress">
+   📊 <span>Player Stats</span>
+  </button>
+
+  <button class="drawer-item" data-page="achievements">
+   🏆 <span>Trophies</span>
+  </button>
+
+  <button class="drawer-item" onclick="logout()">
+   🚪 <span>Logout</span>
+  </button>
+
+ </aside>
+
+
+ <div id="overlay"></div>
+
+
+ <main id="main"></main>
+
+
+ <nav class="bottom-nav">
+
+  <button data-page="home" class="active">
+   🏠
+   <small>Home</small>
+  </button>
+
+  <button data-page="courses">
+   🗺️
+   <small>Map</small>
+  </button>
+
+  <button data-page="quiz">
+   🧠
+   <small>Quiz</small>
+  </button>
+
+  <button data-page="progress">
+   📊
+   <small>Stats</small>
+  </button>
+
+ </nav>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   ACCOUNT SYSTEM
+===================================================== */
+
+const ACCOUNT_KEY="codequest_accounts";
+const SESSION_KEY="codequest_session";
+
+function getAccounts(){
+ return JSON.parse(
+  localStorage.getItem(ACCOUNT_KEY)||"{}"
+ );
+}
+
+function saveAccounts(accounts){
+ localStorage.setItem(
+  ACCOUNT_KEY,
+  JSON.stringify(accounts)
+ );
+}
+
+function currentUser(){
+ return localStorage.getItem(SESSION_KEY);
+}
+
+
+function register(username,password){
+
+ username=username.trim().toLowerCase();
+
+ if(username.length<3){
+  showAuthError(
+   "Username must be at least 3 characters."
+  );
+  return;
+ }
+
+ if(password.length<4){
+  showAuthError(
+   "Password must be at least 4 characters."
+  );
+  return;
+ }
+
+ const accounts=getAccounts();
+
+ if(accounts[username]){
+  showAuthError(
+   "That username already exists."
+  );
+  return;
+ }
+
+ accounts[username]={
+
+  password:password,
+
+  created:Date.now(),
+
+  xp:0,
+  level:0,
+  coins:0,
+  streak:0,
+
+  completed:0,
+
+  achievements:[],
+
+  lessonXP:{},
+
+  lastLogin:null
+
+ };
+
+ saveAccounts(accounts);
+
+ localStorage.setItem(
+  SESSION_KEY,
+  username
+ );
+
+ initApp();
+
+ toast(
+  "Character created! Welcome, coder."
+ );
+
+}
+
+
+function login(username,password){
+
+ username=username.trim().toLowerCase();
+
+ const accounts=getAccounts();
+
+ if(!accounts[username]){
+  showAuthError(
+   "Account not found."
+  );
+  return;
+ }
+
+ if(accounts[username].password!==password){
+  showAuthError(
+   "Incorrect password."
+  );
+  return;
+ }
+
+ localStorage.setItem(
+  SESSION_KEY,
+  username
+ );
+
+ initApp();
+
+}
+
+
+function logout(){
+
+ saveState();
+
+ localStorage.removeItem(
+  SESSION_KEY
+ );
+
+ document.querySelector(
+  "#authScreen"
+ ).style.display="grid";
+
+ showLogin();
+
+}
+
+
+function showAuthError(text){
+
+ const error=document.querySelector(
+  "#authError"
+ );
+
+ if(error){
+  error.textContent=text;
+ }
+
+}
+
+
+function showLogin(){
+
+ document.querySelector(
+  "#loginTab"
+ ).classList.add("active");
+
+ document.querySelector(
+  "#registerTab"
+ ).classList.remove("active");
+
+ document.querySelector(
+  "#authForm"
+ ).innerHTML=`
+
+  <div class="input-group">
+   <label>Username</label>
+
+   <input
+    class="input"
+    id="username"
+    placeholder="Your coder name">
+  </div>
+
+  <div class="input-group">
+   <label>Password</label>
+
+   <input
+    class="input"
+    id="password"
+    type="password"
+    placeholder="Your password">
+  </div>
+
+  <div
+   class="auth-error"
+   id="authError">
+  </div>
+
+  <button
+   class="btn primary"
+   onclick="login(
+    document.querySelector('#username').value,
+    document.querySelector('#password').value
+   )">
+
+   ENTER CODEQUEST
+
+  </button>
+ `;
+}
+
+
+function showRegister(){
+
+ document.querySelector(
+  "#loginTab"
+ ).classList.remove("active");
+
+ document.querySelector(
+  "#registerTab"
+ ).classList.add("active");
+
+ document.querySelector(
+  "#authForm"
+ ).innerHTML=`
+
+  <div class="input-group">
+   <label>Username</label>
+
+   <input
+    class="input"
+    id="username"
+    placeholder="Choose your coder name">
+  </div>
+
+  <div class="input-group">
+   <label>Password</label>
+
+   <input
+    class="input"
+    id="password"
+    type="password"
+    placeholder="At least 4 characters">
+  </div>
+
+  <div class="input-group">
+   <label>Confirm password</label>
+
+   <input
+    class="input"
+    id="confirm"
+    type="password"
+    placeholder="Repeat your password">
+  </div>
+
+  <div
+   class="auth-error"
+   id="authError">
+  </div>
+
+  <button
+   class="btn primary"
+   onclick="doRegister()">
+
+   CREATE CHARACTER
+
+  </button>
+ `;
+}
+
+
+function doRegister(){
+
+ const username=
+  document.querySelector("#username").value;
+
+ const password=
+  document.querySelector("#password").value;
+
+ const confirm=
+  document.querySelector("#confirm").value;
+
+ if(password!==confirm){
+
+  showAuthError(
+   "Passwords do not match."
+  );
+
+  return;
+ }
+
+ register(
+  username,
+  password
+ );
+
+}
+
+
+document.querySelector(
+ "#loginTab"
+).onclick=showLogin;
+
+document.querySelector(
+ "#registerTab"
+).onclick=showRegister;
+
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let state=null;
+
+let currentPage="home";
+
+let selected=null;
+
+let quizDone=false;
+
+let quizQuestion=null;
+
+let currentFact=null;
+
+let combo=0;
+
+
+/* =====================================================
+   CONTENT DATABASE
+===================================================== */
+
+const facts=[
+
+ {
+  title:"Why is JavaScript called JavaScript?",
+  text:"JavaScript was originally called Mocha. It was later renamed LiveScript, then JavaScript. Despite the name, JavaScript and Java are separate programming languages.",
+  category:"LANGUAGES"
+ },
+
+ {
+  title:"The first programmer was a woman.",
+  text:"Ada Lovelace wrote an algorithm for Charles Babbage's Analytical Engine in the 1800s. She is widely regarded as the first computer programmer.",
+  category:"HISTORY"
+ },
+
+ {
+  title:"Computers only understand electricity at the lowest level.",
+  text:"At the hardware level, computers represent information using electrical states that can be represented as 1s and 0s. Programming languages give humans a much easier way to communicate with machines.",
+  category:"COMPUTERS"
+ },
+
+ {
+  title:"Bug does not literally mean an insect.",
+  text:"The famous story about a moth being found inside a computer helped popularize the term debugging. However, engineers were already using the word bug for technical problems before that event.",
+  category:"HISTORY"
+ },
+
+ {
+  title:"Python was named after comedy.",
+  text:"Python creator Guido van Rossum named the language after the British comedy group Monty Python, not the snake.",
+  category:"PYTHON"
+ },
+
+ {
+  title:"A variable is basically a named storage location.",
+  text:"When you create a variable, you give your program a way to refer to some piece of information. The exact behavior depends on the programming language.",
+  category:"FUNDAMENTALS"
+ },
+
+ {
+  title:"Loops save programmers from repetitive work.",
+  text:"Instead of writing the same instruction dozens or thousands of times, a loop can repeat a block of code according to a condition or collection.",
+  category:"LOGIC"
+ },
+
+ {
+  title:"HTML is not a programming language.",
+  text:"HTML is a markup language. It describes the structure and meaning of content on a webpage. JavaScript is used to add programming behavior.",
+  category:"WEB"
+ },
+
+ {
+  title:"CSS controls presentation.",
+  text:"CSS describes how HTML content should look. It can control things such as spacing, typography, positioning, borders and responsive layouts.",
+  category:"WEB"
+ },
+
+ {
+  title:"The first computer bug was not really the first bug.",
+  text:"The famous moth incident happened in 1947, but the word bug was already being used by engineers to describe mechanical and technical problems.",
+  category:"HISTORY"
+ },
+
+ {
+  title:"Functions help organize code.",
+  text:"A function packages instructions into a reusable unit. Instead of copying the same code everywhere, you can call the function when you need it.",
+  category:"FUNDAMENTALS"
+ },
+
+ {
+  title:"Algorithms are instructions.",
+  text:"An algorithm is a sequence of steps for solving a problem or accomplishing a task. Algorithms can be written in plain language before they become actual code.",
+  category:"ALGORITHMS"
+ }
+
+];
+
+
+const questions=[
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"Which keyword creates a variable that can be reassigned in JavaScript?",
+  answers:["const","let","fixed","varname"],
+  correct:1,
+  explanation:"let creates a variable that can later receive a new value."
+ },
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"What does HTML mainly describe?",
+  answers:[
+   "The structure of a webpage",
+   "Computer hardware",
+   "Database passwords",
+   "CPU instructions"
+  ],
+  correct:0,
+  explanation:"HTML describes the structure and content of a webpage."
+ },
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"Which symbol starts a single-line comment in JavaScript?",
+  answers:["//","##","<!--","\\\\"] ,
+  correct:0,
+  explanation:"Two forward slashes begin a single-line JavaScript comment."
+ },
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"What does console.log() usually do?",
+  answers:[
+   "Prints information to the console",
+   "Deletes a variable",
+   "Creates HTML",
+   "Turns off the browser"
+  ],
+  correct:0,
+  explanation:"console.log() outputs information to the developer console."
+ },
+
+ {
+  difficulty:"MEDIUM",
+  xp:20,
+  question:"What will 5 + 3 * 2 evaluate to?",
+  answers:["16","11","13","10"],
+  correct:1,
+  explanation:"Multiplication happens before addition, so 3 * 2 is 6, then 5 + 6 is 11."
+ },
+
+ {
+  difficulty:"MEDIUM",
+  xp:20,
+  question:"What does === compare in JavaScript?",
+  answers:[
+   "Only variable names",
+   "Only values",
+   "Value and type",
+   "Only types"
+  ],
+  correct:2,
+  explanation:"Strict equality checks both the value and the type."
+ },
+
+ {
+  difficulty:"MEDIUM",
+  xp:20,
+  question:"What is the purpose of a loop?",
+  answers:[
+   "Repeat instructions",
+   "Delete memory",
+   "Change the programming language",
+   "Create a monitor"
+  ],
+  correct:0,
+  explanation:"Loops allow instructions to execute repeatedly."
+ },
+
+ {
+  difficulty:"MEDIUM",
+  xp:20,
+  question:"What is a function?",
+  answers:[
+   "A reusable block of instructions",
+   "A computer screen",
+   "A file extension",
+   "A type of keyboard"
+  ],
+  correct:0,
+  explanation:"Functions group reusable instructions together."
+ },
+
+ {
+  difficulty:"HARD",
+  xp:30,
+  question:"What does this print? let x=2; x*=4; console.log(x);",
+  answers:["2","4","6","8"],
+  correct:3,
+  explanation:"x starts at 2 and *= 4 multiplies it by 4, giving 8."
+ },
+
+ {
+  difficulty:"HARD",
+  xp:30,
+  question:"What is the value of Boolean(0) in JavaScript?",
+  answers:["true","false","0","undefined"],
+  correct:1,
+  explanation:"Zero is a falsy value in JavaScript, so Boolean(0) is false."
+ },
+
+ {
+  difficulty:"HARD",
+  xp:30,
+  question:"What does an algorithm provide?",
+  answers:[
+   "A sequence of steps to solve a problem",
+   "A programming font",
+   "A hardware component",
+   "A web browser"
+  ],
+  correct:0,
+  explanation:"Algorithms describe steps for solving problems or completing tasks."
+ }
+
+];
+
+
+const courses=[
+
+ {
+  icon:"🧩",
+  title:"Spawn Point",
+  desc:"Variables, values and your first code",
+  level:0,
+  xp:40
+ },
+
+ {
+  icon:"🔀",
+  title:"Decision District",
+  desc:"Conditions and logical thinking",
+  level:1,
+  xp:60
+ },
+
+ {
+  icon:"🔁",
+  title:"Loop Canyon",
+  desc:"Repetition and automation",
+  level:2,
+  xp:80
+ },
+
+ {
+  icon:"☕",
+  title:"Java Forge",
+  desc:"Methods, classes and objects",
+  level:3,
+  xp:100
+ },
+
+ {
+  icon:"🌐",
+  title:"Web City",
+  desc:"HTML, CSS and JavaScript",
+  level:4,
+  xp:120
+ },
+
+ {
+  icon:"⚙️",
+  title:"Algorithm Lab",
+  desc:"Logic, algorithms and problem solving",
+  level:5,
+  xp:150
+ },
+
+ {
+  icon:"🚀",
+  title:"Project Station",
+  desc:"Build your own coding projects",
+  level:6,
+  xp:200
+ }
+
+];
+
+
+/* =====================================================
+   GAME FUNCTIONS
+===================================================== */
+
+function getAccounts(){
+ return JSON.parse(
+  localStorage.getItem(ACCOUNT_KEY)||"{}"
+ );
+}
+
+function saveState(){
+
+ const accounts=getAccounts();
+
+ const user=currentUser();
+
+ if(!user||!state)return;
+
+ accounts[user]=state;
+
+ localStorage.setItem(
+  ACCOUNT_KEY,
+  JSON.stringify(accounts)
+ );
+
+}
+
+
+function currentUser(){
+ return localStorage.getItem(SESSION_KEY);
+}
+
+
+function loadState(){
+
+ const accounts=getAccounts();
+
+ const user=currentUser();
+
+ if(!user||!accounts[user]){
+  return false;
+ }
+
+ state=accounts[user];
+
+ if(state.xp===undefined)state.xp=0;
+ if(state.level===undefined)state.level=0;
+ if(state.coins===undefined)state.coins=0;
+ if(state.streak===undefined)state.streak=0;
+ if(state.completed===undefined)state.completed=0;
+ if(!state.achievements)state.achievements=[];
+ if(!state.lessonXP)state.lessonXP={};
+
+ return true;
+}
+
+
+function initApp(){
+
+ if(!loadState()){
+  showLogin();
+  return;
+ }
+
+ document.querySelector(
+  "#authScreen"
+ ).style.display="none";
+
+ const user=currentUser();
+
+ document.querySelector(
+  "#avatar"
+ ).textContent=
+ user.charAt(0).toUpperCase();
+
+ render();
+
+}
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+function addXP(amount,reason=""){
+
+ if(!state)return;
+
+ const oldLevel=state.level;
+
+ state.xp+=amount;
+
+ state.coins+=Math.max(
+  1,
+  Math.floor(amount/5)
+ );
+
+ state.level=Math.floor(
+  state.xp/100
+ );
+
+ saveState();
+
+ createXPFloat(amount);
+
+ if(state.level>oldLevel){
+
+  showLevelUp(
+   state.level,
+   reason
+  );
+
+ }else{
+
+  toast(
+   "+"+amount+" XP   🪙 +"+
+   Math.max(1,Math.floor(amount/5))
+  );
+
+ }
+
+ render();
+
+}
+
+
+function createXPFloat(amount){
+
+ const el=document.createElement("div");
+
+ el.className="xp-float";
+
+ el.textContent="+"+amount+" XP";
+
+ document.body.appendChild(el);
+
+ setTimeout(()=>{
+  el.remove();
+ },1000);
+
+}
+
+
+function showLevelUp(level,reason){
+
+ document.querySelector(
+  "#levelupText"
+ ).textContent=
+ "Level "+level+
+ " reached! New parts of the coding world are opening.";
+
+ document.querySelector(
+  "#levelup"
+ ).style.display="grid";
+
+}
+
+
+function closeLevelUp(){
+
+ document.querySelector(
+  "#levelup"
+ ).style.display="none";
+
+ toast(
+  "LEVEL "+state.level+" UNLOCKED!"
+ );
+
+ render();
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(text){
+
+ const el=document.querySelector(
+  "#toast"
+ );
+
+ el.textContent=text;
+
+ el.classList.add("show");
+
+ clearTimeout(window.toastTimer);
+
+ window.toastTimer=setTimeout(()=>{
+  el.classList.remove("show");
+ },1800);
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function openMenu(){
+ app.classList.add("drawer-open");
+}
+
+function closeMenu(){
+ app.classList.remove("drawer-open");
+}
+
+document.querySelector(
+ "#menuBtn"
+).onclick=openMenu;
+
+document.querySelector(
+ "#overlay"
+).onclick=closeMenu;
+
+document.querySelectorAll(
+ "[data-page]"
+).forEach(button=>{
+
+ button.onclick=()=>{
+
+  currentPage=button.dataset.page;
+
+  closeMenu();
+
+  render();
+
+ };
+
+});
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+const app=document.querySelector(
+ ".app-shell"
+);
+
+const main=document.querySelector(
+ "#main"
+);
+
+function headerStats(){
+
+ document.querySelector(
+  "#coins"
+ ).textContent=state.coins;
+
+ document.querySelector(
+  "#streak"
+ ).textContent=state.streak;
+
+}
+
+
+function render(){
+
+ if(!state)return;
+
+ headerStats();
+
+ document.querySelectorAll(
+  ".bottom-nav button"
+ ).forEach(button=>{
+
+  button.classList.toggle(
+   "active",
+   button.dataset.page===currentPage
+  );
+
+ });
+
+ document.querySelectorAll(
+  ".drawer-item[data-page]"
+ ).forEach(button=>{
+
+  button.classList.toggle(
+   "active",
+   button.dataset.page===currentPage
+  );
+
+ });
+
+
+ const pages={
+  home:home,
+  courses:coursePage,
+  quiz:quizArena,
+  facts:factPage,
+  playground:playground,
+  progress:progress,
+  achievements:achievements
+ };
+
+ (pages[currentPage]||home)();
+
+}
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function home(){
+
+ const levelXP=state.xp%100;
+
+ const fact=
+ facts[Math.floor(
+  Math.random()*facts.length
+ )];
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   CODING ADVENTURE
+  </div>
+
+  <h1>
+   Welcome back, coder.
+  </h1>
+
+  <p>
+   Complete missions, answer questions,
+   discover facts and experiment with real code.
+  </p>
+
+ </section>
+
+
+ <div class="grid two">
+
+  <div class="card stat">
+   <span>⚡ XP</span>
+   <b>${state.xp}</b>
+   <small class="muted">
+    Level ${state.level}
+   </small>
+  </div>
+
+  <div class="card stat">
+   <span>🪙 COINS</span>
+   <b>${state.coins}</b>
+   <small class="muted">
+    your currency
+   </small>
+  </div>
+
+  <div class="card stat">
+   <span>🔥 STREAK</span>
+   <b>${state.streak}</b>
+   <small class="muted">
+    coding days
+   </small>
+  </div>
+
+  <div class="card stat">
+   <span>🏆 MISSIONS</span>
+   <b>${state.completed}</b>
+   <small class="muted">
+    completed
+   </small>
+  </div>
+
+ </div>
+
+
+ <div class="card" style="margin-top:10px">
+
+  <div class="xp-row">
+
+   <span>
+    LEVEL ${state.level}
+   </span>
+
+   <span class="level-label">
+    ${levelXP}/100 XP
+   </span>
+
+  </div>
+
+  <div class="xp-bar">
+   <div
+    class="xp-fill"
+    style="width:${levelXP}%">
+   </div>
+  </div>
+
+  <span class="muted">
+   ${100-levelXP} XP until Level ${state.level+1}
+  </span>
+
+ </div>
+
+
+ <div class="section">
+  <h2>🎯 Today's Missions</h2>
+ </div>
+
+
+ ${missionCard(
+  "💡",
+  "Learn a fact",
+  "Read something from the Codex",
+  "+5 XP",
+  "factMission"
+ )}
+
+
+ ${missionCard(
+  "🧠",
+  "Answer a quiz",
+  "Test your programming knowledge",
+  "+10 XP",
+  "quizMission"
+ )}
+
+
+ ${missionCard(
+  "💻",
+  "Run code",
+  "Experiment inside the Code Lab",
+  "+5 XP",
+  "codeMission"
+ )}
+
+
+ <div class="section">
+  <h2>🎮 Quick Play</h2>
+ </div>
+
+
+ <div class="card">
+
+  <div class="play-card">
+
+   <button
+    class="play"
+    onclick="currentPage='quiz';quizArena()">
+
+    <div class="play-icon">🧠</div>
+
+    <b>Quiz Arena</b>
+
+    <small>
+     Random question
+    </small>
+
+    <span class="reward">
+     +10 to +30 XP
+    </span>
+
+   </button>
+
+
+   <button
+    class="play"
+    onclick="currentPage='facts';factPage()">
+
+    <div class="play-icon">💡</div>
+
+    <b>Codex</b>
+
+    <small>
+     Read fun facts
+    </small>
+
+    <span class="reward">
+     +5 XP
+    </span>
+
+   </button>
+
+
+   <button
+    class="play"
+    onclick="currentPage='playground';playground()">
+
+    <div class="play-icon">💻</div>
+
+    <b>Code Lab</b>
+
+    <small>
+     Write JavaScript
+    </small>
+
+    <span class="reward">
+     +5 XP
+    </span>
+
+   </button>
+
+
+   <button
+    class="play"
+    onclick="logicPuzzle()">
+
+    <div class="play-icon">🧩</div>
+
+    <b>Logic Puzzle</b>
+
+    <small>
+     Solve a problem
+    </small>
+
+    <span class="reward">
+     +15 XP
+    </span>
+
+   </button>
+
+  </div>
+
+ </div>
+
+
+ <div class="section">
+  <h2>💡 Random Fact</h2>
+
+  <button onclick="currentPage='facts';factPage()">
+   OPEN CODEX →
+  </button>
+ </div>
+
+
+ <div class="fact">
+
+  <div class="fact-top">
+
+   <span class="fact-tag">
+    ${fact.category}
+   </span>
+
+   <span>
+    💡
+   </span>
+
+  </div>
+
+  <h3>
+   ${fact.title}
+  </h3>
+
+  <p>
+   ${fact.text}
+  </p>
+
+ </div>
+
+
+ <div class="section">
+  <h2>🗺️ World</h2>
+
+  <button onclick="currentPage='courses';render()">
+   MAP →
+  </button>
+
+ </div>
+
+
+ <div class="card">
+
+  <div class="world">
+
+   ${courses.slice(0,5).map(
+    worldNode
+   ).join("")}
+
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+function missionCard(
+ icon,
+ title,
+ desc,
+ reward,
+ action
+){
+
+ return `
+
+ <button
+  class="quest"
+  onclick="${action}()">
+
+  <div class="quest-icon">
+   ${icon}
+  </div>
+
+  <div class="quest-info">
+
+   <b>${title}</b>
+
+   <p>${desc}</p>
+
+  </div>
+
+  <span class="reward">
+   ${reward}
+  </span>
+
+ </button>
+
+ `;
+
+}
+
+
+function worldNode(course){
+
+ const unlocked=
+  state.level>=course.level;
+
+ return `
+
+ <div class="node ${
+  unlocked?"unlocked":"locked"
+ }">
+
+  <div class="node-icon">
+   ${unlocked?course.icon:"🔒"}
+  </div>
+
+  <div class="node-info">
+
+   <b>${course.title}</b>
+
+   <small>
+    ${
+     unlocked
+      ?"Unlocked"
+      :"Reach Level "+course.level
+    }
+   </small>
+
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+/* =====================================================
+   MISSIONS
+===================================================== */
+
+function factMission(){
+
+ currentPage="facts";
+
+ factPage();
+
+}
+
+
+function quizMission(){
+
+ currentPage="quiz";
+
+ quizArena();
+
+}
+
+
+function codeMission(){
+
+ currentPage="playground";
+
+ playground();
+
+}
+
+
+/* =====================================================
+   FACT PAGE
+===================================================== */
+
+function factPage(){
+
+ currentFact=
+  facts[Math.floor(
+   Math.random()*facts.length
+  )];
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   THE CODEX
+  </div>
+
+  <h1>
+   Learn something weird.
+  </h1>
+
+  <p>
+   Programming has a lot of strange history,
+   clever ideas and fun facts.
+  </p>
+
+ </section>
+
+
+ <div class="fact">
+
+  <div class="fact-top">
+
+   <span class="fact-tag">
+    ${currentFact.category}
+   </span>
+
+   <span>💡</span>
+
+  </div>
+
+  <h3>
+   ${currentFact.title}
+  </h3>
+
+  <p>
+   ${currentFact.text}
+  </p>
+
+ </div>
+
+
+ <button
+  class="btn primary"
+  onclick="readFact()">
+
+  I LEARNED SOMETHING
+  <br>
+  <small>+5 XP</small>
+
+ </button>
+
+
+ <button
+  class="btn"
+  onclick="factPage()">
+
+  🎲 SHOW ANOTHER FACT
+
+ </button>
+
+
+ <div class="section">
+  <h2>📚 More facts</h2>
+ </div>
+
+
+ ${facts.slice(0,6).map(
+  f=>`
+
+   <div class="card" style="margin-bottom:9px">
+
+    <div class="fact-tag">
+     ${f.category}
+    </div>
+
+    <h3 style="margin-top:5px">
+     ${f.title}
+    </h3>
+
+    <p class="muted">
+     ${f.text}
+    </p>
+
+   </div>
+
+  `
+ ).join("")}
+
+ `;
+
+}
+
+
+function readFact(){
+
+ addXP(5,"Fact discovered");
+
+}
+
+
+/* =====================================================
+   QUIZ ARENA
+===================================================== */
+
+function randomQuestion(){
+
+ return questions[
+  Math.floor(
+   Math.random()*questions.length
+  )
+ ];
+
+}
+
+
+function quizArena(){
+
+ quizQuestion=randomQuestion();
+
+ selected=null;
+
+ quizDone=false;
+
+ renderQuiz();
+
+}
+
+
+function renderQuiz(){
+
+ const q=quizQuestion;
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   QUIZ ARENA
+  </div>
+
+  <h1>
+   Test your coding brain.
+  </h1>
+
+  <p>
+   Correct answers earn XP.
+   Harder questions give better rewards.
+  </p>
+
+ </section>
+
+
+ <div class="card">
+
+  <div class="quiz-header">
+
+   <span class="difficulty ${
+    q.difficulty.toLowerCase()
+   }">
+
+    ${q.difficulty}
+
+   </span>
+
+   <span class="reward">
+    +${q.xp} XP
+   </span>
+
+  </div>
+
+
+  <h2 style="margin-top:15px">
+   ${q.question}
+  </h2>
+
+
+  ${q.answers.map(
+   (answer,index)=>`
+
+    <button
+     class="choice ${
+      selected===index
+       ?quizDone
+        ?index===q.correct
+         ?"correct"
+         :"wrong"
+        :"selected"
+       :""
+     }"
+     onclick="answerQuiz(${index})">
+
+     ${String.fromCharCode(65+index)}.
+     ${answer}
+
+    </button>
+
+   `
+  ).join("")}
+
+
+  ${
+   quizDone
+   ?`
+
+    <div
+     class="card"
+     style="
+      margin-top:12px;
+      background:#0d131b;
+      box-shadow:none;
+     ">
+
+     <b>
+      ${
+       selected===q.correct
+        ?"🎉 CORRECT!"
+        :"❌ NOT QUITE!"
+      }
+     </b>
+
+     <p class="muted">
+      ${q.explanation}
+     </p>
+
+    </div>
+
+    <button
+     class="btn primary"
+     onclick="quizArena()">
+
+     NEXT QUESTION 🎲
+
+    </button>
+
+   `
+   :`
+
+    <button
+     class="btn primary"
+     onclick="submitQuiz()"
+     ${selected===null?"disabled":""}>
+
+     SUBMIT ANSWER
+
+    </button>
+
+   `
+  }
+
+ </div>
+
+
+ <div class="combo">
+
+  <strong>
+   🔥 Combo x${combo}
+  </strong>
+
+  <span>
+   ${
+    combo>=3
+     ?"XP bonus active!"
+     :"Get answers correct consecutively."
+   }
+  </span>
+
+ </div>
+
+ `;
+
+}
+
+
+function answerQuiz(index){
+
+ if(quizDone)return;
+
+ selected=index;
+
+ renderQuiz();
+
+}
+
+
+function submitQuiz(){
+
+ if(selected===null)return;
+
+ quizDone=true;
+
+ const q=quizQuestion;
+
+ if(selected===q.correct){
+
+  combo++;
+
+  let bonus=0;
+
+  if(combo>=3){
+   bonus=5;
+  }
+
+  addXP(
+   q.xp+bonus,
+   "Quiz correct"
+  );
+
+  state.completed++;
+
+  saveState();
+
+ }else{
+
+  combo=0;
+
+  toast(
+   "Wrong answer. Read the explanation!"
+  );
+
+  render();
+
+ }
+
+}
+
+
+/* =====================================================
+   LOGIC PUZZLES
+===================================================== */
+
+function logicPuzzle(){
+
+ const puzzles=[
+
+  {
+   question:
+    "You have 3 apples. You take away 1 apple. How many apples do you have?",
+   answers:["1","2","3","0"],
+   correct:0
+  },
+
+  {
+   question:
+    "A loop runs 5 times. Inside it, a variable increases by 2. Starting at 0, what is the final value?",
+   answers:["5","7","10","12"],
+   correct:2
+  },
+
+  {
+   question:
+    "Which value is greater: 10 or 2 * 4?",
+   answers:["10","8","They are equal","Impossible to know"],
+   correct:0
+  },
+
+  {
+   question:
+    "If a condition is false, what normally happens to the code inside an if block?",
+   answers:[
+    "It runs twice",
+    "It is skipped",
+    "It crashes automatically",
+    "It becomes a loop"
+   ],
+   correct:1
+  }
+
+ ];
+
+ const puzzle=
+  puzzles[
+   Math.floor(
+    Math.random()*puzzles.length
+   )
+  ];
+
+ selected=null;
+
+ main.innerHTML=`
+
+ <div class="lesson-head">
+
+  <button
+   class="back"
+   onclick="currentPage='home';render()">
+
+   ← Home
+
+  </button>
+
+  <span class="lesson-number">
+   LOGIC PUZZLE
+  </span>
+
+ </div>
+
+
+ <div class="card">
+
+  <div class="eyebrow">
+   BRAIN TRAINING
+  </div>
+
+  <h2>
+   ${puzzle.question}
+  </h2>
+
+
+  ${puzzle.answers.map(
+   (a,i)=>`
+
+    <button
+     class="choice"
+     onclick="selectPuzzle(
+      ${i},
+      ${puzzle.correct}
+     )">
+
+     ${a}
+
+    </button>
+
+   `
+  ).join("")}
+
+ </div>
+
+ `;
+
+}
+
+
+function selectPuzzle(index,correct){
+
+ if(index===correct){
+
+  addXP(15,"Logic puzzle");
+
+  state.completed++;
+
+  saveState();
+
+  toast(
+   "PUZZLE SOLVED! +15 XP 🧩"
+  );
+
+ }else{
+
+  toast(
+   "Not quite. Try another puzzle!"
+  );
+
+ }
+
+}
+
+
+/* =====================================================
+   COURSES
+===================================================== */
+
+function coursePage(){
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   ADVENTURE MAP
+  </div>
+
+  <h1>
+   Explore the coding world.
+  </h1>
+
+  <p>
+   Complete missions to unlock new areas.
+   You do not need to grind one lesson repeatedly.
+  </p>
+
+ </section>
+
+
+ <div class="card">
+
+  <div class="xp-row">
+
+   <span>
+    LEVEL ${state.level}
+   </span>
+
+   <span class="level-label">
+    ${state.xp%100}/100 XP
+   </span>
+
+  </div>
+
+  <div class="xp-bar">
+
+   <div
+    class="xp-fill"
+    style="width:${state.xp%100}%">
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div class="section">
+  <h2>🗺️ World Map</h2>
+ </div>
+
+
+ ${courses.map(
+  courseCard
+ ).join("")}
+
+ `;
+
+}
+
+
+function courseCard(course){
+
+ const unlocked=
+  state.level>=course.level;
+
+ return `
+
+ <button
+  class="quest"
+  onclick="${
+   unlocked
+    ?`openLesson(${course.level})`
+    :`toast('Reach Level ${course.level} to unlock this area!')`
+  }">
+
+  <div class="quest-icon">
+
+   ${
+    unlocked
+     ?course.icon
+     :"🔒"
+   }
+
+  </div>
+
+  <div class="quest-info">
+
+   <b>
+    ${course.title}
+   </b>
+
+   <p>
+    ${course.desc}
+   </p>
+
+  </div>
+
+  <span class="reward">
+
+   ${
+    unlocked
+     ?"+"+course.xp+" XP"
+     :"LV "+course.level
+   }
+
+  </span>
+
+ </button>
+
+ `;
+
+}
+
+
+/* =====================================================
+   LESSON
+===================================================== */
+
+function openLesson(index){
+
+ const course=courses[index];
+
+ if(state.level<index){
+
+  toast(
+   "Reach Level "+index+" first!"
+  );
+
+  return;
+
+ }
+
+ main.innerHTML=`
+
+ <div class="lesson-head">
+
+  <button
+   class="back"
+   onclick="currentPage='courses';render()">
+
+   ← Map
+
+  </button>
+
+  <span class="lesson-number">
+   AREA ${index}
+  </span>
+
+ </div>
+
+
+ <div class="concept">
+
+  <div class="eyebrow">
+   ${course.title}
+  </div>
+
+  <h1>
+   ${course.desc}
+  </h1>
+
+  <p class="muted">
+   Complete this mission once to earn
+   ${course.xp} XP.
+  </p>
+
+
+  <div class="code">
+
+<span class="comment">// Example</span><br>
+<span class="kw">let</span> score =
+<span class="num">10</span>;<br><br>
+
+<span class="kw">if</span>
+(score &gt; <span class="num">5</span>) {<br>
+&nbsp;&nbsp;console.log(
+<span class="str">"Level up!"</span>);<br>
+}
+
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>
+   🧠 Mission
+  </h3>
+
+  <p>
+   What is the purpose of the condition?
+  </p>
+
+
+  <button
+   class="choice"
+   onclick="this.classList.toggle('selected')">
+
+   It checks whether score is greater than 5.
+
+  </button>
+
+
+  <button
+   class="choice"
+   onclick="this.classList.toggle('selected')">
+
+   It automatically repeats the code.
+
+  </button>
+
+
+  <button
+   class="btn green"
+   onclick="completeLesson(${index})">
+
+   COMPLETE MISSION
+   <br>
+   <small>+${course.xp} XP</small>
+
+  </button>
+
+ </div>
+
+ `;
+
+}
+
+
+function completeLesson(index){
+
+ const course=courses[index];
+
+ if(state.lessonXP[index]){
+
+  toast(
+   "You already completed this mission."
+  );
+
+  return;
+
+ }
+
+ state.lessonXP[index]=true;
+
+ state.completed++;
+
+ saveState();
+
+ addXP(
+  course.xp,
+  "Lesson completed"
+ );
+
+}
+
+
+/* =====================================================
+   PLAYGROUND
+===================================================== */
+
+function playground(){
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   CODE LAB
+  </div>
+
+  <h1>
+   Write. Run. Break. Fix.
+  </h1>
+
+  <p>
+   Experiment freely. Every successful run gives
+   a small amount of XP.
+  </p>
+
+ </section>
+
+
+ <div class="editor">
+
+  <div class="editor-top">
+
+   <span>
+    script.js
+   </span>
+
+   <span>
+    JavaScript
+   </span>
+
+  </div>
+
+
+  <textarea
+   id="editor">let name = "Coder";
+let score = 10;
+
+if (score >= 10) {
+  console.log("Welcome, " + name + "!");
+}</textarea>
+
+ </div>
+
+
+ <button
+  class="btn primary"
+  onclick="runCode()">
+
+  ▶ RUN CODE
+
+ </button>
+
+
+ <div
+  class="output"
+  id="output">
+
+  Console output will appear here...
+
+ </div>
+
+
+ <div
+  class="card"
+  style="margin-top:10px">
+
+  <h3>
+   🎯 Experiment
+  </h3>
+
+  <p class="muted">
+   Try changing score to 5.
+   Run it. Then change it to 15.
+   Watch the condition change the result.
+  </p>
+
+ </div>
+
+ `;
+
+}
+
+
+function runCode(){
+
+ const code=
+  document.querySelector(
+   "#editor"
+  ).value;
+
+ const output=
+  document.querySelector(
+   "#output"
+  );
+
+ try{
+
+  const logs=[];
+
+  const fakeConsole={
+   log:(...args)=>{
+    logs.push(
+     args.join(" ")
+    );
+   }
+  };
+
+  new Function(
+   "console",
+   code
+  )(fakeConsole);
+
+  output.textContent=
+   logs.length
+    ?logs.join("\n")
+    :"Code ran successfully. No output.";
+
+  output.style.color=
+   "var(--lime)";
+
+  addXP(
+   5,
+   "Code executed"
+  );
+
+ }catch(error){
+
+  output.textContent=
+   "Error: "+error.message;
+
+  output.style.color=
+   "var(--red)";
+
+ }
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+function progress(){
+
+ const pct=state.xp%100;
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   PLAYER PROFILE
+  </div>
+
+  <h1>
+   Your developer stats.
+  </h1>
+
+  <p>
+   Your XP shows how much you've played,
+   practiced and explored.
+  </p>
+
+ </section>
+
+
+ <div class="grid two">
+
+  <div class="card stat">
+   <span>⚡ XP</span>
+   <b>${state.xp}</b>
+   <small class="muted">
+    lifetime
+   </small>
+  </div>
+
+  <div class="card stat">
+   <span>⭐ LEVEL</span>
+   <b>${state.level}</b>
+   <small class="muted">
+    developer rank
+   </small>
+  </div>
+
+  <div class="card stat">
+   <span>🪙 COINS</span>
+   <b>${state.coins}</b>
+   <small class="muted">
+    earned
+   </small>
+  </div>
+
+  <div class="card stat">
+   <span>🧠 MISSIONS</span>
+   <b>${state.completed}</b>
+   <small class="muted">
+    completed
+   </small>
+  </div>
+
+ </div>
+
+
+ <div class="section">
+  <h2>Next Level</h2>
+ </div>
+
+
+ <div class="card">
+
+  <div class="xp-row">
+
+   <span>
+    Level ${state.level}
+   </span>
+
+   <span class="level-label">
+    ${pct}/100 XP
+   </span>
+
+  </div>
+
+  <div class="xp-bar">
+
+   <div
+    class="xp-fill"
+    style="width:${pct}%">
+   </div>
+
+  </div>
+
+  <p class="muted">
+   ${100-pct} XP remaining.
+  </p>
+
+ </div>
+
+
+ <div class="section">
+  <h2>📈 Your Activity</h2>
+ </div>
+
+
+ <div class="card">
+
+  <p class="muted">
+   Keep playing to build your profile.
+  </p>
+
+  <div style="
+   display:grid;
+   grid-template-columns:1fr 1fr;
+   gap:8px;
+  ">
+
+   <div class="play">
+    <b>Facts</b>
+    <small>Knowledge XP</small>
+   </div>
+
+   <div class="play">
+    <b>Quizzes</b>
+    <small>Brain XP</small>
+   </div>
+
+   <div class="play">
+    <b>Code Lab</b>
+    <small>Practice XP</small>
+   </div>
+
+   <div class="play">
+    <b>Puzzles</b>
+    <small>Logic XP</small>
+   </div>
+
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+/* =====================================================
+   ACHIEVEMENTS
+===================================================== */
+
+function hasAchievement(id){
+
+ return state.achievements.includes(id);
+
+}
+
+
+function achievements(){
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+  <div class="eyebrow">
+   TROPHY ROOM
+  </div>
+
+  <h1>
+   Collect your trophies.
+  </h1>
+
+  <p>
+   Keep playing and unlock badges for different
+   parts of your coding journey.
+  </p>
+
+ </section>
+
+
+ ${achievement(
+  "🌱",
+  "New Coder",
+  "Create your CodeQuest character",
+  true
+ )}
+
+
+ ${achievement(
+  "💡",
+  "Curious Mind",
+  "Read a coding fact",
+  hasAchievement("fact")
+ )}
+
+
+ ${achievement(
+  "🧠",
+  "Quiz Warrior",
+  "Answer a quiz correctly",
+  hasAchievement("quiz")
+ )}
+
+
+ ${achievement(
+  "🔥",
+  "Combo Master",
+  "Reach a 3x quiz combo",
+  hasAchievement("combo")
+ )}
+
+
+ ${achievement(
+  "💻",
+  "First Program",
+  "Run code in the Code Lab",
+  hasAchievement("code")
+ )}
+
+
+ ${achievement(
+  "🧩",
+  "Logic Master",
+  "Solve a logic puzzle",
+  hasAchievement("puzzle")
+ )}
+
+
+ ${achievement(
+  "⭐",
+  "Level One",
+  "Reach Level 1",
+  state.level>=1
+ )}
+
+
+ ${achievement(
+  "🚀",
+  "Explorer",
+  "Reach Level 5",
+  state.level>=5
+ )}
+
+
+ ${achievement(
+  "👑",
+  "Code Legend",
+  "Reach Level 10",
+  state.level>=10
+ )}
+
+ `;
+
+}
+
+
+function achievement(
+ icon,
+ title,
+ desc,
+ unlocked
+){
+
+ return `
+
+ <div
+  class="card achievement ${
+   unlocked?"":"locked"
+  }">
+
+  <div class="badge">
+   ${icon}
+  </div>
+
+  <div>
+
+   <b>${title}</b>
+
+   <p class="muted">
+    ${desc}
+   </p>
+
+  </div>
+
+  <span style="margin-left:auto">
+   ${unlocked?"✓":"🔒"}
+  </span>
+
+ </div>
+
+ `;
+
+}
+
+
+/* =====================================================
+   ACHIEVEMENT TRACKING
+===================================================== */
+
+function unlockAchievement(id,title){
+
+ if(state.achievements.includes(id)){
+  return;
+ }
+
+ state.achievements.push(id);
+
+ saveState();
+
+ toast(
+  "🏆 Achievement: "+title
+ );
+
+}
+
+
+/* =====================================================
+   PATCH XP EVENTS
+===================================================== */
+
+const originalAddXP=addXP;
+
+
+/* =====================================================
+   LOGIN SESSION
+===================================================== */
+
+function updateLoginStreak(){
+
+ if(!state.lastLogin){
+
+  state.streak=1;
+
+ }else{
+
+  const today=
+   new Date().toDateString();
+
+  const last=
+   new Date(
+    state.lastLogin
+   ).toDateString();
+
+  if(today!==last){
+
+   state.streak++;
+
+  }
+
+ }
+
+ state.lastLogin=
+  new Date().toISOString();
+
+ saveState();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+if(currentUser()){
+
+ initApp();
+
+}else{
+
+ showLogin();
+
+}
+
+</script>
+
+</body>
+</html>
