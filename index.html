@@ -2,75 +2,66 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a0d14">
-<title>CodeQuest: Coding Adventure</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#060912">
+<title>CodeQuest: Learn to Code</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <style>
 *{box-sizing:border-box}
 
 :root{
- --bg:#080b12;
- --panel:#10151f;
- --panel2:#151c28;
- --panel3:#1b2330;
- --line:#293344;
-
- --text:#f5f7fb;
- --muted:#8e9aaa;
-
- --orange:#ff8a3d;
- --pink:#ff4f9a;
+ --bg:#050711;
+ --panel:#0d1321;
+ --panel2:#121a2b;
+ --line:#26344d;
+ --text:#f5f7ff;
+ --muted:#8190a8;
+ --orange:#ff8738;
+ --gold:#ffd45c;
+ --cyan:#43d9ff;
+ --python:#5fc9ff;
+ --purple:#a879ff;
+ --pink:#ff4d9a;
  --lime:#8bea52;
- --cyan:#45d9ff;
- --yellow:#ffd166;
- --red:#ff5c72;
- --purple:#a978ff;
-
- --shadow:0 12px 35px #0007;
+ --red:#ff536b;
 }
 
-html{
- scroll-behavior:smooth
-}
+html{scroll-behavior:smooth}
 
 body{
  margin:0;
  min-height:100vh;
- background:#060910;
+ background:
+ radial-gradient(circle at 20% 10%,#14213a 0,transparent 28%),
+ radial-gradient(circle at 90% 80%,#24133c 0,transparent 30%),
+ #03050a;
  color:var(--text);
  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
-button,input,textarea{
- font:inherit;
- color:inherit;
-}
-
-button{
- border:0;
- cursor:pointer;
-}
-
-button:disabled{
- opacity:.45;
- cursor:not-allowed;
-}
+button,input,textarea{font:inherit;color:inherit}
+button{border:0;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
 
 .app-shell{
  width:100%;
- max-width:540px;
+ max-width:560px;
  min-height:100vh;
  margin:auto;
- background:#090d15;
+ background:
+ linear-gradient(#ffffff03 1px,transparent 1px),
+ linear-gradient(90deg,#ffffff03 1px,transparent 1px),
+ #070b14;
+ background-size:28px 28px;
  position:relative;
- padding-bottom:82px;
  overflow:hidden;
+ padding-bottom:90px;
 }
 
-/* =========================
-   AUTH
-========================= */
+/* LOGIN */
 
 #authScreen{
  position:fixed;
@@ -79,41 +70,39 @@ button:disabled{
  display:grid;
  place-items:center;
  padding:20px;
- background:#070a10;
+ background:radial-gradient(circle at 50% 20%,#172847 0,transparent 35%),#03050a;
 }
 
 .auth-box{
- width:min(420px,100%);
- background:#111722;
- border:1px solid #2c3748;
- border-radius:26px;
+ width:min(430px,100%);
  padding:28px;
- box-shadow:0 30px 90px #000b;
- animation:rise .45s ease;
+ background:#0c1220ee;
+ border:1px solid #34435e;
+ border-radius:25px;
+ box-shadow:0 30px 100px #000;
+ backdrop-filter:blur(15px);
+ animation:pop .5s ease;
 }
 
-.logo{
- text-align:center;
- margin-bottom:24px;
-}
+.logo{text-align:center;margin-bottom:22px}
 
 .logo-mark{
- display:inline-grid;
+ width:76px;
+ height:76px;
+ margin:auto;
+ display:grid;
  place-items:center;
- width:66px;
- height:66px;
- border-radius:20px;
- background:#ff8a3d;
- color:#111;
- font-family:monospace;
- font-size:25px;
- font-weight:900;
- box-shadow:0 10px 30px #ff8a3d33;
+ border-radius:22px;
+ background:linear-gradient(145deg,var(--orange),#ffb45b);
+ color:#15100b;
+ font-size:27px;
+ box-shadow:0 0 25px #ff873855;
+ transform:rotate(-4deg);
 }
 
 .logo h1{
- margin:14px 0 5px;
- font-size:29px;
+ margin:15px 0 3px;
+ font-size:32px;
 }
 
 .logo p{
@@ -126,15 +115,15 @@ button:disabled{
  display:flex;
  gap:5px;
  padding:5px;
- background:#090d14;
- border:1px solid #252f3e;
+ background:#060a12;
+ border:1px solid var(--line);
  border-radius:13px;
- margin-bottom:20px;
+ margin-bottom:18px;
 }
 
 .auth-tabs button{
  flex:1;
- padding:10px;
+ padding:11px;
  background:none;
  color:var(--muted);
  border-radius:9px;
@@ -142,19 +131,17 @@ button:disabled{
 }
 
 .auth-tabs button.active{
- background:#202a38;
+ background:#202d43;
  color:var(--orange);
 }
 
-.input-group{
- margin-bottom:13px;
-}
+.input-group{margin-bottom:13px}
 
 .input-group label{
  display:block;
- font-size:10px;
+ font-size:9px;
  text-transform:uppercase;
- letter-spacing:1.5px;
+ letter-spacing:1.7px;
  color:var(--muted);
  font-weight:900;
  margin-bottom:6px;
@@ -163,15 +150,15 @@ button:disabled{
 .input{
  width:100%;
  padding:13px;
- background:#090d14;
- border:1px solid #303b4b;
+ background:#060a12;
+ border:1px solid #30405a;
  border-radius:12px;
  outline:none;
 }
 
 .input:focus{
  border-color:var(--orange);
- box-shadow:0 0 0 3px #ff8a3d15;
+ box-shadow:0 0 0 3px #ff873515;
 }
 
 .auth-error{
@@ -181,30 +168,36 @@ button:disabled{
  margin:4px 0;
 }
 
-/* =========================
-   TOPBAR
-========================= */
+/* TOP */
 
 .topbar{
- height:66px;
+ height:68px;
  display:flex;
  align-items:center;
  justify-content:space-between;
- padding:0 15px;
- border-bottom:1px solid #202936;
- background:#0b1018;
+ padding:0 13px;
+ border-bottom:1px solid #26334a;
+ background:#080d18ef;
+ backdrop-filter:blur(14px);
  position:sticky;
  top:0;
  z-index:20;
 }
 
 .icon-btn{
- width:38px;
- height:38px;
- border-radius:11px;
- background:#151c27;
- border:1px solid #283342;
- font-size:18px;
+ width:40px;
+ height:40px;
+ border-radius:12px;
+ background:#111a2b;
+ border:1px solid #2c3c58;
+ font-size:16px;
+ transition:.2s;
+}
+
+.icon-btn:hover{
+ border-color:var(--orange);
+ box-shadow:0 0 25px #ff873855;
+ transform:translateY(-2px);
 }
 
 .brand{
@@ -212,7 +205,6 @@ button:disabled{
  align-items:center;
  gap:8px;
  font-weight:950;
- letter-spacing:.2px;
 }
 
 .brand-mark{
@@ -223,43 +215,43 @@ button:disabled{
 .header-right{
  display:flex;
  align-items:center;
- gap:6px;
+ gap:5px;
 }
 
 .resource{
- background:#151c27;
- border:1px solid #283342;
+ background:#10192a;
+ border:1px solid #2b3a54;
  border-radius:10px;
  padding:7px 8px;
  font-size:10px;
 }
 
+.resource:first-child{color:var(--gold)}
+.resource:nth-child(2){color:#ff714d}
+
 .avatar{
- width:34px;
- height:34px;
+ width:35px;
+ height:35px;
  border-radius:50%;
  display:grid;
  place-items:center;
- background:var(--pink);
- color:#160812;
+ background:linear-gradient(145deg,var(--purple),var(--pink));
+ color:#130b1c;
  font-weight:950;
+ border:2px solid #d5bfff;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
-#main{
- padding:19px 15px 26px;
-}
+#main{padding:18px 14px 30px}
 
 .hero{
- padding:4px 0 17px;
- animation:rise .4s ease;
+ padding:8px 3px 19px;
+ animation:rise .35s ease;
 }
 
 .eyebrow{
- font-size:10px;
+ font-size:9px;
  color:var(--orange);
  font-weight:950;
  letter-spacing:2px;
@@ -267,40 +259,30 @@ button:disabled{
 }
 
 .hero h1{
- font-size:30px;
- line-height:1.05;
+ font-size:29px;
+ line-height:1.04;
  margin:8px 0;
 }
 
 .hero p{
  color:var(--muted);
- font-size:14px;
+ font-size:13px;
  line-height:1.55;
  margin:0;
 }
 
-.grid{
- display:grid;
- gap:10px;
-}
-
-.two{
- grid-template-columns:1fr 1fr;
-}
+/* CARDS */
 
 .card{
- background:#111722;
- border:1px solid #293445;
+ background:linear-gradient(145deg,#101827,#0c1320);
+ border:1px solid #283750;
  border-radius:19px;
  padding:15px;
- box-shadow:var(--shadow);
- animation:rise .4s ease both;
+ box-shadow:0 14px 35px #0006;
+ animation:rise .35s ease both;
 }
 
-.card h2,
-.card h3{
- margin:0 0 7px;
-}
+.card h2,.card h3{margin:0 0 7px}
 
 .muted{
  color:var(--muted);
@@ -308,189 +290,181 @@ button:disabled{
  line-height:1.5;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+.section{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:23px 0 10px;
+}
 
-.btn{
- width:100%;
- padding:13px 15px;
- margin-top:11px;
- border-radius:12px;
- background:#1a2330;
- border:1px solid #344154;
+.section h2{
+ margin:0;
+ font-size:17px;
+}
+
+.section button{
+ background:none;
+ color:var(--orange);
+ font-size:10px;
  font-weight:950;
- transition:.15s;
 }
 
-.btn:hover{
- transform:translateY(-2px);
- background:#202b3a;
-}
+/* PLAYER */
 
-.btn:active{
- transform:scale(.97);
-}
-
-.btn.primary{
- background:var(--orange);
- color:#130d08;
- border-color:var(--orange);
- box-shadow:0 8px 22px #ff8a3d25;
-}
-
-.btn.pink{
- background:var(--pink);
- color:#180811;
- border-color:var(--pink);
-}
-
-.btn.green{
- background:var(--lime);
- color:#0b1307;
- border-color:var(--lime);
-}
-
-.btn.blue{
- background:var(--cyan);
- color:#071116;
- border-color:var(--cyan);
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stat{
- min-height:105px;
+.player-card{
  position:relative;
  overflow:hidden;
+ padding:17px;
+ border-radius:21px;
+ background:
+ radial-gradient(circle at 90% 0,#ff87381a,transparent 40%),
+ linear-gradient(145deg,#111a2c,#0c1321);
+ border:1px solid #33435d;
+ box-shadow:0 15px 40px #0007;
 }
 
-.stat:before{
- content:"";
- position:absolute;
- width:4px;
- left:0;
- top:17px;
- bottom:17px;
- border-radius:5px;
- background:var(--orange);
+.player-top{
+ display:flex;
+ align-items:center;
+ gap:13px;
 }
 
-.stat:nth-child(2):before{
- background:var(--yellow);
+.player-avatar{
+ width:60px;
+ height:60px;
+ border-radius:18px;
+ display:grid;
+ place-items:center;
+ font-size:25px;
+ background:linear-gradient(145deg,#202e48,#111a2b);
+ border:2px solid var(--orange);
+ box-shadow:0 0 25px #ff873855;
 }
 
-.stat:nth-child(3):before{
- background:var(--pink);
-}
+.player-info{flex:1}
 
-.stat:nth-child(4):before{
- background:var(--lime);
-}
-
-.stat span{
- display:block;
- padding-left:5px;
- font-size:10px;
+.player-info small{
  color:var(--muted);
+ font-size:9px;
+}
+
+.player-info b{
+ display:block;
+ margin-top:3px;
+ font-size:17px;
+}
+
+.rank{
+ color:var(--gold);
+ font-size:10px;
  font-weight:900;
 }
 
-.stat b{
- display:block;
- padding-left:5px;
- font-size:27px;
- margin-top:8px;
-}
-
-.stat small{
- padding-left:5px;
-}
-
-/* =========================
-   XP
-========================= */
-
 .xp-row{
  display:flex;
- align-items:center;
  justify-content:space-between;
- font-size:12px;
+ align-items:center;
+ margin-top:14px;
+ font-size:10px;
  font-weight:900;
 }
 
 .xp-bar{
- height:9px;
- margin:10px 0 5px;
- background:#202834;
+ height:10px;
+ margin:7px 0 4px;
+ background:#060a11;
+ border:1px solid #29364c;
  border-radius:99px;
  overflow:hidden;
 }
 
 .xp-fill{
  height:100%;
- background:var(--orange);
+ background:linear-gradient(90deg,var(--orange),var(--gold));
  border-radius:99px;
+ box-shadow:0 0 12px #ff873888;
  transition:width .7s ease;
 }
 
-.level-label{
- color:var(--orange);
+/* STATS */
+
+.grid{
+ display:grid;
+ gap:9px;
 }
 
-/* =========================
-   QUESTS
-========================= */
-
-.section{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin:21px 0 10px;
+.two{
+ grid-template-columns:1fr 1fr;
 }
 
-.section h2{
- margin:0;
- font-size:18px;
+.stat{
+ min-height:100px;
+ position:relative;
+ overflow:hidden;
 }
 
-.section button{
- background:none;
- color:var(--orange);
- font-size:11px;
- font-weight:950;
+.stat span{
+ display:block;
+ color:var(--muted);
+ font-size:9px;
+ font-weight:900;
+ letter-spacing:1px;
 }
+
+.stat b{
+ display:block;
+ font-size:25px;
+ margin-top:7px;
+}
+
+.stat small{
+ color:var(--muted);
+ font-size:9px;
+}
+
+/* TASKS */
 
 .quest{
  width:100%;
  display:flex;
  align-items:center;
- gap:12px;
+ gap:11px;
  padding:13px;
  margin-bottom:9px;
- background:#111722;
- border:1px solid #293445;
+ background:linear-gradient(145deg,#111b2c,#0b121e);
+ border:1px solid #2b3b56;
  border-radius:17px;
  text-align:left;
- transition:.15s;
+ transition:.2s;
+ position:relative;
+ overflow:hidden;
+}
+
+.quest:before{
+ content:"";
+ position:absolute;
+ left:0;
+ top:0;
+ bottom:0;
+ width:3px;
+ background:var(--orange);
 }
 
 .quest:hover{
- transform:translateY(-2px);
- border-color:#46566d;
+ transform:translateY(-3px);
+ border-color:#506685;
 }
 
 .quest-icon{
- width:47px;
- height:47px;
+ width:48px;
+ height:48px;
  flex:none;
  display:grid;
  place-items:center;
  border-radius:14px;
- background:#1c2532;
- font-size:21px;
+ background:#182238;
+ border:1px solid #31435f;
+ font-size:17px;
 }
 
 .quest-info{
@@ -506,244 +480,170 @@ button:disabled{
 .quest-info p{
  margin:4px 0 0;
  color:var(--muted);
- font-size:11px;
+ font-size:10px;
 }
 
 .reward{
- color:var(--yellow);
+ color:var(--gold);
  font-size:10px;
  font-weight:950;
  white-space:nowrap;
 }
 
-/* =========================
-   QUICK PLAY
-========================= */
+/* MAP */
 
-.play-card{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
+.world-map{
+ padding:17px;
+ border-radius:21px;
+ background:
+ radial-gradient(circle at 50% 0,#25476b22,transparent 35%),
+ linear-gradient(180deg,#0d1727,#080d17);
+ border:1px solid #2c3e5b;
+ overflow:hidden;
 }
 
-.play{
- background:#161e2a;
- border:1px solid #2e3a4c;
- border-radius:15px;
- padding:13px;
- text-align:left;
- transition:.15s;
-}
-
-.play:hover{
- transform:translateY(-2px);
- border-color:#53647c;
-}
-
-.play-icon{
- font-size:22px;
- margin-bottom:7px;
-}
-
-.play b{
+.map-click-area{
+ width:100%;
  display:block;
- font-size:12px;
-}
-
-.play small{
- color:var(--muted);
- font-size:10px;
- display:block;
- margin-top:4px;
-}
-
-.play .reward{
- display:block;
- margin-top:8px;
-}
-
-/* =========================
-   FACT
-========================= */
-
-.fact{
- background:#131b25;
- border:1px solid #344355;
- border-left:4px solid var(--cyan);
- border-radius:18px;
- padding:16px;
-}
-
-.fact-top{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:8px;
-}
-
-.fact-tag{
- color:var(--cyan);
- font-size:10px;
- font-weight:950;
- letter-spacing:1px;
-}
-
-.fact h3{
- margin:0 0 7px;
- font-size:16px;
-}
-
-.fact p{
+ cursor:pointer;
+ border-radius:16px;
+ background:none;
+ padding:0;
  margin:0;
- color:#b5bfcc;
- font-size:12px;
- line-height:1.6;
+ text-align:left;
 }
 
-/* =========================
-   COMBO
-========================= */
-
-.combo{
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:12px 14px;
- border-radius:14px;
- background:#201a10;
- border:1px solid #57451f;
- margin-bottom:10px;
+.map-click-area:hover .zone{
+ transform:translateX(4px);
+ border-color:#506685;
 }
 
-.combo strong{
- color:var(--yellow);
+.map-click-area:active .zone{
+ transform:scale(.98);
 }
 
-.combo span{
- font-size:11px;
- color:#b8a875;
-}
-
-/* =========================
-   WORLD MAP
-========================= */
-
-.world{
+.zone{
  position:relative;
-}
-
-.node{
- position:relative;
+ padding:15px 0;
  display:flex;
  align-items:center;
  gap:12px;
- margin-bottom:15px;
+ transition:.2s;
 }
 
-.node:not(:last-child):after{
+.zone:not(:last-child):after{
  content:"";
  position:absolute;
- left:23px;
- top:51px;
+ left:26px;
+ top:67px;
  width:3px;
- height:32px;
- background:#2a3442;
+ height:35px;
+ background:linear-gradient(var(--orange),#26364e);
 }
 
-.node-icon{
- width:48px;
- height:48px;
+.zone-node{
+ width:54px;
+ height:54px;
+ flex:none;
  display:grid;
  place-items:center;
- border-radius:15px;
- background:#171f2b;
- border:2px solid #303c4d;
+ border-radius:17px;
+ background:#111b2d;
+ border:2px solid #33445f;
+ font-size:18px;
  z-index:2;
 }
 
-.node.unlocked .node-icon{
+.zone.unlocked .zone-node{
  border-color:var(--orange);
+ box-shadow:0 0 25px #ff873855;
  background:#211b18;
- box-shadow:0 0 20px #ff8a3d15;
 }
 
-.node.locked{
- opacity:.42;
+.zone.python .zone-node{
+ border-color:var(--python);
+ box-shadow:0 0 25px #43d9ff44;
 }
 
-.node-info{
+.zone.locked{
+ opacity:.4;
+}
+
+.zone-info{
  flex:1;
 }
 
-.node-info b{
+.zone-info b{
+ display:block;
  font-size:13px;
 }
 
-.node-info small{
- display:block;
+.zone-info small{
  color:var(--muted);
  font-size:10px;
- margin-top:3px;
 }
 
-/* =========================
-   LESSON
-========================= */
-
-.lesson-head{
- display:flex;
- align-items:center;
- justify-content:space-between;
- margin-bottom:17px;
-}
-
-.back{
- background:#151d28;
- border:1px solid #293545;
- padding:9px 12px;
- border-radius:10px;
-}
-
-.lesson-number{
- color:var(--muted);
- font-size:10px;
+.zone-status{
+ font-size:9px;
  font-weight:900;
+ color:var(--lime);
 }
 
-.concept{
- background:#131a25;
- border:1px solid #344154;
- border-radius:19px;
- padding:17px;
- margin-bottom:12px;
+.zone.locked .zone-status{
+ color:var(--muted);
 }
 
-.code{
- background:#080b10;
- border:1px solid #293445;
- border-radius:12px;
- padding:13px;
- font:12px/1.7 "Courier New",monospace;
- color:#dce3ed;
- overflow:auto;
+/* BATTLE */
+
+.battle-card{
+ padding:18px;
+ border-radius:22px;
+ background:
+ radial-gradient(circle at 50% 0,#ff4d9a18,transparent 40%),
+ linear-gradient(145deg,#171226,#0d101e);
+ border:1px solid #4a3d64;
+ box-shadow:0 20px 50px #0008;
 }
 
-.kw{color:#d29cff}
-.str{color:#aaf27b}
-.num{color:#ff9a64}
-.comment{color:#697789}
-.fn{color:#ff80b5}
+.enemy{
+ text-align:center;
+ padding:12px;
+}
 
-/* =========================
-   CHOICES
-========================= */
+.enemy-icon{
+ font-size:55px;
+ color:var(--pink);
+ animation:float 2.5s ease-in-out infinite;
+}
+
+.enemy-name{
+ color:var(--pink);
+ font-weight:950;
+ font-size:13px;
+}
+
+.hp{
+ height:9px;
+ margin:7px auto 15px;
+ max-width:230px;
+ background:#080a10;
+ border:1px solid #39233a;
+ border-radius:99px;
+ overflow:hidden;
+}
+
+.hp-fill{
+ height:100%;
+ background:linear-gradient(90deg,var(--red),var(--pink));
+ transition:.4s;
+}
 
 .choice{
  width:100%;
  padding:13px;
  margin:7px 0;
- background:#111822;
- border:2px solid #2c3849;
+ background:#0c1421;
+ border:2px solid #293a54;
  border-radius:13px;
  text-align:left;
  font-size:12px;
@@ -752,32 +652,97 @@ button:disabled{
 }
 
 .choice:hover{
- border-color:#506078;
+ border-color:#536b8d;
+ transform:translateX(2px);
 }
 
 .choice.selected{
  border-color:var(--orange);
- background:#241a13;
+ background:#241910;
 }
 
 .choice.correct{
  border-color:var(--lime);
- background:#172315;
+ background:#172616;
 }
 
 .choice.wrong{
  border-color:var(--red);
- background:#25151a;
+ background:#27141a;
 }
 
-/* =========================
-   EDITOR
-========================= */
+/* BUTTONS */
+
+.btn{
+ width:100%;
+ padding:13px 15px;
+ margin-top:10px;
+ border-radius:12px;
+ background:#172235;
+ border:1px solid #344965;
+ font-weight:950;
+ transition:.18s;
+}
+
+.btn:hover{
+ transform:translateY(-2px);
+}
+
+.btn:active{
+ transform:scale(.97);
+}
+
+.btn.primary{
+ background:linear-gradient(135deg,var(--orange),#ffad54);
+ color:#160d06;
+ border-color:var(--orange);
+}
+
+.btn.python{
+ background:linear-gradient(135deg,#42c9ff,#79e1ff);
+ color:#061018;
+ border-color:var(--cyan);
+}
+
+.btn.green{
+ background:var(--lime);
+ color:#0b1507;
+}
+
+/* CODE */
+
+.language-tabs{
+ display:flex;
+ gap:5px;
+ padding:5px;
+ background:#060a11;
+ border:1px solid #29384f;
+ border-radius:13px;
+ margin-bottom:12px;
+}
+
+.language-tabs button{
+ flex:1;
+ padding:10px;
+ border-radius:9px;
+ background:none;
+ color:var(--muted);
+ font-weight:900;
+}
+
+.language-tabs button.active{
+ background:#1c2940;
+ color:var(--orange);
+}
+
+.language-tabs button.python-active{
+ color:var(--python);
+}
 
 .editor{
- background:#080b10;
- border:1px solid #2d3949;
- border-radius:14px;
+ background:#05080d;
+ border:1px solid #30405a;
+ border-radius:15px;
  overflow:hidden;
 }
 
@@ -785,112 +750,102 @@ button:disabled{
  display:flex;
  justify-content:space-between;
  padding:9px 12px;
- border-bottom:1px solid #252f3d;
+ border-bottom:1px solid #26344a;
  color:var(--muted);
  font-size:10px;
 }
 
 .editor textarea{
  width:100%;
- min-height:190px;
+ min-height:250px;
  resize:vertical;
  border:0;
  outline:0;
- background:#080b10;
+ background:#05080d;
  color:#dce5ef;
  padding:14px;
  font:13px/1.65 "Courier New",monospace;
 }
 
 .output{
- min-height:45px;
+ min-height:90px;
  margin-top:9px;
  padding:12px;
  border-radius:11px;
- background:#0b0f15;
- border:1px solid #2c3747;
+ background:#03060b;
+ border:1px solid #293950;
  color:var(--lime);
- font:12px monospace;
+ font:12px/1.6 monospace;
  white-space:pre-wrap;
+ overflow:auto;
 }
 
-/* =========================
-   QUIZ ARENA
-========================= */
+.output.error{
+ color:var(--red);
+}
 
-.quiz-header{
+.output-title{
  display:flex;
- align-items:center;
  justify-content:space-between;
-}
-
-.difficulty{
- display:inline-block;
- padding:5px 8px;
- border-radius:7px;
+ color:var(--muted);
  font-size:9px;
- font-weight:950;
+ margin-top:12px;
+ margin-bottom:5px;
+ text-transform:uppercase;
+ letter-spacing:1px;
 }
 
-.easy{
- color:#091207;
- background:var(--lime);
+/* FILES */
+
+.file-list{
+ display:grid;
+ gap:8px;
 }
 
-.medium{
- color:#171006;
- background:var(--yellow);
-}
-
-.hard{
- color:#17070d;
- background:var(--pink);
-}
-
-/* =========================
-   ACHIEVEMENTS
-========================= */
-
-.achievement{
+.file-item{
  display:flex;
  align-items:center;
- gap:12px;
- margin-bottom:9px;
+ gap:10px;
+ padding:11px;
+ background:#0c1421;
+ border:1px solid #293a54;
+ border-radius:12px;
 }
 
-.badge{
- width:48px;
- height:48px;
- display:grid;
- place-items:center;
- border-radius:14px;
- background:#1d2531;
- font-size:22px;
- flex:none;
+.file-name{
+ flex:1;
+ font-family:monospace;
+ font-size:12px;
 }
 
-.achievement.locked{
- opacity:.4;
- filter:grayscale(1);
+.file-actions{
+ display:flex;
+ gap:5px;
 }
 
-/* =========================
-   DRAWER
-========================= */
+.file-actions button{
+ padding:7px 8px;
+ border-radius:8px;
+ background:#19263a;
+ font-size:10px;
+}
+
+/* DRAWER */
 
 #drawer{
  position:fixed;
  z-index:40;
  top:0;
  bottom:0;
- left:max(calc(50% - 270px),0px);
- width:min(290px,82vw);
+ left:max(calc(50% - 280px),0px);
+ width:min(305px,84vw);
  padding:24px 14px;
- background:#0d121a;
- border-right:1px solid #2b3646;
+ background:#090f1bf5;
+ border-right:1px solid #2c3d57;
  transform:translateX(-105%);
  transition:.3s;
- box-shadow:20px 0 50px #0009;
+ box-shadow:20px 0 60px #000b;
+ backdrop-filter:blur(18px);
 }
 
 .drawer-open #drawer{
@@ -900,7 +855,7 @@ button:disabled{
 #overlay{
  position:fixed;
  inset:0;
- background:#0009;
+ background:#000b;
  z-index:30;
  opacity:0;
  pointer-events:none;
@@ -913,7 +868,7 @@ button:disabled{
 }
 
 .drawer-title{
- color:var(--muted);
+ color:var(--orange);
  font-size:10px;
  letter-spacing:2px;
  font-weight:950;
@@ -929,18 +884,22 @@ button:disabled{
  margin-bottom:4px;
  background:none;
  border-radius:11px;
- color:#aab3c0;
+ color:#aab6c8;
  text-align:left;
+}
+
+.drawer-item:hover{
+ background:#172238;
+ color:white;
 }
 
 .drawer-item.active{
  background:#211a16;
  color:var(--orange);
+ border-left:2px solid var(--orange);
 }
 
-/* =========================
-   NAV
-========================= */
+/* BOTTOM */
 
 .bottom-nav{
  position:fixed;
@@ -948,19 +907,20 @@ button:disabled{
  left:50%;
  transform:translateX(-50%);
  width:100%;
- max-width:540px;
- height:78px;
+ max-width:560px;
+ height:82px;
  display:flex;
- background:#0c1119;
- border-top:1px solid #293445;
+ background:#080d17f2;
+ border-top:1px solid #2b3b55;
  z-index:25;
+ backdrop-filter:blur(15px);
 }
 
 .bottom-nav button{
  flex:1;
  background:none;
- color:#657083;
- font-size:18px;
+ color:#66758d;
+ font-size:17px;
 }
 
 .bottom-nav button.active{
@@ -973,25 +933,22 @@ button:disabled{
  margin-top:4px;
 }
 
-/* =========================
-   TOAST
-========================= */
+/* TOAST */
 
 #toast{
  position:fixed;
  left:50%;
- bottom:94px;
+ bottom:98px;
  transform:translate(-50%,20px);
- z-index:100;
+ z-index:300;
  opacity:0;
  pointer-events:none;
- background:#f6f8fb;
- color:#0b1017;
+ background:#f5f7fb;
+ color:#09101a;
  border-radius:12px;
  padding:11px 15px;
  font-size:12px;
  font-weight:950;
- box-shadow:0 10px 35px #0009;
  transition:.25s;
  white-space:nowrap;
 }
@@ -1001,41 +958,7 @@ button:disabled{
  transform:translate(-50%,0);
 }
 
-/* =========================
-   XP FLOAT
-========================= */
-
-.xp-float{
- position:fixed;
- left:50%;
- top:48%;
- z-index:300;
- pointer-events:none;
- color:var(--yellow);
- font-size:24px;
- font-weight:950;
- animation:floatXP 1s ease forwards;
- text-shadow:0 3px 15px #000;
-}
-
-@keyframes floatXP{
- 0%{
-  opacity:0;
-  transform:translate(-50%,20px) scale(.7);
- }
- 20%{
-  opacity:1;
-  transform:translate(-50%,0) scale(1.1);
- }
- 100%{
-  opacity:0;
-  transform:translate(-50%,-100px) scale(1);
- }
-}
-
-/* =========================
-   LEVEL UP
-========================= */
+/* LEVEL */
 
 #levelup{
  position:fixed;
@@ -1043,44 +966,145 @@ button:disabled{
  z-index:200;
  display:none;
  place-items:center;
- background:#05070bd9;
- backdrop-filter:blur(6px);
+ background:#03050bd9;
+ backdrop-filter:blur(8px);
  padding:20px;
 }
 
 .levelup-box{
  width:min(350px,100%);
  padding:30px;
- border-radius:24px;
+ border-radius:25px;
  text-align:center;
- background:#111722;
- border:1px solid #465469;
+ background:#101827;
+ border:1px solid #596b87;
  box-shadow:0 30px 100px #000b;
- animation:levelPop .45s ease;
 }
 
 .levelup-icon{
- font-size:65px;
+ font-size:55px;
+ color:var(--gold);
 }
 
 .levelup-box h1{
- color:var(--orange);
+ color:var(--gold);
  font-size:38px;
  margin:8px 0;
 }
 
-.levelup-box p{
+/* TAGS */
+
+.tag{
+ display:inline-block;
+ padding:6px 9px;
+ border-radius:8px;
+ font-size:9px;
+ font-weight:950;
+ background:#202d43;
  color:var(--muted);
+ margin:3px;
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
+.tag.python{
+ background:#102a37;
+ color:var(--python);
+ border:1px solid #24536a;
+}
+
+/* LESSON */
+
+.lesson-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:12px;
+}
+
+.back{
+ background:none;
+ color:var(--orange);
+ font-size:12px;
+ font-weight:900;
+}
+
+.lesson-number{
+ color:var(--muted);
+ font-size:9px;
+ font-weight:900;
+}
+
+.concept{
+ background:linear-gradient(145deg,#101827,#0c1320);
+ border:1px solid #283750;
+ border-radius:19px;
+ padding:18px;
+ margin-bottom:12px;
+}
+
+.concept h1{
+ margin:8px 0;
+ font-size:25px;
+}
+
+.code{
+ white-space:pre-wrap;
+ background:#05080d;
+ border:1px solid #30405a;
+ border-radius:12px;
+ padding:13px;
+ color:#dce5ef;
+ font:12px/1.6 "Courier New",monospace;
+ margin-top:12px;
+ overflow:auto;
+}
+
+.file-preview{
+ white-space:pre-wrap;
+ min-height:150px;
+ background:#05080d;
+ border:1px solid #30405a;
+ border-radius:12px;
+ padding:14px;
+ margin-top:12px;
+ color:#dce5ef;
+ font:12px/1.6 monospace;
+}
+
+/* ACHIEVEMENTS */
+
+.achievement{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ margin-bottom:9px;
+}
+
+.achievement .badge{
+ width:48px;
+ height:48px;
+ flex:none;
+ display:grid;
+ place-items:center;
+ border-radius:14px;
+ background:#182238;
+ color:var(--gold);
+ font-size:19px;
+}
+
+.achievement.locked{
+ opacity:.4;
+}
+
+.achievement p{
+ margin:4px 0 0;
+}
+
+/* ANIMATIONS */
 
 @keyframes rise{
  from{
   opacity:0;
-  transform:translateY(10px);
+  transform:translateY(12px);
  }
  to{
   opacity:1;
@@ -1088,33 +1112,33 @@ button:disabled{
  }
 }
 
-@keyframes levelPop{
- 0%{
+@keyframes pop{
+ from{
   opacity:0;
-  transform:scale(.7);
+  transform:scale(.85);
  }
- 70%{
-  transform:scale(1.05);
- }
- 100%{
+ to{
   opacity:1;
   transform:scale(1);
  }
 }
 
-@media(min-width:541px){
- body{
-  padding:20px 0;
- }
+@keyframes float{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-8px)}
+}
+
+@media(min-width:561px){
+ body{padding:20px 0}
 
  .app-shell{
-  border-radius:24px;
-  box-shadow:0 25px 80px #000a;
+  border-radius:25px;
+  box-shadow:0 30px 100px #000c;
  }
 
  .bottom-nav{
   bottom:20px;
-  border-radius:0 0 24px 24px;
+  border-radius:0 0 25px 25px;
  }
 }
 </style>
@@ -1122,816 +1146,404 @@ button:disabled{
 
 <body>
 
-<!-- =========================
-     AUTH
-========================= -->
+<!-- LOGIN -->
 
 <div id="authScreen">
+<div class="auth-box">
 
- <div class="auth-box">
-
-  <div class="logo">
-
-   <div class="logo-mark">&lt;/&gt;</div>
-
-   <h1>CodeQuest</h1>
-
-   <p>Turn programming into an adventure.</p>
-
-  </div>
-
-  <div class="auth-tabs">
-
-   <button id="loginTab" class="active">
-    LOGIN
-   </button>
-
-   <button id="registerTab">
-    REGISTER
-   </button>
-
-  </div>
-
-  <div id="authForm"></div>
-
- </div>
-
+<div class="logo">
+<div class="logo-mark">
+<i class="fa-solid fa-code"></i>
 </div>
 
+<h1>CODEQUEST</h1>
+<p>Learn coding one step at a time.</p>
+</div>
 
-<!-- =========================
-     LEVEL UP
-========================= -->
+<div class="auth-tabs">
+<button id="loginTab" class="active">LOG IN</button>
+<button id="registerTab">SIGN UP</button>
+</div>
+
+<div id="authForm"></div>
+
+</div>
+</div>
+
+<!-- LEVEL UP -->
 
 <div id="levelup">
+<div class="levelup-box">
 
- <div class="levelup-box">
-
-  <div class="levelup-icon">🏆</div>
-
-  <h1>LEVEL UP!</h1>
-
-  <p id="levelupText">
-   New abilities unlocked.
-  </p>
-
-  <button
-   class="btn primary"
-   onclick="closeLevelUp()">
-
-   CONTINUE
-
-  </button>
-
- </div>
-
+<div class="levelup-icon">
+<i class="fa-solid fa-trophy"></i>
 </div>
 
+<h1>LEVEL UP!</h1>
 
-<!-- =========================
-     APP
-========================= -->
+<p id="levelupText">
+You reached a new level.
+</p>
+
+<button class="btn primary" onclick="closeLevelUp()">
+<i class="fa-solid fa-arrow-right"></i>
+KEEP GOING
+</button>
+
+</div>
+</div>
+
+<!-- APP -->
 
 <div class="app-shell">
 
- <header class="topbar">
+<header class="topbar">
 
-  <button class="icon-btn" id="menuBtn">
-   ☰
-  </button>
+<button class="icon-btn" id="menuBtn">
+<i class="fa-solid fa-bars"></i>
+</button>
 
-  <div class="brand">
-   <span class="brand-mark">&lt;/&gt;</span>
-   <span>CodeQuest</span>
-  </div>
+<div class="brand">
+<span class="brand-mark">&lt;/&gt;</span>
+<span>CodeQuest</span>
+</div>
 
-  <div class="header-right">
+<div class="header-right">
 
-   <span class="resource">
-    🪙 <b id="coins">0</b>
-   </span>
+<span class="resource">
+<i class="fa-solid fa-coins"></i>
+<b id="coins">0</b>
+</span>
 
-   <span class="resource">
-    🔥 <b id="streak">0</b>
-   </span>
+<span class="resource">
+<i class="fa-solid fa-fire"></i>
+<b id="streak">0</b>
+</span>
 
-   <span class="avatar" id="avatar">
-    ?
-   </span>
+<span class="avatar" id="avatar">?</span>
 
-  </div>
+</div>
+</header>
 
- </header>
+<!-- MENU -->
 
+<aside id="drawer">
 
- <aside id="drawer">
+<div class="drawer-title">
+<i class="fa-solid fa-bars"></i>
+MENU
+</div>
 
-  <div class="drawer-title">
-   CODEQUEST
-  </div>
+<button class="drawer-item active" data-page="home">
+<i class="fa-solid fa-house"></i>
+<span>Home</span>
+</button>
 
-  <button class="drawer-item active" data-page="home">
-   🏠 <span>Home Base</span>
-  </button>
+<button class="drawer-item" data-page="courses">
+<i class="fa-solid fa-map"></i>
+<span>Map</span>
+</button>
 
-  <button class="drawer-item" data-page="courses">
-   🗺️ <span>Adventure Map</span>
-  </button>
+<button class="drawer-item" data-page="python">
+<i class="fa-brands fa-python"></i>
+<span>Python</span>
+</button>
 
-  <button class="drawer-item" data-page="quiz">
-   🧠 <span>Quiz Arena</span>
-  </button>
+<button class="drawer-item" data-page="quiz">
+<i class="fa-solid fa-crosshairs"></i>
+<span>Quiz</span>
+</button>
 
-  <button class="drawer-item" data-page="facts">
-   💡 <span>Codex</span>
-  </button>
+<button class="drawer-item" data-page="facts">
+<i class="fa-solid fa-book"></i>
+<span>Learn</span>
+</button>
 
-  <button class="drawer-item" data-page="playground">
-   💻 <span>Code Lab</span>
-  </button>
+<button class="drawer-item" data-page="playground">
+<i class="fa-solid fa-flask"></i>
+<span>Code Practice</span>
+</button>
 
-  <button class="drawer-item" data-page="progress">
-   📊 <span>Player Stats</span>
-  </button>
+<button class="drawer-item" data-page="files">
+<i class="fa-solid fa-folder"></i>
+<span>Files</span>
+</button>
 
-  <button class="drawer-item" data-page="achievements">
-   🏆 <span>Trophies</span>
-  </button>
+<button class="drawer-item" data-page="progress">
+<i class="fa-solid fa-chart-line"></i>
+<span>My Stats</span>
+</button>
 
-  <button class="drawer-item" onclick="logout()">
-   🚪 <span>Logout</span>
-  </button>
+<button class="drawer-item" data-page="achievements">
+<i class="fa-solid fa-trophy"></i>
+<span>Badges</span>
+</button>
 
- </aside>
+<button class="drawer-item" onclick="logout()">
+<i class="fa-solid fa-right-from-bracket"></i>
+<span>Log Out</span>
+</button>
 
+</aside>
 
- <div id="overlay"></div>
+<div id="overlay"></div>
 
+<main id="main"></main>
 
- <main id="main"></main>
+<!-- BOTTOM MENU -->
 
+<nav class="bottom-nav">
 
- <nav class="bottom-nav">
+<button data-page="home" class="active">
+<i class="fa-solid fa-house"></i>
+<small>Home</small>
+</button>
 
-  <button data-page="home" class="active">
-   🏠
-   <small>Home</small>
-  </button>
+<button data-page="courses">
+<i class="fa-solid fa-map"></i>
+<small>Map</small>
+</button>
 
-  <button data-page="courses">
-   🗺️
-   <small>Map</small>
-  </button>
+<button data-page="python">
+<i class="fa-brands fa-python"></i>
+<small>Python</small>
+</button>
 
-  <button data-page="quiz">
-   🧠
-   <small>Quiz</small>
-  </button>
+<button data-page="quiz">
+<i class="fa-solid fa-crosshairs"></i>
+<small>Quiz</small>
+</button>
 
-  <button data-page="progress">
-   📊
-   <small>Stats</small>
-  </button>
+<button data-page="progress">
+<i class="fa-solid fa-chart-line"></i>
+<small>Stats</small>
+</button>
 
- </nav>
+</nav>
 
 </div>
 
-
 <div id="toast"></div>
-
 
 <script>
 
-/* =====================================================
-   ACCOUNT SYSTEM
-===================================================== */
+/* =========================================================
+ACCOUNT
+========================================================= */
 
-const ACCOUNT_KEY="codequest_accounts";
-const SESSION_KEY="codequest_session";
+const ACCOUNT_KEY="codequest_accounts_v6";
+const SESSION_KEY="codequest_session_v6";
 
 function getAccounts(){
- return JSON.parse(
-  localStorage.getItem(ACCOUNT_KEY)||"{}"
- );
+ return JSON.parse(localStorage.getItem(ACCOUNT_KEY)||"{}");
 }
 
 function saveAccounts(accounts){
- localStorage.setItem(
-  ACCOUNT_KEY,
-  JSON.stringify(accounts)
- );
+ localStorage.setItem(ACCOUNT_KEY,JSON.stringify(accounts));
 }
 
 function currentUser(){
  return localStorage.getItem(SESSION_KEY);
 }
 
+function showAuthError(text){
+ const el=document.querySelector("#authError");
+ if(el)el.textContent=text;
+}
 
-function register(username,password){
+/* =========================================================
+LOGIN
+========================================================= */
 
- username=username.trim().toLowerCase();
+function showLogin(){
+
+ document.querySelector("#loginTab").classList.add("active");
+ document.querySelector("#registerTab").classList.remove("active");
+
+ document.querySelector("#authForm").innerHTML=`
+
+ <div class="input-group">
+ <label>Name</label>
+ <input class="input" id="username" placeholder="Your name">
+ </div>
+
+ <div class="input-group">
+ <label>Password</label>
+ <input class="input" id="password" type="password" placeholder="Your password">
+ </div>
+
+ <div class="auth-error" id="authError"></div>
+
+ <button class="btn primary" onclick="login()">
+ <i class="fa-solid fa-right-to-bracket"></i>
+ LOG IN
+ </button>
+
+ `;
+}
+
+function showRegister(){
+
+ document.querySelector("#loginTab").classList.remove("active");
+ document.querySelector("#registerTab").classList.add("active");
+
+ document.querySelector("#authForm").innerHTML=`
+
+ <div class="input-group">
+ <label>Name</label>
+ <input class="input" id="username" placeholder="Choose your name">
+ </div>
+
+ <div class="input-group">
+ <label>Password</label>
+ <input class="input" id="password" type="password" placeholder="At least 4 characters">
+ </div>
+
+ <div class="input-group">
+ <label>Repeat Password</label>
+ <input class="input" id="confirm" type="password" placeholder="Type it again">
+ </div>
+
+ <div class="auth-error" id="authError"></div>
+
+ <button class="btn primary" onclick="register()">
+ <i class="fa-solid fa-user-plus"></i>
+ CREATE ACCOUNT
+ </button>
+
+ `;
+}
+
+function register(){
+
+ const username=document.querySelector("#username").value.trim().toLowerCase();
+ const password=document.querySelector("#password").value;
+ const confirm=document.querySelector("#confirm").value;
 
  if(username.length<3){
-  showAuthError(
-   "Username must be at least 3 characters."
-  );
+  showAuthError("Name must have at least 3 letters.");
   return;
  }
 
  if(password.length<4){
-  showAuthError(
-   "Password must be at least 4 characters."
-  );
+  showAuthError("Password must have at least 4 characters.");
+  return;
+ }
+
+ if(password!==confirm){
+  showAuthError("Passwords do not match.");
   return;
  }
 
  const accounts=getAccounts();
 
  if(accounts[username]){
-  showAuthError(
-   "That username already exists."
-  );
+  showAuthError("That name is already used.");
   return;
  }
 
- accounts[username]={
-
-  password:password,
-
-  created:Date.now(),
-
-  xp:0,
-  level:0,
-  coins:0,
-  streak:0,
-
-  completed:0,
-
-  achievements:[],
-
-  lessonXP:{},
-
-  lastLogin:null
-
- };
+ accounts[username]=createDefaultState();
+ accounts[username].password=password;
 
  saveAccounts(accounts);
 
- localStorage.setItem(
-  SESSION_KEY,
-  username
- );
+ localStorage.setItem(SESSION_KEY,username);
 
  initApp();
 
- toast(
-  "Character created! Welcome, coder."
- );
-
+ toast("Account created.");
 }
 
+function login(){
 
-function login(username,password){
-
- username=username.trim().toLowerCase();
+ const username=document.querySelector("#username").value.trim().toLowerCase();
+ const password=document.querySelector("#password").value;
 
  const accounts=getAccounts();
 
  if(!accounts[username]){
-  showAuthError(
-   "Account not found."
-  );
+  showAuthError("Name not found.");
   return;
  }
 
  if(accounts[username].password!==password){
-  showAuthError(
-   "Incorrect password."
-  );
+  showAuthError("Wrong password.");
   return;
  }
 
- localStorage.setItem(
-  SESSION_KEY,
-  username
- );
+ localStorage.setItem(SESSION_KEY,username);
 
  initApp();
-
 }
-
 
 function logout(){
 
  saveState();
 
- localStorage.removeItem(
-  SESSION_KEY
- );
+ localStorage.removeItem(SESSION_KEY);
 
- document.querySelector(
-  "#authScreen"
- ).style.display="grid";
+ document.querySelector("#authScreen").style.display="grid";
 
  showLogin();
+}
+
+/* =========================================================
+DEFAULT STATE
+========================================================= */
+
+function createDefaultState(){
+
+ return{
+  password:"",
+  created:Date.now(),
+  xp:0,
+  level:0,
+  coins:50,
+  streak:0,
+  completed:0,
+  achievements:["newcoder"],
+  lessonXP:{},
+  pythonFiles:{
+   "welcome.txt":"Welcome to CodeQuest Python!\n\nStart learning Python here."
+  },
+  codeRuns:0,
+  pythonRuns:0,
+  lastLogin:null
+ };
 
 }
 
-
-function showAuthError(text){
-
- const error=document.querySelector(
-  "#authError"
- );
-
- if(error){
-  error.textContent=text;
- }
-
-}
-
-
-function showLogin(){
-
- document.querySelector(
-  "#loginTab"
- ).classList.add("active");
-
- document.querySelector(
-  "#registerTab"
- ).classList.remove("active");
-
- document.querySelector(
-  "#authForm"
- ).innerHTML=`
-
-  <div class="input-group">
-   <label>Username</label>
-
-   <input
-    class="input"
-    id="username"
-    placeholder="Your coder name">
-  </div>
-
-  <div class="input-group">
-   <label>Password</label>
-
-   <input
-    class="input"
-    id="password"
-    type="password"
-    placeholder="Your password">
-  </div>
-
-  <div
-   class="auth-error"
-   id="authError">
-  </div>
-
-  <button
-   class="btn primary"
-   onclick="login(
-    document.querySelector('#username').value,
-    document.querySelector('#password').value
-   )">
-
-   ENTER CODEQUEST
-
-  </button>
- `;
-}
-
-
-function showRegister(){
-
- document.querySelector(
-  "#loginTab"
- ).classList.remove("active");
-
- document.querySelector(
-  "#registerTab"
- ).classList.add("active");
-
- document.querySelector(
-  "#authForm"
- ).innerHTML=`
-
-  <div class="input-group">
-   <label>Username</label>
-
-   <input
-    class="input"
-    id="username"
-    placeholder="Choose your coder name">
-  </div>
-
-  <div class="input-group">
-   <label>Password</label>
-
-   <input
-    class="input"
-    id="password"
-    type="password"
-    placeholder="At least 4 characters">
-  </div>
-
-  <div class="input-group">
-   <label>Confirm password</label>
-
-   <input
-    class="input"
-    id="confirm"
-    type="password"
-    placeholder="Repeat your password">
-  </div>
-
-  <div
-   class="auth-error"
-   id="authError">
-  </div>
-
-  <button
-   class="btn primary"
-   onclick="doRegister()">
-
-   CREATE CHARACTER
-
-  </button>
- `;
-}
-
-
-function doRegister(){
-
- const username=
-  document.querySelector("#username").value;
-
- const password=
-  document.querySelector("#password").value;
-
- const confirm=
-  document.querySelector("#confirm").value;
-
- if(password!==confirm){
-
-  showAuthError(
-   "Passwords do not match."
-  );
-
-  return;
- }
-
- register(
-  username,
-  password
- );
-
-}
-
-
-document.querySelector(
- "#loginTab"
-).onclick=showLogin;
-
-document.querySelector(
- "#registerTab"
-).onclick=showRegister;
-
-
-/* =====================================================
-   GAME STATE
-===================================================== */
+/* =========================================================
+GAME STATE
+========================================================= */
 
 let state=null;
-
 let currentPage="home";
-
 let selected=null;
-
 let quizDone=false;
-
 let quizQuestion=null;
-
-let currentFact=null;
-
 let combo=0;
+let activeLanguage="python";
 
-
-/* =====================================================
-   CONTENT DATABASE
-===================================================== */
-
-const facts=[
-
- {
-  title:"Why is JavaScript called JavaScript?",
-  text:"JavaScript was originally called Mocha. It was later renamed LiveScript, then JavaScript. Despite the name, JavaScript and Java are separate programming languages.",
-  category:"LANGUAGES"
- },
-
- {
-  title:"The first programmer was a woman.",
-  text:"Ada Lovelace wrote an algorithm for Charles Babbage's Analytical Engine in the 1800s. She is widely regarded as the first computer programmer.",
-  category:"HISTORY"
- },
-
- {
-  title:"Computers only understand electricity at the lowest level.",
-  text:"At the hardware level, computers represent information using electrical states that can be represented as 1s and 0s. Programming languages give humans a much easier way to communicate with machines.",
-  category:"COMPUTERS"
- },
-
- {
-  title:"Bug does not literally mean an insect.",
-  text:"The famous story about a moth being found inside a computer helped popularize the term debugging. However, engineers were already using the word bug for technical problems before that event.",
-  category:"HISTORY"
- },
-
- {
-  title:"Python was named after comedy.",
-  text:"Python creator Guido van Rossum named the language after the British comedy group Monty Python, not the snake.",
-  category:"PYTHON"
- },
-
- {
-  title:"A variable is basically a named storage location.",
-  text:"When you create a variable, you give your program a way to refer to some piece of information. The exact behavior depends on the programming language.",
-  category:"FUNDAMENTALS"
- },
-
- {
-  title:"Loops save programmers from repetitive work.",
-  text:"Instead of writing the same instruction dozens or thousands of times, a loop can repeat a block of code according to a condition or collection.",
-  category:"LOGIC"
- },
-
- {
-  title:"HTML is not a programming language.",
-  text:"HTML is a markup language. It describes the structure and meaning of content on a webpage. JavaScript is used to add programming behavior.",
-  category:"WEB"
- },
-
- {
-  title:"CSS controls presentation.",
-  text:"CSS describes how HTML content should look. It can control things such as spacing, typography, positioning, borders and responsive layouts.",
-  category:"WEB"
- },
-
- {
-  title:"The first computer bug was not really the first bug.",
-  text:"The famous moth incident happened in 1947, but the word bug was already being used by engineers to describe mechanical and technical problems.",
-  category:"HISTORY"
- },
-
- {
-  title:"Functions help organize code.",
-  text:"A function packages instructions into a reusable unit. Instead of copying the same code everywhere, you can call the function when you need it.",
-  category:"FUNDAMENTALS"
- },
-
- {
-  title:"Algorithms are instructions.",
-  text:"An algorithm is a sequence of steps for solving a problem or accomplishing a task. Algorithms can be written in plain language before they become actual code.",
-  category:"ALGORITHMS"
- }
-
-];
-
-
-const questions=[
-
- {
-  difficulty:"EASY",
-  xp:10,
-  question:"Which keyword creates a variable that can be reassigned in JavaScript?",
-  answers:["const","let","fixed","varname"],
-  correct:1,
-  explanation:"let creates a variable that can later receive a new value."
- },
-
- {
-  difficulty:"EASY",
-  xp:10,
-  question:"What does HTML mainly describe?",
-  answers:[
-   "The structure of a webpage",
-   "Computer hardware",
-   "Database passwords",
-   "CPU instructions"
-  ],
-  correct:0,
-  explanation:"HTML describes the structure and content of a webpage."
- },
-
- {
-  difficulty:"EASY",
-  xp:10,
-  question:"Which symbol starts a single-line comment in JavaScript?",
-  answers:["//","##","<!--","\\\\"] ,
-  correct:0,
-  explanation:"Two forward slashes begin a single-line JavaScript comment."
- },
-
- {
-  difficulty:"EASY",
-  xp:10,
-  question:"What does console.log() usually do?",
-  answers:[
-   "Prints information to the console",
-   "Deletes a variable",
-   "Creates HTML",
-   "Turns off the browser"
-  ],
-  correct:0,
-  explanation:"console.log() outputs information to the developer console."
- },
-
- {
-  difficulty:"MEDIUM",
-  xp:20,
-  question:"What will 5 + 3 * 2 evaluate to?",
-  answers:["16","11","13","10"],
-  correct:1,
-  explanation:"Multiplication happens before addition, so 3 * 2 is 6, then 5 + 6 is 11."
- },
-
- {
-  difficulty:"MEDIUM",
-  xp:20,
-  question:"What does === compare in JavaScript?",
-  answers:[
-   "Only variable names",
-   "Only values",
-   "Value and type",
-   "Only types"
-  ],
-  correct:2,
-  explanation:"Strict equality checks both the value and the type."
- },
-
- {
-  difficulty:"MEDIUM",
-  xp:20,
-  question:"What is the purpose of a loop?",
-  answers:[
-   "Repeat instructions",
-   "Delete memory",
-   "Change the programming language",
-   "Create a monitor"
-  ],
-  correct:0,
-  explanation:"Loops allow instructions to execute repeatedly."
- },
-
- {
-  difficulty:"MEDIUM",
-  xp:20,
-  question:"What is a function?",
-  answers:[
-   "A reusable block of instructions",
-   "A computer screen",
-   "A file extension",
-   "A type of keyboard"
-  ],
-  correct:0,
-  explanation:"Functions group reusable instructions together."
- },
-
- {
-  difficulty:"HARD",
-  xp:30,
-  question:"What does this print? let x=2; x*=4; console.log(x);",
-  answers:["2","4","6","8"],
-  correct:3,
-  explanation:"x starts at 2 and *= 4 multiplies it by 4, giving 8."
- },
-
- {
-  difficulty:"HARD",
-  xp:30,
-  question:"What is the value of Boolean(0) in JavaScript?",
-  answers:["true","false","0","undefined"],
-  correct:1,
-  explanation:"Zero is a falsy value in JavaScript, so Boolean(0) is false."
- },
-
- {
-  difficulty:"HARD",
-  xp:30,
-  question:"What does an algorithm provide?",
-  answers:[
-   "A sequence of steps to solve a problem",
-   "A programming font",
-   "A hardware component",
-   "A web browser"
-  ],
-  correct:0,
-  explanation:"Algorithms describe steps for solving problems or completing tasks."
- }
-
-];
-
-
-const courses=[
-
- {
-  icon:"🧩",
-  title:"Spawn Point",
-  desc:"Variables, values and your first code",
-  level:0,
-  xp:40
- },
-
- {
-  icon:"🔀",
-  title:"Decision District",
-  desc:"Conditions and logical thinking",
-  level:1,
-  xp:60
- },
-
- {
-  icon:"🔁",
-  title:"Loop Canyon",
-  desc:"Repetition and automation",
-  level:2,
-  xp:80
- },
-
- {
-  icon:"☕",
-  title:"Java Forge",
-  desc:"Methods, classes and objects",
-  level:3,
-  xp:100
- },
-
- {
-  icon:"🌐",
-  title:"Web City",
-  desc:"HTML, CSS and JavaScript",
-  level:4,
-  xp:120
- },
-
- {
-  icon:"⚙️",
-  title:"Algorithm Lab",
-  desc:"Logic, algorithms and problem solving",
-  level:5,
-  xp:150
- },
-
- {
-  icon:"🚀",
-  title:"Project Station",
-  desc:"Build your own coding projects",
-  level:6,
-  xp:200
- }
-
-];
-
-
-/* =====================================================
-   GAME FUNCTIONS
-===================================================== */
-
-function getAccounts(){
- return JSON.parse(
-  localStorage.getItem(ACCOUNT_KEY)||"{}"
- );
-}
+/* =========================================================
+SAVE / LOAD
+========================================================= */
 
 function saveState(){
 
  const accounts=getAccounts();
-
  const user=currentUser();
 
  if(!user||!state)return;
 
  accounts[user]=state;
 
- localStorage.setItem(
-  ACCOUNT_KEY,
-  JSON.stringify(accounts)
- );
-
+ saveAccounts(accounts);
 }
-
-
-function currentUser(){
- return localStorage.getItem(SESSION_KEY);
-}
-
 
 function loadState(){
 
  const accounts=getAccounts();
-
  const user=currentUser();
 
  if(!user||!accounts[user]){
@@ -1942,15 +1554,19 @@ function loadState(){
 
  if(state.xp===undefined)state.xp=0;
  if(state.level===undefined)state.level=0;
- if(state.coins===undefined)state.coins=0;
+ if(state.coins===undefined)state.coins=50;
  if(state.streak===undefined)state.streak=0;
  if(state.completed===undefined)state.completed=0;
  if(!state.achievements)state.achievements=[];
  if(!state.lessonXP)state.lessonXP={};
+ if(!state.pythonFiles)state.pythonFiles={};
+ if(state.codeRuns===undefined)state.codeRuns=0;
+ if(state.pythonRuns===undefined)state.pythonRuns=0;
+
+ updateLoginStreak();
 
  return true;
 }
-
 
 function initApp(){
 
@@ -1959,141 +1575,314 @@ function initApp(){
   return;
  }
 
- document.querySelector(
-  "#authScreen"
- ).style.display="none";
+ document.querySelector("#authScreen").style.display="none";
 
  const user=currentUser();
 
- document.querySelector(
-  "#avatar"
- ).textContent=
+ document.querySelector("#avatar").textContent=
  user.charAt(0).toUpperCase();
 
  render();
-
 }
 
+/* =========================================================
+STREAK
+========================================================= */
 
-/* =====================================================
-   XP
-===================================================== */
+function updateLoginStreak(){
 
-function addXP(amount,reason=""){
+ const today=new Date().toDateString();
+
+ if(!state.lastLogin){
+
+  state.streak=1;
+
+ }else{
+
+  const last=new Date(state.lastLogin);
+  const lastDate=last.toDateString();
+
+  if(today!==lastDate){
+
+   const yesterday=new Date();
+   yesterday.setDate(yesterday.getDate()-1);
+
+   if(lastDate===yesterday.toDateString()){
+    state.streak++;
+   }else{
+    state.streak=1;
+   }
+
+  }
+
+ }
+
+ state.lastLogin=new Date().toISOString();
+
+ saveState();
+}
+
+/* =========================================================
+XP
+========================================================= */
+
+function addXP(amount,reason="",rerender=true){
 
  if(!state)return;
 
  const oldLevel=state.level;
 
  state.xp+=amount;
-
- state.coins+=Math.max(
-  1,
-  Math.floor(amount/5)
- );
-
- state.level=Math.floor(
-  state.xp/100
- );
+ state.coins+=Math.max(1,Math.floor(amount/5));
+ state.level=Math.floor(state.xp/100);
 
  saveState();
 
  createXPFloat(amount);
 
  if(state.level>oldLevel){
-
-  showLevelUp(
-   state.level,
-   reason
-  );
-
- }else{
-
-  toast(
-   "+"+amount+" XP   🪙 +"+
-   Math.max(1,Math.floor(amount/5))
-  );
-
+  showLevelUp(state.level);
  }
 
- render();
+ checkAchievements();
 
+ if(rerender){
+  render();
+ }else{
+  headerStats();
+ }
 }
-
 
 function createXPFloat(amount){
 
  const el=document.createElement("div");
 
- el.className="xp-float";
+ el.style.position="fixed";
+ el.style.left="50%";
+ el.style.top="48%";
+ el.style.zIndex="300";
+ el.style.color="var(--gold)";
+ el.style.fontSize="25px";
+ el.style.fontWeight="950";
+ el.style.pointerEvents="none";
 
  el.textContent="+"+amount+" XP";
 
  document.body.appendChild(el);
 
- setTimeout(()=>{
-  el.remove();
- },1000);
+ el.animate([
+  {
+   opacity:0,
+   transform:"translate(-50%,20px) scale(.7)"
+  },
+  {
+   opacity:1,
+   transform:"translate(-50%,0) scale(1.1)"
+  },
+  {
+   opacity:0,
+   transform:"translate(-50%,-100px)"
+  }
+ ],{
+  duration:1000,
+  easing:"ease"
+ });
 
+ setTimeout(()=>el.remove(),1000);
 }
 
+function showLevelUp(level){
 
-function showLevelUp(level,reason){
+ document.querySelector("#levelupText").textContent=
+ "You reached Level "+level+".";
 
- document.querySelector(
-  "#levelupText"
- ).textContent=
- "Level "+level+
- " reached! New parts of the coding world are opening.";
-
- document.querySelector(
-  "#levelup"
- ).style.display="grid";
-
+ document.querySelector("#levelup").style.display="grid";
 }
-
 
 function closeLevelUp(){
 
- document.querySelector(
-  "#levelup"
- ).style.display="none";
+ document.querySelector("#levelup").style.display="none";
 
- toast(
-  "LEVEL "+state.level+" UNLOCKED!"
- );
+ toast("Level "+state.level+" reached.");
 
  render();
-
 }
 
-
-/* =====================================================
-   TOAST
-===================================================== */
+/* =========================================================
+TOAST
+========================================================= */
 
 function toast(text){
 
- const el=document.querySelector(
-  "#toast"
- );
+ const el=document.querySelector("#toast");
 
  el.textContent=text;
-
  el.classList.add("show");
 
  clearTimeout(window.toastTimer);
 
  window.toastTimer=setTimeout(()=>{
   el.classList.remove("show");
- },1800);
-
+ },1900);
 }
 
+/* =========================================================
+FACTS
+========================================================= */
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+const facts=[
+
+ {
+  title:"Python got its name from a comedy show.",
+  text:"Guido van Rossum named Python after Monty Python.",
+  category:"PYTHON"
+ },
+
+ {
+  title:"Variables hold values.",
+  text:"A variable gives a name to information your program stores.",
+  category:"BASICS"
+ },
+
+ {
+  title:"input() gets text.",
+  text:"Python input() lets the user type something.",
+  category:"PYTHON"
+ },
+
+ {
+  title:"print() shows text.",
+  text:"Python print() shows information on the screen.",
+  category:"PYTHON"
+ },
+
+ {
+  title:"Algorithms are steps.",
+  text:"An algorithm is a group of steps used to solve a problem.",
+  category:"BASICS"
+ },
+
+ {
+  title:"Loops repeat code.",
+  text:"Loops let a program run the same code more than once.",
+  category:"BASICS"
+ }
+
+];
+
+/* =========================================================
+COURSES / MAP
+========================================================= */
+
+const courses=[
+
+ {
+  icon:"fa-solid fa-campground",
+  title:"Start Here",
+  desc:"Learn your first coding steps.",
+  level:0,
+  xp:40,
+  type:"general"
+ },
+
+ {
+  icon:"fa-brands fa-python",
+  title:"Python",
+  desc:"Start learning Python.",
+  level:0,
+  xp:50,
+  type:"python"
+ },
+
+ {
+  icon:"fa-box",
+  title:"Variables",
+  desc:"Learn how to store values.",
+  level:0,
+  xp:50,
+  type:"python"
+ },
+
+ {
+  icon:"fa-keyboard",
+  title:"Input",
+  desc:"Let users type into your program.",
+  level:1,
+  xp:60,
+  type:"python"
+ },
+
+ {
+  icon:"fa-terminal",
+  title:"Output",
+  desc:"Learn how print() works.",
+  level:1,
+  xp:60,
+  type:"python"
+ },
+
+ {
+  icon:"fa-folder",
+  title:"Files",
+  desc:"Learn how to read and write files.",
+  level:2,
+  xp:100,
+  type:"python"
+ },
+
+ {
+  icon:"fa-code-branch",
+  title:"If and Else",
+  desc:"Make your program choose.",
+  level:2,
+  xp:80,
+  type:"general"
+ },
+
+ {
+  icon:"fa-rotate",
+  title:"Loops",
+  desc:"Make your program repeat code.",
+  level:3,
+  xp:100,
+  type:"general"
+ },
+
+ {
+  icon:"fa-globe",
+  title:"Web",
+  desc:"Learn HTML, CSS and JavaScript.",
+  level:4,
+  xp:120,
+  type:"web"
+ },
+
+ {
+  icon:"fa-gears",
+  title:"Problem Solving",
+  desc:"Solve harder coding problems.",
+  level:5,
+  xp:150,
+  type:"general"
+ },
+
+ {
+  icon:"fa-chess-rook",
+  title:"Projects",
+  desc:"Build your own coding projects.",
+  level:7,
+  xp:200,
+  type:"project"
+ }
+
+];
+
+/* =========================================================
+NAVIGATION
+========================================================= */
+
+const app=document.querySelector(".app-shell");
+const main=document.querySelector("#main");
 
 function openMenu(){
  app.classList.add("drawer-open");
@@ -2103,17 +1892,10 @@ function closeMenu(){
  app.classList.remove("drawer-open");
 }
 
-document.querySelector(
- "#menuBtn"
-).onclick=openMenu;
+document.querySelector("#menuBtn").onclick=openMenu;
+document.querySelector("#overlay").onclick=closeMenu;
 
-document.querySelector(
- "#overlay"
-).onclick=closeMenu;
-
-document.querySelectorAll(
- "[data-page]"
-).forEach(button=>{
+document.querySelectorAll("[data-page]").forEach(button=>{
 
  button.onclick=()=>{
 
@@ -2122,36 +1904,19 @@ document.querySelectorAll(
   closeMenu();
 
   render();
-
  };
 
 });
 
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-const app=document.querySelector(
- ".app-shell"
-);
-
-const main=document.querySelector(
- "#main"
-);
+/* =========================================================
+RENDER
+========================================================= */
 
 function headerStats(){
 
- document.querySelector(
-  "#coins"
- ).textContent=state.coins;
-
- document.querySelector(
-  "#streak"
- ).textContent=state.streak;
-
+ document.querySelector("#coins").textContent=state.coins;
+ document.querySelector("#streak").textContent=state.streak;
 }
-
 
 function render(){
 
@@ -2159,568 +1924,1769 @@ function render(){
 
  headerStats();
 
- document.querySelectorAll(
-  ".bottom-nav button"
- ).forEach(button=>{
-
+ document.querySelectorAll(".bottom-nav button").forEach(button=>{
   button.classList.toggle(
    "active",
    button.dataset.page===currentPage
   );
-
  });
 
- document.querySelectorAll(
-  ".drawer-item[data-page]"
- ).forEach(button=>{
-
+ document.querySelectorAll(".drawer-item[data-page]").forEach(button=>{
   button.classList.toggle(
    "active",
    button.dataset.page===currentPage
   );
-
  });
-
 
  const pages={
-  home:home,
+  home,
   courses:coursePage,
+  python:pythonPage,
   quiz:quizArena,
   facts:factPage,
-  playground:playground,
-  progress:progress,
-  achievements:achievements
+  playground,
+  files:fileHarbor,
+  progress,
+  achievements
  };
 
  (pages[currentPage]||home)();
-
 }
 
+/* =========================================================
+PLAYER
+========================================================= */
 
-/* =====================================================
-   HOME
-===================================================== */
+function playerHUD(){
+
+ const pct=state.xp%100;
+
+ let rank="NEW CODER";
+
+ if(state.level>=10)rank="CODE LEGEND";
+ else if(state.level>=7)rank="MASTER CODER";
+ else if(state.level>=5)rank="CODE KNIGHT";
+ else if(state.level>=3)rank="PYTHON CODER";
+ else if(state.level>=1)rank="JUNIOR CODER";
+
+ return`
+
+ <div class="player-card">
+
+ <div class="player-top">
+
+ <div class="player-avatar">
+ <i class="fa-solid fa-user"></i>
+ </div>
+
+ <div class="player-info">
+
+ <small>PLAYER</small>
+
+ <b>${escapeHTML(currentUser())}</b>
+
+ <span class="rank">
+ <i class="fa-solid fa-star"></i>
+ ${rank}
+ </span>
+
+ </div>
+
+ <div style="text-align:right">
+
+ <small style="color:var(--muted)">
+ LEVEL
+ </small>
+
+ <div style="
+ font-size:25px;
+ font-weight:950;
+ color:var(--gold)
+ ">
+ ${state.level}
+ </div>
+
+ </div>
+
+ </div>
+
+ <div class="xp-row">
+ <span>XP</span>
+ <span style="color:var(--gold)">
+ ${pct}/100
+ </span>
+ </div>
+
+ <div class="xp-bar">
+ <div class="xp-fill" style="width:${pct}%"></div>
+ </div>
+
+ <small class="muted">
+ ${100-pct} XP until Level ${state.level+1}
+ </small>
+
+ </div>
+
+ `;
+}
+
+/* =========================================================
+HOME
+========================================================= */
 
 function home(){
 
- const levelXP=state.xp%100;
-
- const fact=
- facts[Math.floor(
-  Math.random()*facts.length
- )];
+ const fact=facts[Math.floor(Math.random()*facts.length)];
 
  main.innerHTML=`
 
  <section class="hero">
 
-  <div class="eyebrow">
-   CODING ADVENTURE
-  </div>
+ <div class="eyebrow">
+ <i class="fa-solid fa-house"></i>
+ HOME
+ </div>
 
-  <h1>
-   Welcome back, coder.
-  </h1>
+ <h1>Welcome back!</h1>
 
-  <p>
-   Complete missions, answer questions,
-   discover facts and experiment with real code.
-  </p>
+ <p>
+ Learn coding, finish tasks and build your skills.
+ </p>
 
  </section>
 
+ ${playerHUD()}
+
+ <div class="section">
+ <h2>
+ <i class="fa-solid fa-chart-simple"></i>
+ My Stats
+ </h2>
+ </div>
 
  <div class="grid two">
 
-  <div class="card stat">
-   <span>⚡ XP</span>
-   <b>${state.xp}</b>
-   <small class="muted">
-    Level ${state.level}
-   </small>
-  </div>
-
-  <div class="card stat">
-   <span>🪙 COINS</span>
-   <b>${state.coins}</b>
-   <small class="muted">
-    your currency
-   </small>
-  </div>
-
-  <div class="card stat">
-   <span>🔥 STREAK</span>
-   <b>${state.streak}</b>
-   <small class="muted">
-    coding days
-   </small>
-  </div>
-
-  <div class="card stat">
-   <span>🏆 MISSIONS</span>
-   <b>${state.completed}</b>
-   <small class="muted">
-    completed
-   </small>
-  </div>
-
+ <div class="card stat">
+ <span>XP</span>
+ <b>${state.xp}</b>
+ <small>Total XP</small>
  </div>
 
-
- <div class="card" style="margin-top:10px">
-
-  <div class="xp-row">
-
-   <span>
-    LEVEL ${state.level}
-   </span>
-
-   <span class="level-label">
-    ${levelXP}/100 XP
-   </span>
-
-  </div>
-
-  <div class="xp-bar">
-   <div
-    class="xp-fill"
-    style="width:${levelXP}%">
-   </div>
-  </div>
-
-  <span class="muted">
-   ${100-levelXP} XP until Level ${state.level+1}
-  </span>
-
+ <div class="card stat">
+ <span>GOLD</span>
+ <b>${state.coins}</b>
+ <small>Coins</small>
  </div>
 
+ <div class="card stat">
+ <span>STREAK</span>
+ <b>${state.streak}</b>
+ <small>Days</small>
+ </div>
+
+ <div class="card stat">
+ <span>TASKS</span>
+ <b>${state.completed}</b>
+ <small>Finished</small>
+ </div>
+
+ </div>
 
  <div class="section">
-  <h2>🎯 Today's Missions</h2>
+ <h2>
+ <i class="fa-solid fa-list-check"></i>
+ Tasks
+ </h2>
  </div>
 
-
  ${missionCard(
-  "💡",
-  "Learn a fact",
-  "Read something from the Codex",
-  "+5 XP",
-  "factMission"
+  "fa-brands fa-python",
+  "Learn Python",
+  "Start your Python lessons.",
+  "+50 XP",
+  "go('python')"
  )}
 
-
  ${missionCard(
-  "🧠",
-  "Answer a quiz",
-  "Test your programming knowledge",
+  "fa-solid fa-crosshairs",
+  "Take the Quiz",
+  "Test what you know.",
   "+10 XP",
-  "quizMission"
+  "go('quiz')"
  )}
-
 
  ${missionCard(
-  "💻",
-  "Run code",
-  "Experiment inside the Code Lab",
+  "fa-solid fa-flask",
+  "Write Code",
+  "Write and run code.",
   "+5 XP",
-  "codeMission"
+  "go('playground')"
  )}
 
+ ${missionCard(
+  "fa-solid fa-folder",
+  "Open Files",
+  "Learn how programs use files.",
+  "+5 XP",
+  "go('files')"
+ )}
 
  <div class="section">
-  <h2>🎮 Quick Play</h2>
+
+ <h2>
+ <i class="fa-solid fa-map"></i>
+ Map
+ </h2>
+
+ <button onclick="go('courses')">
+ OPEN →
+ </button>
+
  </div>
 
+ <div class="world-map">
+
+ ${courses.slice(0,5).map((course,index)=>
+  mapNode(course,index)
+ ).join("")}
+
+ </div>
+
+ <div class="section">
+
+ <h2>
+ <i class="fa-solid fa-book"></i>
+ Learn
+ </h2>
+
+ <button onclick="go('facts')">
+ MORE →
+ </button>
+
+ </div>
 
  <div class="card">
 
-  <div class="play-card">
-
-   <button
-    class="play"
-    onclick="currentPage='quiz';quizArena()">
-
-    <div class="play-icon">🧠</div>
-
-    <b>Quiz Arena</b>
-
-    <small>
-     Random question
-    </small>
-
-    <span class="reward">
-     +10 to +30 XP
-    </span>
-
-   </button>
-
-
-   <button
-    class="play"
-    onclick="currentPage='facts';factPage()">
-
-    <div class="play-icon">💡</div>
-
-    <b>Codex</b>
-
-    <small>
-     Read fun facts
-    </small>
-
-    <span class="reward">
-     +5 XP
-    </span>
-
-   </button>
-
-
-   <button
-    class="play"
-    onclick="currentPage='playground';playground()">
-
-    <div class="play-icon">💻</div>
-
-    <b>Code Lab</b>
-
-    <small>
-     Write JavaScript
-    </small>
-
-    <span class="reward">
-     +5 XP
-    </span>
-
-   </button>
-
-
-   <button
-    class="play"
-    onclick="logicPuzzle()">
-
-    <div class="play-icon">🧩</div>
-
-    <b>Logic Puzzle</b>
-
-    <small>
-     Solve a problem
-    </small>
-
-    <span class="reward">
-     +15 XP
-    </span>
-
-   </button>
-
-  </div>
-
+ <div class="eyebrow">
+ ${fact.category}
  </div>
 
+ <h3 style="margin-top:7px">
+ ${fact.title}
+ </h3>
 
- <div class="section">
-  <h2>💡 Random Fact</h2>
-
-  <button onclick="currentPage='facts';factPage()">
-   OPEN CODEX →
-  </button>
- </div>
-
-
- <div class="fact">
-
-  <div class="fact-top">
-
-   <span class="fact-tag">
-    ${fact.category}
-   </span>
-
-   <span>
-    💡
-   </span>
-
-  </div>
-
-  <h3>
-   ${fact.title}
-  </h3>
-
-  <p>
-   ${fact.text}
-  </p>
-
- </div>
-
-
- <div class="section">
-  <h2>🗺️ World</h2>
-
-  <button onclick="currentPage='courses';render()">
-   MAP →
-  </button>
-
- </div>
-
-
- <div class="card">
-
-  <div class="world">
-
-   ${courses.slice(0,5).map(
-    worldNode
-   ).join("")}
-
-  </div>
+ <p class="muted">
+ ${fact.text}
+ </p>
 
  </div>
 
  `;
-
 }
 
+function missionCard(icon,title,desc,reward,action){
 
-function missionCard(
- icon,
- title,
- desc,
- reward,
- action
-){
+ return`
 
- return `
+ <button class="quest" onclick="${action}">
 
- <button
-  class="quest"
-  onclick="${action}()">
+ <div class="quest-icon">
+ <i class="${icon}"></i>
+ </div>
 
-  <div class="quest-icon">
-   ${icon}
-  </div>
+ <div class="quest-info">
 
-  <div class="quest-info">
+ <b>${title}</b>
 
-   <b>${title}</b>
+ <p>${desc}</p>
 
-   <p>${desc}</p>
+ </div>
 
-  </div>
-
-  <span class="reward">
-   ${reward}
-  </span>
+ <span class="reward">
+ ${reward}
+ </span>
 
  </button>
 
  `;
-
 }
 
+function go(page){
 
-function worldNode(course){
+ currentPage=page;
 
- const unlocked=
-  state.level>=course.level;
+ render();
+}
 
- return `
+/* =========================================================
+IMPORTANT MAP CLICK FIX
+========================================================= */
 
- <div class="node ${
-  unlocked?"unlocked":"locked"
- }">
+function mapNode(course,index){
 
-  <div class="node-icon">
-   ${unlocked?course.icon:"🔒"}
-  </div>
+ const unlocked=state.level>=course.level;
 
-  <div class="node-info">
+ return`
 
-   <b>${course.title}</b>
+ <div
+ class="map-click-area"
+ onclick="${
+  unlocked
+  ? `openCourse(${index})`
+  : `toast('Reach Level ${course.level} first.')`
+ }"
+ >
 
-   <small>
-    ${
-     unlocked
-      ?"Unlocked"
-      :"Reach Level "+course.level
-    }
-   </small>
+ <div class="
+ zone
+ ${unlocked?"unlocked":"locked"}
+ ${course.type==="python"?"python":""}
+ ">
 
-  </div>
+ <div class="zone-node">
+
+ ${
+  unlocked
+  ? `<i class="${course.icon}"></i>`
+  : `<i class="fa-solid fa-lock"></i>`
+ }
+
+ </div>
+
+ <div class="zone-info">
+
+ <b>${course.title}</b>
+
+ <small>
+ ${
+  unlocked
+  ? course.desc
+  : "Reach Level "+course.level
+ }
+ </small>
+
+ </div>
+
+ <span class="zone-status">
+ ${unlocked?"OPEN":"LOCKED"}
+ </span>
+
+ </div>
 
  </div>
 
  `;
-
 }
 
+/* =========================================================
+MAP PAGE
+========================================================= */
 
-/* =====================================================
-   MISSIONS
-===================================================== */
-
-function factMission(){
-
- currentPage="facts";
-
- factPage();
-
-}
-
-
-function quizMission(){
-
- currentPage="quiz";
-
- quizArena();
-
-}
-
-
-function codeMission(){
-
- currentPage="playground";
-
- playground();
-
-}
-
-
-/* =====================================================
-   FACT PAGE
-===================================================== */
-
-function factPage(){
-
- currentFact=
-  facts[Math.floor(
-   Math.random()*facts.length
-  )];
+function coursePage(){
 
  main.innerHTML=`
 
  <section class="hero">
 
-  <div class="eyebrow">
-   THE CODEX
-  </div>
+ <div class="eyebrow">
+ <i class="fa-solid fa-map"></i>
+ MAP
+ </div>
 
-  <h1>
-   Learn something weird.
-  </h1>
+ <h1>The Coding Map</h1>
 
-  <p>
-   Programming has a lot of strange history,
-   clever ideas and fun facts.
-  </p>
+ <p>
+ Click a lesson to start learning.
+ </p>
 
  </section>
 
+ ${playerHUD()}
 
- <div class="fact">
+ <div class="section">
+ <h2>Lessons</h2>
+ </div>
 
-  <div class="fact-top">
+ <div class="world-map">
 
-   <span class="fact-tag">
-    ${currentFact.category}
-   </span>
+ ${courses.map((course,index)=>
+  mapNode(course,index)
+ ).join("")}
 
-   <span>💡</span>
+ </div>
+
+ `;
+}
+
+function openCourse(index){
+
+ const course=courses[index];
+
+ if(state.level<course.level){
+
+  toast("Reach Level "+course.level+" first.");
+
+  return;
+ }
+
+ if(course.type==="python"){
+
+  openPythonLesson(course);
+
+ }else{
+
+  openGenericLesson(course,index);
+
+ }
+}
+
+/* =========================================================
+PYTHON
+========================================================= */
+
+function pythonCourses(){
+
+ return courses.filter(c=>c.type==="python");
+}
+
+function pythonPage(){
+
+ const list=pythonCourses();
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+ <div class="eyebrow">
+ <i class="fa-brands fa-python"></i>
+ PYTHON
+ </div>
+
+ <h1>Learn Python</h1>
+
+ <p>
+ Learn Python one simple lesson at a time.
+ </p>
+
+ </section>
+
+ <div class="card" style="
+ text-align:center;
+ background:#0d1826;
+ ">
+
+ <div style="
+ font-size:65px;
+ color:var(--python);
+ ">
+
+ <i class="fa-brands fa-python"></i>
+
+ </div>
+
+ <h2>PYTHON LESSONS</h2>
+
+ <p class="muted">
+ Start with the basics and move up slowly.
+ </p>
+
+ </div>
+
+ <div class="section">
+ <h2>Python Lessons</h2>
+ </div>
+
+ <div class="world-map">
+
+ ${list.map(course=>{
+
+  const index=courses.indexOf(course);
+
+  return mapNode(course,index);
+
+ }).join("")}
+
+ </div>
+
+ <button class="btn python" onclick="openPythonLab()">
+ <i class="fa-solid fa-code"></i>
+ WRITE PYTHON
+ </button>
+
+ <button class="btn" onclick="go('files')">
+ <i class="fa-solid fa-folder"></i>
+ OPEN FILES
+ </button>
+
+ `;
+}
+
+/* =========================================================
+PYTHON LESSONS
+========================================================= */
+
+const pythonLessons={
+
+ "Python":{
+  title:"Your First Python Code",
+  concept:"Python is a programming language. You can use it to make programs, games and tools.",
+  code:`# Your first Python program
+print("Hello, CodeQuest!")`,
+  question:"Which function shows text in Python?",
+  answers:["input()","print()","open()","display()"],
+  correct:1
+ },
+
+ "Variables":{
+  title:"Variables",
+  concept:"A variable gives a name to a value. You can use variables to keep text and numbers.",
+  code:`name = "Coder"
+score = 100
+
+print(name)
+print(score)`,
+  question:"What value is stored in score?",
+  answers:["name","100","Coder","Nothing"],
+  correct:1
+ },
+
+ "Input":{
+  title:"Input",
+  concept:"input() lets the user type something into your program.",
+  code:`name = input("What is your name? ")
+print("Hello,", name)`,
+  question:"Which function lets the user type something?",
+  answers:["print()","open()","input()","write()"],
+  correct:2
+ },
+
+ "Output":{
+  title:"Output",
+  concept:"print() shows information in the program output.",
+  code:`name = "Coder"
+score = 95
+
+print("Name:", name)
+print("Score:", score)`,
+  question:"What does print() do?",
+  answers:["Gets input","Shows information","Creates a file","Deletes variables"],
+  correct:1
+ },
+
+ "Files":{
+  title:"Files",
+  concept:"Python can make, read and change files with open().",
+  code:`file = open("notes.txt", "w")
+file.write("I am learning Python!")
+file.close()`,
+  question:"What does the 'w' mode mean?",
+  answers:["Watch","Write","Web","Wait"],
+  correct:1
+ }
+
+};
+
+function openPythonLessonByName(name){
+
+ const course=courses.find(c=>c.title===name);
+
+ if(course){
+  openPythonLesson(course);
+ }
+}
+
+function openPythonLesson(course){
+
+ const lesson=pythonLessons[course.title];
+
+ if(!lesson){
+  openPythonLab();
+  return;
+ }
+
+ main.innerHTML=`
+
+ <div class="lesson-head">
+
+ <button class="back" onclick="go('python')">
+ ← Python
+ </button>
+
+ <span class="lesson-number">
+ LESSON ${course.level+1}
+ </span>
+
+ </div>
+
+ <div class="concept">
+
+ <div class="eyebrow">
+ <i class="fa-brands fa-python"></i>
+ ${course.title}
+ </div>
+
+ <h1>${lesson.title}</h1>
+
+ <p class="muted">
+ ${lesson.concept}
+ </p>
+
+ <div class="code">
+ ${escapeHTML(lesson.code)}
+ </div>
+
+ </div>
+
+ <div class="battle-card">
+
+ <div class="enemy">
+
+ <div class="enemy-icon">
+ <i class="fa-brands fa-python"></i>
+ </div>
+
+ <div class="enemy-name">
+ PYTHON CHALLENGE
+ </div>
+
+ </div>
+
+ <h3>Question</h3>
+
+ <p>${lesson.question}</p>
+
+ <div id="lessonChoices">
+
+ ${lesson.answers.map((answer,i)=>`
+
+ <button
+ class="choice"
+ onclick="selectLessonAnswer(
+ ${i},
+ ${lesson.correct},
+ '${escapeAttribute(course.title)}'
+ )"
+ >
+
+ ${String.fromCharCode(65+i)}.
+ ${answer}
+
+ </button>
+
+ `).join("")}
+
+ </div>
+
+ <div id="lessonResult"></div>
+
+ </div>
+
+ <div class="card" style="margin-top:10px">
+
+ <h3>
+ <i class="fa-solid fa-code"></i>
+ Try It
+ </h3>
+
+ <p class="muted">
+ Try the code yourself.
+ </p>
+
+ <button class="btn python" onclick="openPythonLab()">
+ WRITE PYTHON
+ </button>
+
+ </div>
+
+ `;
+}
+
+function selectLessonAnswer(index,correct,title){
+
+ const buttons=document.querySelectorAll(
+ "#lessonChoices .choice"
+ );
+
+ buttons.forEach(b=>b.disabled=true);
+
+ buttons[index].classList.add(
+ index===correct?"correct":"wrong"
+ );
+
+ if(index!==correct){
+
+  buttons[correct].classList.add("correct");
+
+  document.querySelector("#lessonResult").innerHTML=`
+
+  <div class="card"
+  style="margin-top:12px;background:#17101a;box-shadow:none">
+
+  <b style="color:var(--red)">
+  WRONG
+  </b>
+
+  <p class="muted">
+  Look at the green answer.
+  </p>
 
   </div>
 
-  <h3>
-   ${currentFact.title}
-  </h3>
+  `;
 
-  <p>
-   ${currentFact.text}
-  </p>
+  return;
+ }
+
+ document.querySelector("#lessonResult").innerHTML=`
+
+ <div class="card"
+ style="margin-top:12px;background:#111e17;box-shadow:none">
+
+ <b style="color:var(--lime)">
+ CORRECT
+ </b>
+
+ <p class="muted">
+ Good job! You got it right.
+ </p>
 
  </div>
-
-
- <button
-  class="btn primary"
-  onclick="readFact()">
-
-  I LEARNED SOMETHING
-  <br>
-  <small>+5 XP</small>
-
- </button>
-
-
- <button
-  class="btn"
-  onclick="factPage()">
-
-  🎲 SHOW ANOTHER FACT
-
- </button>
-
-
- <div class="section">
-  <h2>📚 More facts</h2>
- </div>
-
-
- ${facts.slice(0,6).map(
-  f=>`
-
-   <div class="card" style="margin-bottom:9px">
-
-    <div class="fact-tag">
-     ${f.category}
-    </div>
-
-    <h3 style="margin-top:5px">
-     ${f.title}
-    </h3>
-
-    <p class="muted">
-     ${f.text}
-    </p>
-
-   </div>
-
-  `
- ).join("")}
 
  `;
 
+ const course=courses.find(c=>c.title===title);
+
+ if(course&&!state.lessonXP[title]){
+
+  state.lessonXP[title]=true;
+  state.completed++;
+
+  saveState();
+
+  addXP(course.xp,"Lesson done");
+ }
 }
 
+/* =========================================================
+GENERIC LESSONS
+========================================================= */
 
-function readFact(){
+function openGenericLesson(course,index){
 
- addXP(5,"Fact discovered");
+ main.innerHTML=`
 
+ <div class="lesson-head">
+
+ <button class="back" onclick="go('courses')">
+ ← Map
+ </button>
+
+ <span class="lesson-number">
+ LESSON ${index+1}
+ </span>
+
+ </div>
+
+ <div class="concept">
+
+ <div class="eyebrow">
+ ${course.title}
+ </div>
+
+ <h1>${course.desc}</h1>
+
+ <p class="muted">
+ Finish the question below to get XP.
+ </p>
+
+ <div class="code">
+ let score = 10;
+
+ if(score > 5){
+     console.log("Good score!");
+ }
+ </div>
+
+ </div>
+
+ <div class="battle-card">
+
+ <div class="enemy">
+
+ <div class="enemy-icon">
+ <i class="fa-solid fa-robot"></i>
+ </div>
+
+ <div class="enemy-name">
+ CODING QUESTION
+ </div>
+
+ </div>
+
+ <h3>Question</h3>
+
+ <p>
+ What does the if statement check?
+ </p>
+
+ <button
+ class="choice"
+ onclick="this.classList.add('correct');genericLessonDone(${index})"
+ >
+ It checks if score is greater than 5.
+ </button>
+
+ <button
+ class="choice"
+ onclick="this.classList.add('wrong');toast('Try again.')"
+ >
+ It repeats the code.
+ </button>
+
+ </div>
+
+ `;
 }
 
+function genericLessonDone(index){
 
-/* =====================================================
-   QUIZ ARENA
-===================================================== */
+ const course=courses[index];
+
+ if(state.lessonXP[index]){
+  toast("You already finished this lesson.");
+  return;
+ }
+
+ state.lessonXP[index]=true;
+ state.completed++;
+
+ saveState();
+
+ addXP(course.xp,"Lesson done");
+}
+
+/* =========================================================
+CODE PRACTICE
+========================================================= */
+
+function openPythonLab(){
+
+ currentPage="playground";
+ activeLanguage="python";
+
+ playground();
+}
+
+function playground(){
+
+ const python=activeLanguage==="python";
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+ <div class="eyebrow">
+ <i class="fa-solid fa-flask"></i>
+ CODE PRACTICE
+ </div>
+
+ <h1>Write Code</h1>
+
+ <p>
+ Write code, run it and see what it does.
+ </p>
+
+ </section>
+
+ <div class="language-tabs">
+
+ <button
+ class="${!python?"active":""}"
+ onclick="switchLanguage('javascript')"
+ >
+ <i class="fa-brands fa-js"></i>
+ JavaScript
+ </button>
+
+ <button
+ class="${python?"active python-active":""}"
+ onclick="switchLanguage('python')"
+ >
+ <i class="fa-brands fa-python"></i>
+ Python
+ </button>
+
+ </div>
+
+ <div class="editor">
+
+ <div class="editor-top">
+
+ <span>
+ ${python?"main.py":"script.js"}
+ </span>
+
+ <span>
+ ${python?"PYTHON":"JAVASCRIPT"}
+ </span>
+
+ </div>
+
+ <textarea id="editor">${
+ python
+ ? `name = "Coder"
+score = 10
+
+print("Hello,", name)
+print("Score:", score)`
+ : `let name = "Coder";
+let score = 10;
+
+if(score >= 10){
+ console.log("Hello, " + name + "!");
+}`
+ }</textarea>
+
+ </div>
+
+ <div class="output-title">
+ <span>OUTPUT</span>
+ <span>
+ <i class="fa-solid fa-terminal"></i>
+ </span>
+ </div>
+
+ <div class="output" id="output">
+ Output will appear here...
+ </div>
+
+ <div
+ id="inputConsole"
+ style="display:none;margin-top:10px"
+ >
+
+ <div class="muted" style="margin-bottom:6px">
+ Your program needs an answer.
+ </div>
+
+ <input
+ id="pythonInput"
+ class="input"
+ placeholder="Type your answer and press Enter"
+ >
+
+ </div>
+
+ <button
+ class="btn ${python?"python":"primary"}"
+ onclick="runCode()"
+ >
+
+ <i class="fa-solid fa-play"></i>
+
+ RUN ${python?"PYTHON":"CODE"}
+
+ </button>
+
+ ${python?`
+
+ <div class="card" style="margin-top:10px">
+
+ <h3>
+ <i class="fa-brands fa-python"></i>
+ Things You Know
+ </h3>
+
+ <div style="margin-top:8px">
+
+ <span class="tag python">Variables</span>
+ <span class="tag python">input()</span>
+ <span class="tag python">print()</span>
+ <span class="tag python">if / else</span>
+ <span class="tag python">open()</span>
+ <span class="tag python">read()</span>
+ <span class="tag python">write()</span>
+
+ </div>
+
+ </div>
+
+ `:""}
+
+ `;
+
+ const input=document.querySelector("#pythonInput");
+
+ if(input){
+
+  input.addEventListener("keydown",event=>{
+
+   if(event.key==="Enter"){
+    submitPythonInput();
+   }
+
+  });
+
+ }
+}
+
+function switchLanguage(language){
+
+ activeLanguage=language;
+
+ playground();
+}
+
+/* =========================================================
+RUN CODE
+========================================================= */
+
+function runCode(){
+
+ const editor=document.querySelector("#editor");
+ const output=document.querySelector("#output");
+
+ if(!editor||!output)return;
+
+ const code=editor.value;
+
+ output.classList.remove("error");
+ output.textContent="Running...";
+
+ if(activeLanguage==="python"){
+  runPython(code,output);
+ }else{
+  runJavaScript(code,output);
+ }
+}
+
+/* =========================================================
+JAVASCRIPT
+========================================================= */
+
+function runJavaScript(code,output){
+
+ try{
+
+  const logs=[];
+
+  const fakeConsole={
+   log:(...args)=>logs.push(args.map(String).join(" ")),
+   error:(...args)=>logs.push("ERROR: "+args.map(String).join(" ")),
+   warn:(...args)=>logs.push("WARNING: "+args.map(String).join(" "))
+  };
+
+  new Function("console",code)(fakeConsole);
+
+  state.codeRuns++;
+
+  addXP(5,"Code run",false);
+
+  unlockAchievement("code","First Code");
+
+  output.classList.remove("error");
+
+  output.textContent=
+   logs.length
+   ? logs.join("\n")
+   : "Code ran with no output.";
+
+ }catch(error){
+
+  output.classList.add("error");
+
+  output.textContent=
+   "JavaScript Error: "+error.message;
+ }
+}
+
+/* =========================================================
+PYTHON
+========================================================= */
+
+let pythonInputState=null;
+
+function runPython(code,output){
+
+ const lines=code.split(/\r?\n/);
+ const vars={};
+ const logs=[];
+
+ try{
+
+  for(let i=0;i<lines.length;i++){
+
+   let line=lines[i].trim();
+
+   if(!line||line.startsWith("#"))continue;
+
+   if(line.startsWith("print(")&&line.endsWith(")")){
+
+    const inside=line.slice(6,-1);
+
+    const parts=splitPythonArguments(inside);
+
+    const values=parts.map(
+     part=>evaluatePythonExpression(part,vars)
+    );
+
+    logs.push(values.map(String).join(" "));
+
+    continue;
+   }
+
+   const inputAssignment=
+    line.match(/^([A-Za-z_]\w*)\s*=\s*input\((.*)\)$/);
+
+   if(inputAssignment){
+
+    const variable=inputAssignment[1];
+
+    const prompt=
+     evaluatePythonExpression(
+      inputAssignment[2],
+      vars
+     );
+
+    return waitForPythonInput(
+     code,
+     output,
+     variable,
+     prompt,
+     vars,
+     logs,
+     lines,
+     i
+    );
+   }
+
+   const assignment=
+    line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+
+   if(assignment){
+
+    vars[assignment[1]]=
+     evaluatePythonExpression(
+      assignment[2],
+      vars
+     );
+
+    continue;
+   }
+
+   throw new Error(
+    "I do not know this Python code yet: "+line
+   );
+  }
+
+  finishPythonExecution(output,logs);
+
+ }catch(error){
+
+  output.classList.add("error");
+
+  output.textContent=
+   "Python Error: "+error.message;
+ }
+}
+
+function waitForPythonInput(
+ code,
+ output,
+ variable,
+ prompt,
+ vars,
+ logs,
+ lines,
+ inputLine
+){
+
+ const consoleBox=document.querySelector("#inputConsole");
+ const input=document.querySelector("#pythonInput");
+
+ if(!consoleBox||!input){
+  throw new Error("The input box is not available.");
+ }
+
+ consoleBox.style.display="block";
+
+ input.placeholder=
+  String(prompt||"Type something...");
+
+ input.value="";
+ input.focus();
+
+ pythonInputState={
+  code,
+  output,
+  variable,
+  vars,
+  logs,
+  lines,
+  inputLine
+ };
+
+ output.textContent=
+  "Your program is waiting for your answer...";
+}
+
+function submitPythonInput(){
+
+ if(!pythonInputState)return;
+
+ const input=document.querySelector("#pythonInput");
+
+ const value=input.value;
+
+ if(value==="")return;
+
+ const data=pythonInputState;
+
+ data.vars[data.variable]=value;
+
+ pythonInputState=null;
+
+ document.querySelector("#inputConsole").style.display="none";
+
+ continuePythonExecution(data);
+}
+
+function continuePythonExecution(data){
+
+ const{
+  output,
+  vars,
+  logs,
+  lines,
+  inputLine
+ }=data;
+
+ try{
+
+  for(let i=inputLine+1;i<lines.length;i++){
+
+   let line=lines[i].trim();
+
+   if(!line||line.startsWith("#"))continue;
+
+   if(line.startsWith("print(")&&line.endsWith(")")){
+
+    const inside=line.slice(6,-1);
+
+    const parts=splitPythonArguments(inside);
+
+    const values=parts.map(
+     p=>evaluatePythonExpression(p,vars)
+    );
+
+    logs.push(values.map(String).join(" "));
+
+    continue;
+   }
+
+   const assignment=
+    line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+
+   if(assignment){
+
+    vars[assignment[1]]=
+     evaluatePythonExpression(
+      assignment[2],
+      vars
+     );
+
+    continue;
+   }
+
+   throw new Error(
+    "I do not know this Python code yet: "+line
+   );
+  }
+
+  finishPythonExecution(output,logs);
+
+ }catch(error){
+
+  output.classList.add("error");
+
+  output.textContent=
+   "Python Error: "+error.message;
+ }
+}
+
+function finishPythonExecution(output,logs){
+
+ state.pythonRuns++;
+
+ saveState();
+
+ addXP(5,"Python code run",false);
+
+ unlockAchievement(
+  "python",
+  "Python Coder"
+ );
+
+ output.classList.remove("error");
+
+ output.textContent=
+  logs.length
+  ? logs.join("\n")
+  : "Python finished with no output.";
+}
+
+/* =========================================================
+PYTHON EXPRESSIONS
+========================================================= */
+
+function evaluatePythonExpression(expression,vars){
+
+ expression=expression.trim();
+
+ if(
+  (expression.startsWith('"')&&expression.endsWith('"'))||
+  (expression.startsWith("'")&&expression.endsWith("'"))
+ ){
+
+  return expression.slice(1,-1);
+ }
+
+ if(Object.prototype.hasOwnProperty.call(vars,expression)){
+  return vars[expression];
+ }
+
+ if(expression==="True")return true;
+ if(expression==="False")return false;
+ if(expression==="None")return null;
+
+ const lenMatch=expression.match(/^len\((.+)\)$/);
+
+ if(lenMatch){
+
+  const value=
+   evaluatePythonExpression(
+    lenMatch[1],
+    vars
+   );
+
+  return String(value).length;
+ }
+
+ if(expression.includes("+")){
+
+  const parts=splitOperator(expression,"+");
+
+  const values=parts.map(
+   p=>evaluatePythonExpression(p,vars)
+  );
+
+  if(values.every(v=>typeof v==="number")){
+   return values.reduce((a,b)=>a+b,0);
+  }
+
+  return values.map(String).join("");
+ }
+
+ if(expression.includes("-")){
+
+  const parts=splitOperator(expression,"-");
+
+  if(parts.length===2){
+
+   const a=Number(
+    evaluatePythonExpression(parts[0],vars)
+   );
+
+   const b=Number(
+    evaluatePythonExpression(parts[1],vars)
+   );
+
+   if(!isNaN(a)&&!isNaN(b)){
+    return a-b;
+   }
+  }
+ }
+
+ if(expression.includes("*")){
+
+  const parts=splitOperator(expression,"*");
+
+  if(parts.length===2){
+
+   const a=Number(
+    evaluatePythonExpression(parts[0],vars)
+   );
+
+   const b=Number(
+    evaluatePythonExpression(parts[1],vars)
+   );
+
+   if(!isNaN(a)&&!isNaN(b)){
+    return a*b;
+   }
+  }
+ }
+
+ if(
+  expression!=="" &&
+  !isNaN(Number(expression))
+ ){
+
+  return Number(expression);
+ }
+
+ return expression;
+}
+
+function splitPythonArguments(text){
+
+ const result=[];
+ let current="";
+ let quote=null;
+
+ for(let i=0;i<text.length;i++){
+
+  const char=text[i];
+
+  if(
+   (char==="'"||char==='"')&&
+   !quote
+  ){
+
+   quote=char;
+   current+=char;
+   continue;
+  }
+
+  if(char===quote){
+
+   quote=null;
+   current+=char;
+   continue;
+  }
+
+  if(char===","&&!quote){
+
+   result.push(current.trim());
+   current="";
+   continue;
+  }
+
+  current+=char;
+ }
+
+ if(current.trim()){
+  result.push(current.trim());
+ }
+
+ return result;
+}
+
+function splitOperator(text,operator){
+
+ return text
+  .split(operator)
+  .map(x=>x.trim());
+}
+
+/* =========================================================
+FILES
+========================================================= */
+
+function fileHarbor(){
+
+ const filenames=Object.keys(state.pythonFiles);
+
+ main.innerHTML=`
+
+ <section class="hero">
+
+ <div class="eyebrow">
+ <i class="fa-solid fa-folder"></i>
+ FILES
+ </div>
+
+ <h1>Your Files</h1>
+
+ <p>
+ Make and save simple text files.
+ </p>
+
+ </section>
+
+ <div class="card">
+
+ <h3>
+ <i class="fa-solid fa-file-circle-plus"></i>
+ New File
+ </h3>
+
+ <div class="input-group" style="margin-top:12px">
+
+ <label>File Name</label>
+
+ <input
+ class="input"
+ id="newFileName"
+ placeholder="notes.txt"
+ >
+
+ </div>
+
+ <div class="input-group">
+
+ <label>Text</label>
+
+ <textarea
+ class="input"
+ id="newFileContent"
+ style="min-height:120px"
+ placeholder="Write something..."
+ ></textarea>
+
+ </div>
+
+ <button class="btn python" onclick="createFile()">
+ CREATE FILE
+ </button>
+
+ </div>
+
+ <div class="section">
+
+ <h2>
+ <i class="fa-solid fa-folder-open"></i>
+ My Files
+ </h2>
+
+ <button onclick="go('playground')">
+ CODE →
+ </button>
+
+ </div>
+
+ <div class="file-list">
+
+ ${
+  filenames.length
+  ? filenames.map(fileCard).join("")
+  : `
+  <div class="card">
+  <p class="muted">
+  You have no files yet.
+  </p>
+  </div>
+  `
+ }
+
+ </div>
+
+ `;
+}
+
+function fileCard(filename){
+
+ return`
+
+ <div class="file-item">
+
+ <span style="font-size:18px">
+ <i class="fa-solid fa-file-lines"></i>
+ </span>
+
+ <span class="file-name">
+ ${escapeHTML(filename)}
+ </span>
+
+ <div class="file-actions">
+
+ <button onclick="viewFile('${escapeAttribute(filename)}')">
+ <i class="fa-solid fa-eye"></i>
+ </button>
+
+ <button onclick="downloadFile('${escapeAttribute(filename)}')">
+ <i class="fa-solid fa-download"></i>
+ </button>
+
+ <button onclick="deleteFile('${escapeAttribute(filename)}')">
+ <i class="fa-solid fa-trash"></i>
+ </button>
+
+ </div>
+
+ </div>
+
+ `;
+}
+
+function createFile(){
+
+ const name=
+  document.querySelector("#newFileName").value.trim();
+
+ const content=
+  document.querySelector("#newFileContent").value;
+
+ if(!name){
+  toast("Enter a file name.");
+  return;
+ }
+
+ if(!name.includes(".")){
+  toast("Use a name like notes.txt.");
+  return;
+ }
+
+ state.pythonFiles[name]=content;
+
+ saveState();
+
+ unlockAchievement("file","File User");
+
+ toast("File created.");
+
+ render();
+}
+
+function viewFile(name){
+
+ const content=state.pythonFiles[name]||"";
+
+ main.innerHTML=`
+
+ <div class="lesson-head">
+
+ <button class="back" onclick="go('files')">
+ ← Files
+ </button>
+
+ <span class="lesson-number">
+ FILE
+ </span>
+
+ </div>
+
+ <div class="card">
+
+ <h2>
+ <i class="fa-solid fa-file-lines"></i>
+ ${escapeHTML(name)}
+ </h2>
+
+ <div class="file-preview">
+ ${escapeHTML(content)}
+ </div>
+
+ <button class="btn"
+ onclick="downloadFile('${escapeAttribute(name)}')"
+ >
+ DOWNLOAD
+ </button>
+
+ </div>
+
+ `;
+}
+
+function deleteFile(name){
+
+ if(!confirm("Delete "+name+"?"))return;
+
+ delete state.pythonFiles[name];
+
+ saveState();
+
+ toast("File deleted.");
+
+ render();
+}
+
+function downloadFile(name){
+
+ const content=state.pythonFiles[name];
+
+ const blob=new Blob(
+  [content],
+  {type:"text/plain"}
+ );
+
+ const url=URL.createObjectURL(blob);
+
+ const a=document.createElement("a");
+
+ a.href=url;
+ a.download=name;
+
+ document.body.appendChild(a);
+
+ a.click();
+
+ a.remove();
+
+ URL.revokeObjectURL(url);
+
+ toast("File saved.");
+}
+
+/* =========================================================
+QUIZ
+========================================================= */
+
+const questions=[
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"Which symbol puts a value into a Python variable?",
+  answers:["==","=","=>","!="],
+  correct:1,
+  explanation:"The = symbol puts a value into a variable."
+ },
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"Which Python function lets the user type something?",
+  answers:["get()","input()","readUser()","ask()"],
+  correct:1,
+  explanation:"input() lets the user type information."
+ },
+
+ {
+  difficulty:"EASY",
+  xp:10,
+  question:"Which Python function shows information?",
+  answers:["display()","show()","print()","console()"],
+  correct:2,
+  explanation:"print() shows information."
+ },
+
+ {
+  difficulty:"HARD",
+  xp:30,
+  question:"What will x=5; print(x+3) show?",
+  answers:["53","8","2","Error"],
+  correct:1,
+  explanation:"5 + 3 is 8."
+ }
+
+];
 
 function randomQuestion(){
 
  return questions[
-  Math.floor(
-   Math.random()*questions.length
-  )
+  Math.floor(Math.random()*questions.length)
  ];
-
 }
-
 
 function quizArena(){
 
  quizQuestion=randomQuestion();
-
  selected=null;
-
  quizDone=false;
 
  renderQuiz();
-
 }
-
 
 function renderQuiz(){
 
@@ -2730,142 +3696,116 @@ function renderQuiz(){
 
  <section class="hero">
 
-  <div class="eyebrow">
-   QUIZ ARENA
-  </div>
+ <div class="eyebrow">
+ <i class="fa-solid fa-crosshairs"></i>
+ QUIZ
+ </div>
 
-  <h1>
-   Test your coding brain.
-  </h1>
+ <h1>Code Quiz</h1>
 
-  <p>
-   Correct answers earn XP.
-   Harder questions give better rewards.
-  </p>
+ <p>
+ Answer the question and earn XP.
+ </p>
 
  </section>
 
+ <div class="battle-card">
 
- <div class="card">
+ <div class="enemy">
 
-  <div class="quiz-header">
+ <div class="enemy-icon">
+ <i class="fa-solid fa-robot"></i>
+ </div>
 
-   <span class="difficulty ${
-    q.difficulty.toLowerCase()
-   }">
-
-    ${q.difficulty}
-
-   </span>
-
-   <span class="reward">
-    +${q.xp} XP
-   </span>
-
-  </div>
-
-
-  <h2 style="margin-top:15px">
-   ${q.question}
-  </h2>
-
-
-  ${q.answers.map(
-   (answer,index)=>`
-
-    <button
-     class="choice ${
-      selected===index
-       ?quizDone
-        ?index===q.correct
-         ?"correct"
-         :"wrong"
-        :"selected"
-       :""
-     }"
-     onclick="answerQuiz(${index})">
-
-     ${String.fromCharCode(65+index)}.
-     ${answer}
-
-    </button>
-
-   `
-  ).join("")}
-
-
-  ${
-   quizDone
-   ?`
-
-    <div
-     class="card"
-     style="
-      margin-top:12px;
-      background:#0d131b;
-      box-shadow:none;
-     ">
-
-     <b>
-      ${
-       selected===q.correct
-        ?"🎉 CORRECT!"
-        :"❌ NOT QUITE!"
-      }
-     </b>
-
-     <p class="muted">
-      ${q.explanation}
-     </p>
-
-    </div>
-
-    <button
-     class="btn primary"
-     onclick="quizArena()">
-
-     NEXT QUESTION 🎲
-
-    </button>
-
-   `
-   :`
-
-    <button
-     class="btn primary"
-     onclick="submitQuiz()"
-     ${selected===null?"disabled":""}>
-
-     SUBMIT ANSWER
-
-    </button>
-
-   `
-  }
+ <div class="enemy-name">
+ ${q.difficulty} QUESTION
+ </div>
 
  </div>
 
+ <div class="card"
+ style="margin-top:10px;box-shadow:none">
 
- <div class="combo">
+ <h3>Question</h3>
 
-  <strong>
-   🔥 Combo x${combo}
-  </strong>
+ <h2 style="font-size:17px">
+ ${q.question}
+ </h2>
 
-  <span>
-   ${
-    combo>=3
-     ?"XP bonus active!"
-     :"Get answers correct consecutively."
-   }
-  </span>
+ ${q.answers.map((answer,index)=>`
+
+ <button
+ class="choice ${
+  selected===index
+  ? quizDone
+   ? index===q.correct
+    ?"correct"
+    :"wrong"
+   :"selected"
+  :""
+ }"
+ onclick="answerQuiz(${index})"
+ >
+
+ ${String.fromCharCode(65+index)}.
+ ${answer}
+
+ </button>
+
+ `).join("")}
+
+ ${
+  quizDone
+  ? `
+
+  <div class="card"
+  style="margin-top:12px;box-shadow:none">
+
+  <b style="color:${
+   selected===q.correct
+   ?"var(--lime)"
+   :"var(--red)"
+  }">
+
+  ${
+   selected===q.correct
+   ?"CORRECT"
+   :"WRONG"
+  }
+
+  </b>
+
+  <p class="muted">
+  ${q.explanation}
+  </p>
+
+  </div>
+
+  <button class="btn primary"
+  onclick="quizArena()">
+  NEXT QUESTION
+  </button>
+
+  `
+  :`
+
+  <button
+  class="btn primary"
+  onclick="submitQuiz()"
+  ${selected===null?"disabled":""}
+  >
+  CHECK ANSWER
+  </button>
+
+  `
+ }
+
+ </div>
 
  </div>
 
  `;
-
 }
-
 
 function answerQuiz(index){
 
@@ -2874,9 +3814,7 @@ function answerQuiz(index){
  selected=index;
 
  renderQuiz();
-
 }
-
 
 function submitQuiz(){
 
@@ -2890,580 +3828,94 @@ function submitQuiz(){
 
   combo++;
 
-  let bonus=0;
-
-  if(combo>=3){
-   bonus=5;
-  }
-
-  addXP(
-   q.xp+bonus,
-   "Quiz correct"
-  );
+  const bonus=combo>=3?5:0;
 
   state.completed++;
 
   saveState();
+
+  addXP(q.xp+bonus,"Quiz done");
+
+  unlockAchievement("quiz","Quiz User");
+
+  if(combo>=3){
+   unlockAchievement("combo","3 in a Row");
+  }
 
  }else{
 
   combo=0;
 
-  toast(
-   "Wrong answer. Read the explanation!"
-  );
+  toast("Wrong answer.");
 
-  render();
-
+  renderQuiz();
  }
-
 }
 
+/* ========================================================= LEARN
+========================================================= */
 
-/* =====================================================
-   LOGIC PUZZLES
-===================================================== */
+function factPage(){
 
-function logicPuzzle(){
-
- const puzzles=[
-
-  {
-   question:
-    "You have 3 apples. You take away 1 apple. How many apples do you have?",
-   answers:["1","2","3","0"],
-   correct:0
-  },
-
-  {
-   question:
-    "A loop runs 5 times. Inside it, a variable increases by 2. Starting at 0, what is the final value?",
-   answers:["5","7","10","12"],
-   correct:2
-  },
-
-  {
-   question:
-    "Which value is greater: 10 or 2 * 4?",
-   answers:["10","8","They are equal","Impossible to know"],
-   correct:0
-  },
-
-  {
-   question:
-    "If a condition is false, what normally happens to the code inside an if block?",
-   answers:[
-    "It runs twice",
-    "It is skipped",
-    "It crashes automatically",
-    "It becomes a loop"
-   ],
-   correct:1
-  }
-
- ];
-
- const puzzle=
-  puzzles[
-   Math.floor(
-    Math.random()*puzzles.length
-   )
-  ];
-
- selected=null;
-
- main.innerHTML=`
-
- <div class="lesson-head">
-
-  <button
-   class="back"
-   onclick="currentPage='home';render()">
-
-   ← Home
-
-  </button>
-
-  <span class="lesson-number">
-   LOGIC PUZZLE
-  </span>
-
- </div>
-
-
- <div class="card">
-
-  <div class="eyebrow">
-   BRAIN TRAINING
-  </div>
-
-  <h2>
-   ${puzzle.question}
-  </h2>
-
-
-  ${puzzle.answers.map(
-   (a,i)=>`
-
-    <button
-     class="choice"
-     onclick="selectPuzzle(
-      ${i},
-      ${puzzle.correct}
-     )">
-
-     ${a}
-
-    </button>
-
-   `
-  ).join("")}
-
- </div>
-
- `;
-
-}
-
-
-function selectPuzzle(index,correct){
-
- if(index===correct){
-
-  addXP(15,"Logic puzzle");
-
-  state.completed++;
-
-  saveState();
-
-  toast(
-   "PUZZLE SOLVED! +15 XP 🧩"
-  );
-
- }else{
-
-  toast(
-   "Not quite. Try another puzzle!"
-  );
-
- }
-
-}
-
-
-/* =====================================================
-   COURSES
-===================================================== */
-
-function coursePage(){
+ const fact=
+  facts[Math.floor(Math.random()*facts.length)];
 
  main.innerHTML=`
 
  <section class="hero">
 
-  <div class="eyebrow">
-   ADVENTURE MAP
-  </div>
+ <div class="eyebrow">
+ <i class="fa-solid fa-book"></i>
+ LEARN
+ </div>
 
-  <h1>
-   Explore the coding world.
-  </h1>
+ <h1>Simple Coding Tips</h1>
 
-  <p>
-   Complete missions to unlock new areas.
-   You do not need to grind one lesson repeatedly.
-  </p>
+ <p>
+ Learn small facts that can help you code.
+ </p>
 
  </section>
 
-
  <div class="card">
 
-  <div class="xp-row">
+ <div class="eyebrow">
+ ${fact.category}
+ </div>
 
-   <span>
-    LEVEL ${state.level}
-   </span>
+ <h2 style="margin-top:8px">
+ ${fact.title}
+ </h2>
 
-   <span class="level-label">
-    ${state.xp%100}/100 XP
-   </span>
-
-  </div>
-
-  <div class="xp-bar">
-
-   <div
-    class="xp-fill"
-    style="width:${state.xp%100}%">
-   </div>
-
-  </div>
+ <p class="muted">
+ ${fact.text}
+ </p>
 
  </div>
 
+ <button class="btn primary" onclick="readFact()">
+ <i class="fa-solid fa-lightbulb"></i>
+ I LEARNED THIS
+ <br>
+ <small>+5 XP</small>
+ </button>
 
- <div class="section">
-  <h2>🗺️ World Map</h2>
- </div>
-
-
- ${courses.map(
-  courseCard
- ).join("")}
-
- `;
-
-}
-
-
-function courseCard(course){
-
- const unlocked=
-  state.level>=course.level;
-
- return `
-
- <button
-  class="quest"
-  onclick="${
-   unlocked
-    ?`openLesson(${course.level})`
-    :`toast('Reach Level ${course.level} to unlock this area!')`
-  }">
-
-  <div class="quest-icon">
-
-   ${
-    unlocked
-     ?course.icon
-     :"🔒"
-   }
-
-  </div>
-
-  <div class="quest-info">
-
-   <b>
-    ${course.title}
-   </b>
-
-   <p>
-    ${course.desc}
-   </p>
-
-  </div>
-
-  <span class="reward">
-
-   ${
-    unlocked
-     ?"+"+course.xp+" XP"
-     :"LV "+course.level
-   }
-
-  </span>
-
+ <button class="btn" onclick="factPage()">
+ SHOW ANOTHER
  </button>
 
  `;
-
 }
 
+function readFact(){
 
-/* =====================================================
-   LESSON
-===================================================== */
+ addXP(5,"Learned something");
 
-function openLesson(index){
-
- const course=courses[index];
-
- if(state.level<index){
-
-  toast(
-   "Reach Level "+index+" first!"
-  );
-
-  return;
-
- }
-
- main.innerHTML=`
-
- <div class="lesson-head">
-
-  <button
-   class="back"
-   onclick="currentPage='courses';render()">
-
-   ← Map
-
-  </button>
-
-  <span class="lesson-number">
-   AREA ${index}
-  </span>
-
- </div>
-
-
- <div class="concept">
-
-  <div class="eyebrow">
-   ${course.title}
-  </div>
-
-  <h1>
-   ${course.desc}
-  </h1>
-
-  <p class="muted">
-   Complete this mission once to earn
-   ${course.xp} XP.
-  </p>
-
-
-  <div class="code">
-
-<span class="comment">// Example</span><br>
-<span class="kw">let</span> score =
-<span class="num">10</span>;<br><br>
-
-<span class="kw">if</span>
-(score &gt; <span class="num">5</span>) {<br>
-&nbsp;&nbsp;console.log(
-<span class="str">"Level up!"</span>);<br>
+ unlockAchievement("fact","Learner");
 }
 
-  </div>
-
- </div>
-
-
- <div class="card">
-
-  <h3>
-   🧠 Mission
-  </h3>
-
-  <p>
-   What is the purpose of the condition?
-  </p>
-
-
-  <button
-   class="choice"
-   onclick="this.classList.toggle('selected')">
-
-   It checks whether score is greater than 5.
-
-  </button>
-
-
-  <button
-   class="choice"
-   onclick="this.classList.toggle('selected')">
-
-   It automatically repeats the code.
-
-  </button>
-
-
-  <button
-   class="btn green"
-   onclick="completeLesson(${index})">
-
-   COMPLETE MISSION
-   <br>
-   <small>+${course.xp} XP</small>
-
-  </button>
-
- </div>
-
- `;
-
-}
-
-
-function completeLesson(index){
-
- const course=courses[index];
-
- if(state.lessonXP[index]){
-
-  toast(
-   "You already completed this mission."
-  );
-
-  return;
-
- }
-
- state.lessonXP[index]=true;
-
- state.completed++;
-
- saveState();
-
- addXP(
-  course.xp,
-  "Lesson completed"
- );
-
-}
-
-
-/* =====================================================
-   PLAYGROUND
-===================================================== */
-
-function playground(){
-
- main.innerHTML=`
-
- <section class="hero">
-
-  <div class="eyebrow">
-   CODE LAB
-  </div>
-
-  <h1>
-   Write. Run. Break. Fix.
-  </h1>
-
-  <p>
-   Experiment freely. Every successful run gives
-   a small amount of XP.
-  </p>
-
- </section>
-
-
- <div class="editor">
-
-  <div class="editor-top">
-
-   <span>
-    script.js
-   </span>
-
-   <span>
-    JavaScript
-   </span>
-
-  </div>
-
-
-  <textarea
-   id="editor">let name = "Coder";
-let score = 10;
-
-if (score >= 10) {
-  console.log("Welcome, " + name + "!");
-}</textarea>
-
- </div>
-
-
- <button
-  class="btn primary"
-  onclick="runCode()">
-
-  ▶ RUN CODE
-
- </button>
-
-
- <div
-  class="output"
-  id="output">
-
-  Console output will appear here...
-
- </div>
-
-
- <div
-  class="card"
-  style="margin-top:10px">
-
-  <h3>
-   🎯 Experiment
-  </h3>
-
-  <p class="muted">
-   Try changing score to 5.
-   Run it. Then change it to 15.
-   Watch the condition change the result.
-  </p>
-
- </div>
-
- `;
-
-}
-
-
-function runCode(){
-
- const code=
-  document.querySelector(
-   "#editor"
-  ).value;
-
- const output=
-  document.querySelector(
-   "#output"
-  );
-
- try{
-
-  const logs=[];
-
-  const fakeConsole={
-   log:(...args)=>{
-    logs.push(
-     args.join(" ")
-    );
-   }
-  };
-
-  new Function(
-   "console",
-   code
-  )(fakeConsole);
-
-  output.textContent=
-   logs.length
-    ?logs.join("\n")
-    :"Code ran successfully. No output.";
-
-  output.style.color=
-   "var(--lime)";
-
-  addXP(
-   5,
-   "Code executed"
-  );
-
- }catch(error){
-
-  output.textContent=
-   "Error: "+error.message;
-
-  output.style.color=
-   "var(--red)";
-
- }
-
-}
-
-
-/* =====================================================
-   PROGRESS
-===================================================== */
+/* ========================================================= STATS
+========================================================= */
 
 function progress(){
 
@@ -3473,150 +3925,114 @@ function progress(){
 
  <section class="hero">
 
-  <div class="eyebrow">
-   PLAYER PROFILE
-  </div>
+ <div class="eyebrow">
+ <i class="fa-solid fa-chart-line"></i>
+ MY STATS
+ </div>
 
-  <h1>
-   Your developer stats.
-  </h1>
+ <h1>My Progress</h1>
 
-  <p>
-   Your XP shows how much you've played,
-   practiced and explored.
-  </p>
+ <p>
+ See how much you have learned.
+ </p>
 
  </section>
 
+ ${playerHUD()}
 
  <div class="grid two">
 
-  <div class="card stat">
-   <span>⚡ XP</span>
-   <b>${state.xp}</b>
-   <small class="muted">
-    lifetime
-   </small>
-  </div>
-
-  <div class="card stat">
-   <span>⭐ LEVEL</span>
-   <b>${state.level}</b>
-   <small class="muted">
-    developer rank
-   </small>
-  </div>
-
-  <div class="card stat">
-   <span>🪙 COINS</span>
-   <b>${state.coins}</b>
-   <small class="muted">
-    earned
-   </small>
-  </div>
-
-  <div class="card stat">
-   <span>🧠 MISSIONS</span>
-   <b>${state.completed}</b>
-   <small class="muted">
-    completed
-   </small>
-  </div>
-
+ <div class="card stat">
+ <span>XP</span>
+ <b>${state.xp}</b>
+ <small>Total</small>
  </div>
 
+ <div class="card stat">
+ <span>LEVEL</span>
+ <b>${state.level}</b>
+ <small>Current level</small>
+ </div>
+
+ <div class="card stat">
+ <span>GOLD</span>
+ <b>${state.coins}</b>
+ <small>Coins</small>
+ </div>
+
+ <div class="card stat">
+ <span>TASKS</span>
+ <b>${state.completed}</b>
+ <small>Finished</small>
+ </div>
+
+ </div>
 
  <div class="section">
-  <h2>Next Level</h2>
+ <h2>Python</h2>
  </div>
-
 
  <div class="card">
 
-  <div class="xp-row">
+ <p class="muted">
+ Python runs:
+ <b style="color:var(--python)">
+ ${state.pythonRuns}
+ </b>
+ </p>
 
-   <span>
-    Level ${state.level}
-   </span>
+ <p class="muted">
+ Files:
+ <b style="color:var(--cyan)">
+ ${Object.keys(state.pythonFiles).length}
+ </b>
+ </p>
 
-   <span class="level-label">
-    ${pct}/100 XP
-   </span>
-
-  </div>
-
-  <div class="xp-bar">
-
-   <div
-    class="xp-fill"
-    style="width:${pct}%">
-   </div>
-
-  </div>
-
-  <p class="muted">
-   ${100-pct} XP remaining.
-  </p>
+ <button class="btn python"
+ onclick="go('python')">
+ KEEP LEARNING PYTHON
+ </button>
 
  </div>
-
 
  <div class="section">
-  <h2>📈 Your Activity</h2>
+ <h2>Next Level</h2>
  </div>
-
 
  <div class="card">
 
-  <p class="muted">
-   Keep playing to build your profile.
-  </p>
+ <h2>${getRank()}</h2>
 
-  <div style="
-   display:grid;
-   grid-template-columns:1fr 1fr;
-   gap:8px;
-  ">
+ <div class="xp-bar">
 
-   <div class="play">
-    <b>Facts</b>
-    <small>Knowledge XP</small>
-   </div>
+ <div class="xp-fill"
+ style="width:${pct}%">
+ </div>
 
-   <div class="play">
-    <b>Quizzes</b>
-    <small>Brain XP</small>
-   </div>
+ </div>
 
-   <div class="play">
-    <b>Code Lab</b>
-    <small>Practice XP</small>
-   </div>
-
-   <div class="play">
-    <b>Puzzles</b>
-    <small>Logic XP</small>
-   </div>
-
-  </div>
+ <p class="muted">
+ Keep learning to reach the next level.
+ </p>
 
  </div>
 
  `;
-
 }
 
+function getRank(){
 
-/* =====================================================
-   ACHIEVEMENTS
-===================================================== */
+ if(state.level>=10)return"CODE LEGEND";
+ if(state.level>=7)return"MASTER CODER";
+ if(state.level>=5)return"CODE KNIGHT";
+ if(state.level>=3)return"PYTHON CODER";
+ if(state.level>=1)return"JUNIOR CODER";
 
-function hasAchievement(id){
-
- return state.achievements.includes(id);
-
+ return"NEW CODER";
 }
 
+/* ========================================================= BADGES
+========================================================= */
 
 function achievements(){
 
@@ -3624,213 +4040,181 @@ function achievements(){
 
  <section class="hero">
 
-  <div class="eyebrow">
-   TROPHY ROOM
-  </div>
+ <div class="eyebrow">
+ <i class="fa-solid fa-trophy"></i>
+ BADGES
+ </div>
 
-  <h1>
-   Collect your trophies.
-  </h1>
+ <h1>My Badges</h1>
 
-  <p>
-   Keep playing and unlock badges for different
-   parts of your coding journey.
-  </p>
+ <p>
+ Get badges by using different parts of CodeQuest.
+ </p>
 
  </section>
 
-
  ${achievement(
-  "🌱",
+  "fa-solid fa-seedling",
   "New Coder",
-  "Create your CodeQuest character",
-  true
+  "Create an account",
+  hasAchievement("newcoder")
  )}
 
-
  ${achievement(
-  "💡",
-  "Curious Mind",
-  "Read a coding fact",
+  "fa-solid fa-lightbulb",
+  "Learner",
+  "Learn a tip",
   hasAchievement("fact")
  )}
 
-
  ${achievement(
-  "🧠",
-  "Quiz Warrior",
-  "Answer a quiz correctly",
+  "fa-solid fa-crosshairs",
+  "Quiz User",
+  "Finish a quiz question",
   hasAchievement("quiz")
  )}
 
-
  ${achievement(
-  "🔥",
-  "Combo Master",
-  "Reach a 3x quiz combo",
-  hasAchievement("combo")
- )}
-
-
- ${achievement(
-  "💻",
-  "First Program",
-  "Run code in the Code Lab",
+  "fa-solid fa-terminal",
+  "First Code",
+  "Run code",
   hasAchievement("code")
  )}
 
-
  ${achievement(
-  "🧩",
-  "Logic Master",
-  "Solve a logic puzzle",
-  hasAchievement("puzzle")
+  "fa-brands fa-python",
+  "Python Coder",
+  "Run Python code",
+  hasAchievement("python")
  )}
 
+ ${achievement(
+  "fa-solid fa-folder-open",
+  "File User",
+  "Make a file",
+  hasAchievement("file")
+ )}
 
  ${achievement(
-  "⭐",
+  "fa-solid fa-star",
   "Level One",
   "Reach Level 1",
   state.level>=1
  )}
 
-
  ${achievement(
-  "🚀",
-  "Explorer",
+  "fa-solid fa-shield-halved",
+  "Code Knight",
   "Reach Level 5",
   state.level>=5
  )}
 
-
  ${achievement(
-  "👑",
+  "fa-solid fa-crown",
   "Code Legend",
   "Reach Level 10",
   state.level>=10
  )}
 
  `;
-
 }
 
+function hasAchievement(id){
 
-function achievement(
- icon,
- title,
- desc,
- unlocked
-){
+ return state.achievements.includes(id);
+}
 
- return `
+function achievement(icon,title,desc,unlocked){
 
- <div
-  class="card achievement ${
-   unlocked?"":"locked"
-  }">
+ return`
 
-  <div class="badge">
-   ${icon}
-  </div>
+ <div class="card achievement ${unlocked?"":"locked"}">
 
-  <div>
+ <div class="badge">
+ <i class="${icon}"></i>
+ </div>
 
-   <b>${title}</b>
+ <div>
 
-   <p class="muted">
-    ${desc}
-   </p>
+ <b>${title}</b>
 
-  </div>
+ <p class="muted">
+ ${desc}
+ </p>
 
-  <span style="margin-left:auto">
-   ${unlocked?"✓":"🔒"}
-  </span>
+ </div>
+
+ <span style="margin-left:auto">
+
+ ${
+  unlocked
+  ? '<i class="fa-solid fa-check"></i>'
+  : '<i class="fa-solid fa-lock"></i>'
+ }
+
+ </span>
 
  </div>
 
  `;
-
 }
-
-
-/* =====================================================
-   ACHIEVEMENT TRACKING
-===================================================== */
 
 function unlockAchievement(id,title){
 
- if(state.achievements.includes(id)){
-  return;
- }
+ if(state.achievements.includes(id))return;
 
  state.achievements.push(id);
 
  saveState();
 
- toast(
-  "🏆 Achievement: "+title
- );
-
+ toast("BADGE: "+title);
 }
 
+function checkAchievements(){
 
-/* =====================================================
-   PATCH XP EVENTS
-===================================================== */
-
-const originalAddXP=addXP;
-
-
-/* =====================================================
-   LOGIN SESSION
-===================================================== */
-
-function updateLoginStreak(){
-
- if(!state.lastLogin){
-
-  state.streak=1;
-
- }else{
-
-  const today=
-   new Date().toDateString();
-
-  const last=
-   new Date(
-    state.lastLogin
-   ).toDateString();
-
-  if(today!==last){
-
-   state.streak++;
-
-  }
-
+ if(state.level>=1){
+  unlockAchievement("level1","Level One");
  }
 
- state.lastLogin=
-  new Date().toISOString();
+ if(state.level>=5){
+  unlockAchievement("explorer","Code Knight");
+ }
 
- saveState();
-
+ if(state.level>=10){
+  unlockAchievement("legend","Code Legend");
+ }
 }
 
+/* ========================================================= SAFE TEXT
+========================================================= */
 
-/* =====================================================
-   START
-===================================================== */
+function escapeHTML(value){
+
+ return String(value)
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
+
+function escapeAttribute(value){
+
+ return String(value)
+  .replace(/\\/g,"\\\\")
+  .replace(/'/g,"\\'");
+}
+
+/* ========================================================= START
+========================================================= */
+
+document.querySelector("#loginTab").onclick=showLogin;
+document.querySelector("#registerTab").onclick=showRegister;
 
 if(currentUser()){
-
  initApp();
-
 }else{
-
  showLogin();
-
 }
 
 </script>
