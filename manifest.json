@@ -2,9 +2,12 @@
   "name": "CodeQuest",
   "short_name": "CodeQuest",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#050711",
   "theme_color": "#050711",
+  "description": "Learn coding through a simple game.",
   "icons": [
     {
       "src": "icon.png",
