@@ -3,17 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#060912">
- <link rel="manifest" href="manifest.json">
+
 <meta name="theme-color" content="#050711">
 <meta name="mobile-web-app-capable" content="yes">
+
+<link rel="manifest" href="manifest.json">
+
 <title>CodeQuest: Learn to Code</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <style>
-*{box-sizing:border-box}
+*{
+ box-sizing:border-box;
+}
 
 :root{
  --bg:#050711;
@@ -22,6 +26,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
  --line:#26344d;
  --text:#f5f7ff;
  --muted:#8190a8;
+
  --orange:#ff8738;
  --gold:#ffd45c;
  --cyan:#43d9ff;
@@ -32,74 +37,189 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
  --red:#ff536b;
 }
 
-html{scroll-behavior:smooth}
+html{
+ scroll-behavior:smooth;
+}
+
+html:fullscreen{
+ background:#03050a;
+}
 
 body{
  margin:0;
  min-height:100vh;
+
  background:
- radial-gradient(circle at 20% 10%,#14213a 0,transparent 28%),
- radial-gradient(circle at 90% 80%,#24133c 0,transparent 30%),
+ radial-gradient(
+  circle at 20% 10%,
+  #14213a 0,
+  transparent 28%
+ ),
+ radial-gradient(
+  circle at 90% 80%,
+ #24133c 0,
+ transparent 30%
+ ),
  #03050a;
+
  color:var(--text);
- font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+
+ font-family:
+ Inter,
+ system-ui,
+ -apple-system,
+ BlinkMacSystemFont,
+ "Segoe UI",
+ Arial,
+ sans-serif;
 }
 
-button,input,textarea{font:inherit;color:inherit}
-button{border:0;cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}
+body:fullscreen{
+ width:100vw;
+ height:100vh;
+ overflow:hidden;
+}
+
+button,
+input,
+textarea{
+ font:inherit;
+ color:inherit;
+}
+
+button{
+ border:0;
+ cursor:pointer;
+}
+
+button:disabled{
+ opacity:.45;
+ cursor:not-allowed;
+}
+
+/* =========================================================
+APP
+========================================================= */
 
 .app-shell{
  width:100%;
  max-width:560px;
  min-height:100vh;
  margin:auto;
+
  background:
- linear-gradient(#ffffff03 1px,transparent 1px),
- linear-gradient(90deg,#ffffff03 1px,transparent 1px),
+ linear-gradient(
+  #ffffff03 1px,
+  transparent 1px
+ ),
+ linear-gradient(
+  90deg,
+  #ffffff03 1px,
+  transparent 1px
+ ),
  #070b14;
+
  background-size:28px 28px;
+
  position:relative;
  overflow:hidden;
+
  padding-bottom:90px;
 }
 
-/* LOGIN */
+/*
+ Fullscreen mode.
+
+ On a phone the app becomes the full screen instead
+ of keeping the small 560px centered size.
+*/
+
+.app-shell:fullscreen{
+ width:100vw;
+ max-width:none;
+ height:100vh;
+ min-height:100vh;
+ border-radius:0;
+ box-shadow:none;
+}
+
+.app-shell:fullscreen .bottom-nav{
+ max-width:none;
+}
+
+.app-shell:fullscreen #drawer{
+ left:0;
+}
+
+/* =========================================================
+LOGIN
+========================================================= */
 
 #authScreen{
  position:fixed;
  inset:0;
  z-index:1000;
+
  display:grid;
  place-items:center;
+
  padding:20px;
- background:radial-gradient(circle at 50% 20%,#172847 0,transparent 35%),#03050a;
+
+ background:
+ radial-gradient(
+  circle at 50% 20%,
+  #172847 0,
+  transparent 35%
+ ),
+ #03050a;
 }
 
 .auth-box{
  width:min(430px,100%);
+
  padding:28px;
+
  background:#0c1220ee;
+
  border:1px solid #34435e;
  border-radius:25px;
+
  box-shadow:0 30px 100px #000;
+
  backdrop-filter:blur(15px);
+
  animation:pop .5s ease;
 }
 
-.logo{text-align:center;margin-bottom:22px}
+.logo{
+ text-align:center;
+ margin-bottom:22px;
+}
 
 .logo-mark{
  width:76px;
  height:76px;
+
  margin:auto;
+
  display:grid;
  place-items:center;
+
  border-radius:22px;
- background:linear-gradient(145deg,var(--orange),#ffb45b);
+
+ background:
+ linear-gradient(
+  145deg,
+  var(--orange),
+  #ffb45b
+ );
+
  color:#15100b;
+
  font-size:27px;
+
  box-shadow:0 0 25px #ff873855;
+
  transform:rotate(-4deg);
 }
 
@@ -117,19 +237,28 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .auth-tabs{
  display:flex;
  gap:5px;
+
  padding:5px;
+
  background:#060a12;
+
  border:1px solid var(--line);
  border-radius:13px;
+
  margin-bottom:18px;
 }
 
 .auth-tabs button{
  flex:1;
+
  padding:11px;
+
  background:none;
+
  color:var(--muted);
+
  border-radius:9px;
+
  font-weight:900;
 }
 
@@ -138,76 +267,133 @@ button:disabled{opacity:.45;cursor:not-allowed}
  color:var(--orange);
 }
 
-.input-group{margin-bottom:13px}
+.input-group{
+ margin-bottom:13px;
+}
 
 .input-group label{
  display:block;
+
  font-size:9px;
+
  text-transform:uppercase;
+
  letter-spacing:1.7px;
+
  color:var(--muted);
+
  font-weight:900;
+
  margin-bottom:6px;
 }
 
 .input{
  width:100%;
+
  padding:13px;
+
  background:#060a12;
+
  border:1px solid #30405a;
+
  border-radius:12px;
+
  outline:none;
 }
 
 .input:focus{
  border-color:var(--orange);
- box-shadow:0 0 0 3px #ff873515;
+
+ box-shadow:
+ 0 0 0 3px #ff873515;
 }
 
 .auth-error{
  min-height:18px;
+
  color:var(--red);
+
  font-size:12px;
+
  margin:4px 0;
 }
 
-/* TOP */
+/* =========================================================
+TOP BAR
+========================================================= */
 
 .topbar{
  height:68px;
+
  display:flex;
  align-items:center;
  justify-content:space-between;
+
  padding:0 13px;
+
  border-bottom:1px solid #26334a;
+
  background:#080d18ef;
+
  backdrop-filter:blur(14px);
+
  position:sticky;
  top:0;
+
  z-index:20;
 }
 
 .icon-btn{
  width:40px;
  height:40px;
+
+ flex:none;
+
  border-radius:12px;
+
  background:#111a2b;
+
  border:1px solid #2c3c58;
+
  font-size:16px;
+
  transition:.2s;
 }
 
 .icon-btn:hover{
  border-color:var(--orange);
+
  box-shadow:0 0 25px #ff873855;
+
  transform:translateY(-2px);
+}
+
+.icon-btn:active{
+ transform:scale(.94);
+}
+
+/*
+ Fullscreen button has a small orange glow
+ so it is easy to find.
+*/
+
+#fullscreenBtn{
+ color:var(--cyan);
+}
+
+#fullscreenBtn:hover{
+ color:var(--orange);
 }
 
 .brand{
  display:flex;
  align-items:center;
+
  gap:8px;
+
  font-weight:950;
+
+ min-width:0;
 }
 
 .brand-mark{
@@ -223,73 +409,123 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .resource{
  background:#10192a;
+
  border:1px solid #2b3a54;
+
  border-radius:10px;
+
  padding:7px 8px;
+
  font-size:10px;
 }
 
-.resource:first-child{color:var(--gold)}
-.resource:nth-child(2){color:#ff714d}
+.resource:first-child{
+ color:var(--gold);
+}
+
+.resource:nth-child(2){
+ color:#ff714d;
+}
 
 .avatar{
  width:35px;
  height:35px;
+
  border-radius:50%;
+
  display:grid;
  place-items:center;
- background:linear-gradient(145deg,var(--purple),var(--pink));
+
+ background:
+ linear-gradient(
+  145deg,
+  var(--purple),
+  var(--pink)
+ );
+
  color:#130b1c;
+
  font-weight:950;
+
  border:2px solid #d5bfff;
 }
 
-/* MAIN */
+/* =========================================================
+MAIN
+========================================================= */
 
-#main{padding:18px 14px 30px}
+#main{
+ padding:18px 14px 30px;
+}
 
 .hero{
  padding:8px 3px 19px;
+
  animation:rise .35s ease;
 }
 
 .eyebrow{
  font-size:9px;
+
  color:var(--orange);
+
  font-weight:950;
+
  letter-spacing:2px;
+
  text-transform:uppercase;
 }
 
 .hero h1{
  font-size:29px;
  line-height:1.04;
+
  margin:8px 0;
 }
 
 .hero p{
  color:var(--muted);
+
  font-size:13px;
+
  line-height:1.55;
+
  margin:0;
 }
 
-/* CARDS */
+/* =========================================================
+CARDS
+========================================================= */
 
 .card{
- background:linear-gradient(145deg,#101827,#0c1320);
+ background:
+ linear-gradient(
+  145deg,
+  #101827,
+  #0c1320
+ );
+
  border:1px solid #283750;
+
  border-radius:19px;
+
  padding:15px;
+
  box-shadow:0 14px 35px #0006;
+
  animation:rise .35s ease both;
 }
 
-.card h2,.card h3{margin:0 0 7px}
+.card h2,
+.card h3{
+ margin:0 0 7px;
+}
 
 .muted{
  color:var(--muted);
+
  font-size:12px;
+
  line-height:1.5;
 }
 
@@ -297,6 +533,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
  display:flex;
  justify-content:space-between;
  align-items:center;
+
  margin:23px 0 10px;
 }
 
@@ -307,44 +544,78 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .section button{
  background:none;
+
  color:var(--orange);
+
  font-size:10px;
+
  font-weight:950;
 }
 
-/* PLAYER */
+/* =========================================================
+PLAYER
+========================================================= */
 
 .player-card{
  position:relative;
+
  overflow:hidden;
+
  padding:17px;
+
  border-radius:21px;
+
  background:
- radial-gradient(circle at 90% 0,#ff87381a,transparent 40%),
- linear-gradient(145deg,#111a2c,#0c1321);
+ radial-gradient(
+  circle at 90% 0,
+  #ff87381a,
+  transparent 40%
+ ),
+ linear-gradient(
+  145deg,
+  #111a2c,
+  #0c1321
+ );
+
  border:1px solid #33435d;
+
  box-shadow:0 15px 40px #0007;
 }
 
 .player-top{
  display:flex;
  align-items:center;
+
  gap:13px;
 }
 
 .player-avatar{
  width:60px;
  height:60px;
+
  border-radius:18px;
+
  display:grid;
  place-items:center;
+
  font-size:25px;
- background:linear-gradient(145deg,#202e48,#111a2b);
+
+ background:
+ linear-gradient(
+  145deg,
+  #202e48,
+  #111a2b
+ );
+
  border:2px solid var(--orange);
+
  box-shadow:0 0 25px #ff873855;
 }
 
-.player-info{flex:1}
+.player-info{
+ flex:1;
+ min-width:0;
+}
 
 .player-info small{
  color:var(--muted);
@@ -353,43 +624,71 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .player-info b{
  display:block;
+
  margin-top:3px;
+
  font-size:17px;
+
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
 }
 
 .rank{
  color:var(--gold);
+
  font-size:10px;
+
  font-weight:900;
 }
 
 .xp-row{
  display:flex;
+
  justify-content:space-between;
  align-items:center;
+
  margin-top:14px;
+
  font-size:10px;
+
  font-weight:900;
 }
 
 .xp-bar{
  height:10px;
+
  margin:7px 0 4px;
+
  background:#060a11;
+
  border:1px solid #29364c;
+
  border-radius:99px;
+
  overflow:hidden;
 }
 
 .xp-fill{
  height:100%;
- background:linear-gradient(90deg,var(--orange),var(--gold));
+
+ background:
+ linear-gradient(
+  90deg,
+  var(--orange),
+  var(--gold)
+ );
+
  border-radius:99px;
+
  box-shadow:0 0 12px #ff873888;
+
  transition:width .7s ease;
 }
 
-/* STATS */
+/* =========================================================
+STATS
+========================================================= */
 
 .grid{
  display:grid;
@@ -402,122 +701,193 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .stat{
  min-height:100px;
+
  position:relative;
+
  overflow:hidden;
 }
 
 .stat span{
  display:block;
+
  color:var(--muted);
+
  font-size:9px;
+
  font-weight:900;
+
  letter-spacing:1px;
 }
 
 .stat b{
  display:block;
+
  font-size:25px;
+
  margin-top:7px;
 }
 
 .stat small{
  color:var(--muted);
+
  font-size:9px;
 }
 
-/* TASKS */
+/* =========================================================
+TASKS
+========================================================= */
 
 .quest{
  width:100%;
+
  display:flex;
  align-items:center;
+
  gap:11px;
+
  padding:13px;
+
  margin-bottom:9px;
- background:linear-gradient(145deg,#111b2c,#0b121e);
+
+ background:
+ linear-gradient(
+  145deg,
+  #111b2c,
+  #0b121e
+ );
+
  border:1px solid #2b3b56;
+
  border-radius:17px;
+
  text-align:left;
+
  transition:.2s;
+
  position:relative;
+
  overflow:hidden;
 }
 
 .quest:before{
  content:"";
+
  position:absolute;
+
  left:0;
  top:0;
  bottom:0;
+
  width:3px;
+
  background:var(--orange);
 }
 
 .quest:hover{
  transform:translateY(-3px);
+
  border-color:#506685;
+}
+
+.quest:active{
+ transform:scale(.98);
 }
 
 .quest-icon{
  width:48px;
  height:48px;
+
  flex:none;
+
  display:grid;
  place-items:center;
+
  border-radius:14px;
+
  background:#182238;
+
  border:1px solid #31435f;
+
  font-size:17px;
 }
 
 .quest-info{
  flex:1;
+
  min-width:0;
 }
 
 .quest-info b{
  display:block;
+
  font-size:13px;
 }
 
 .quest-info p{
  margin:4px 0 0;
+
  color:var(--muted);
+
  font-size:10px;
 }
 
 .reward{
  color:var(--gold);
+
  font-size:10px;
+
  font-weight:950;
+
  white-space:nowrap;
 }
 
-/* MAP */
+/* =========================================================
+MAP
+========================================================= */
 
 .world-map{
  padding:17px;
+
  border-radius:21px;
+
  background:
- radial-gradient(circle at 50% 0,#25476b22,transparent 35%),
- linear-gradient(180deg,#0d1727,#080d17);
+ radial-gradient(
+  circle at 50% 0,
+  #25476b22,
+  transparent 35%
+ ),
+ linear-gradient(
+  180deg,
+  #0d1727,
+  #080d17
+ );
+
  border:1px solid #2c3e5b;
+
  overflow:hidden;
 }
 
 .map-click-area{
  width:100%;
+
  display:block;
+
  cursor:pointer;
+
  border-radius:16px;
+
  background:none;
+
  padding:0;
+
  margin:0;
+
  text-align:left;
 }
 
 .map-click-area:hover .zone{
  transform:translateX(4px);
+
  border-color:#506685;
 }
 
@@ -527,44 +897,66 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .zone{
  position:relative;
+
  padding:15px 0;
+
  display:flex;
  align-items:center;
+
  gap:12px;
+
  transition:.2s;
 }
 
 .zone:not(:last-child):after{
  content:"";
+
  position:absolute;
+
  left:26px;
  top:67px;
+
  width:3px;
  height:35px;
- background:linear-gradient(var(--orange),#26364e);
+
+ background:
+ linear-gradient(
+  var(--orange),
+  #26364e
+ );
 }
 
 .zone-node{
  width:54px;
  height:54px;
+
  flex:none;
+
  display:grid;
  place-items:center;
+
  border-radius:17px;
+
  background:#111b2d;
+
  border:2px solid #33445f;
+
  font-size:18px;
+
  z-index:2;
 }
 
 .zone.unlocked .zone-node{
  border-color:var(--orange);
+
  box-shadow:0 0 25px #ff873855;
+
  background:#211b18;
 }
 
 .zone.python .zone-node{
  border-color:var(--python);
+
  box-shadow:0 0 25px #43d9ff44;
 }
 
@@ -574,21 +966,27 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .zone-info{
  flex:1;
+
+ min-width:0;
 }
 
 .zone-info b{
  display:block;
+
  font-size:13px;
 }
 
 .zone-info small{
  color:var(--muted);
+
  font-size:10px;
 }
 
 .zone-status{
  font-size:9px;
+
  font-weight:900;
+
  color:var(--lime);
 }
 
@@ -596,94 +994,148 @@ button:disabled{opacity:.45;cursor:not-allowed}
  color:var(--muted);
 }
 
-/* BATTLE */
+/* =========================================================
+BATTLE
+========================================================= */
 
 .battle-card{
  padding:18px;
+
  border-radius:22px;
+
  background:
- radial-gradient(circle at 50% 0,#ff4d9a18,transparent 40%),
- linear-gradient(145deg,#171226,#0d101e);
+ radial-gradient(
+  circle at 50% 0,
+  #ff4d9a18,
+  transparent 40%
+ ),
+ linear-gradient(
+  145deg,
+  #171226,
+  #0d101e
+ );
+
  border:1px solid #4a3d64;
+
  box-shadow:0 20px 50px #0008;
 }
 
 .enemy{
  text-align:center;
+
  padding:12px;
 }
 
 .enemy-icon{
  font-size:55px;
+
  color:var(--pink);
+
  animation:float 2.5s ease-in-out infinite;
 }
 
 .enemy-name{
  color:var(--pink);
+
  font-weight:950;
+
  font-size:13px;
 }
 
 .hp{
  height:9px;
+
  margin:7px auto 15px;
+
  max-width:230px;
+
  background:#080a10;
+
  border:1px solid #39233a;
+
  border-radius:99px;
+
  overflow:hidden;
 }
 
 .hp-fill{
  height:100%;
- background:linear-gradient(90deg,var(--red),var(--pink));
+
+ background:
+ linear-gradient(
+  90deg,
+  var(--red),
+  var(--pink)
+ );
+
  transition:.4s;
 }
 
 .choice{
  width:100%;
+
  padding:13px;
+
  margin:7px 0;
+
  background:#0c1421;
+
  border:2px solid #293a54;
+
  border-radius:13px;
+
  text-align:left;
+
  font-size:12px;
+
  font-weight:800;
+
  transition:.15s;
 }
 
 .choice:hover{
  border-color:#536b8d;
+
  transform:translateX(2px);
 }
 
 .choice.selected{
  border-color:var(--orange);
+
  background:#241910;
 }
 
 .choice.correct{
  border-color:var(--lime);
+
  background:#172616;
 }
 
 .choice.wrong{
  border-color:var(--red);
+
  background:#27141a;
 }
 
-/* BUTTONS */
+/* =========================================================
+BUTTONS
+========================================================= */
 
 .btn{
  width:100%;
+
  padding:13px 15px;
+
  margin-top:10px;
+
  border-radius:12px;
+
  background:#172235;
+
  border:1px solid #344965;
+
  font-weight:950;
+
  transition:.18s;
 }
 
@@ -696,45 +1148,74 @@ button:disabled{opacity:.45;cursor:not-allowed}
 }
 
 .btn.primary{
- background:linear-gradient(135deg,var(--orange),#ffad54);
+ background:
+ linear-gradient(
+  135deg,
+  var(--orange),
+  #ffad54
+ );
+
  color:#160d06;
+
  border-color:var(--orange);
 }
 
 .btn.python{
- background:linear-gradient(135deg,#42c9ff,#79e1ff);
+ background:
+ linear-gradient(
+  135deg,
+  #42c9ff,
+  #79e1ff
+ );
+
  color:#061018;
+
  border-color:var(--cyan);
 }
 
 .btn.green{
  background:var(--lime);
+
  color:#0b1507;
 }
 
-/* CODE */
+/* =========================================================
+CODE
+========================================================= */
 
 .language-tabs{
  display:flex;
+
  gap:5px;
+
  padding:5px;
+
  background:#060a11;
+
  border:1px solid #29384f;
+
  border-radius:13px;
+
  margin-bottom:12px;
 }
 
 .language-tabs button{
  flex:1;
+
  padding:10px;
+
  border-radius:9px;
+
  background:none;
+
  color:var(--muted);
+
  font-weight:900;
 }
 
 .language-tabs button.active{
  background:#1c2940;
+
  color:var(--orange);
 }
 
@@ -744,42 +1225,67 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .editor{
  background:#05080d;
+
  border:1px solid #30405a;
+
  border-radius:15px;
+
  overflow:hidden;
 }
 
 .editor-top{
  display:flex;
+
  justify-content:space-between;
+
  padding:9px 12px;
+
  border-bottom:1px solid #26344a;
+
  color:var(--muted);
+
  font-size:10px;
 }
 
 .editor textarea{
  width:100%;
+
  min-height:250px;
+
  resize:vertical;
+
  border:0;
+
  outline:0;
+
  background:#05080d;
+
  color:#dce5ef;
+
  padding:14px;
+
  font:13px/1.65 "Courier New",monospace;
 }
 
 .output{
  min-height:90px;
+
  margin-top:9px;
+
  padding:12px;
+
  border-radius:11px;
+
  background:#03060b;
+
  border:1px solid #293950;
+
  color:var(--lime);
+
  font:12px/1.6 monospace;
+
  white-space:pre-wrap;
+
  overflow:auto;
 }
 
@@ -789,65 +1295,103 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .output-title{
  display:flex;
+
  justify-content:space-between;
+
  color:var(--muted);
+
  font-size:9px;
+
  margin-top:12px;
+
  margin-bottom:5px;
+
  text-transform:uppercase;
+
  letter-spacing:1px;
 }
 
-/* FILES */
+/* =========================================================
+FILES
+========================================================= */
 
 .file-list{
  display:grid;
+
  gap:8px;
 }
 
 .file-item{
  display:flex;
  align-items:center;
+
  gap:10px;
+
  padding:11px;
+
  background:#0c1421;
+
  border:1px solid #293a54;
+
  border-radius:12px;
 }
 
 .file-name{
  flex:1;
+
  font-family:monospace;
+
  font-size:12px;
+
+ overflow:hidden;
+
+ text-overflow:ellipsis;
 }
 
 .file-actions{
  display:flex;
+
  gap:5px;
 }
 
 .file-actions button{
  padding:7px 8px;
+
  border-radius:8px;
+
  background:#19263a;
+
  font-size:10px;
 }
 
-/* DRAWER */
+/* =========================================================
+DRAWER
+========================================================= */
 
 #drawer{
  position:fixed;
+
  z-index:40;
+
  top:0;
  bottom:0;
+
  left:max(calc(50% - 280px),0px);
+
  width:min(305px,84vw);
+
  padding:24px 14px;
+
  background:#090f1bf5;
+
  border-right:1px solid #2c3d57;
+
  transform:translateX(-105%);
+
  transition:.3s;
+
  box-shadow:20px 0 60px #000b;
+
  backdrop-filter:blur(18px);
 }
 
@@ -857,72 +1401,110 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 #overlay{
  position:fixed;
+
  inset:0;
+
  background:#000b;
+
  z-index:30;
+
  opacity:0;
+
  pointer-events:none;
+
  transition:.3s;
 }
 
 .drawer-open #overlay{
  opacity:1;
+
  pointer-events:auto;
 }
 
 .drawer-title{
  color:var(--orange);
+
  font-size:10px;
+
  letter-spacing:2px;
+
  font-weight:950;
+
  margin:10px 12px 17px;
 }
 
 .drawer-item{
  width:100%;
+
  display:flex;
  align-items:center;
+
  gap:12px;
+
  padding:13px 12px;
+
  margin-bottom:4px;
+
  background:none;
+
  border-radius:11px;
+
  color:#aab6c8;
+
  text-align:left;
 }
 
 .drawer-item:hover{
  background:#172238;
+
  color:white;
 }
 
 .drawer-item.active{
  background:#211a16;
+
  color:var(--orange);
+
  border-left:2px solid var(--orange);
 }
 
-/* BOTTOM */
+/* =========================================================
+BOTTOM NAV
+========================================================= */
 
 .bottom-nav{
  position:fixed;
+
  bottom:0;
+
  left:50%;
+
  transform:translateX(-50%);
+
  width:100%;
+
  max-width:560px;
+
  height:82px;
+
  display:flex;
+
  background:#080d17f2;
+
  border-top:1px solid #2b3b55;
+
  z-index:25;
+
  backdrop-filter:blur(15px);
 }
 
 .bottom-nav button{
  flex:1;
+
  background:none;
+
  color:#66758d;
+
  font-size:17px;
 }
 
@@ -932,165 +1514,259 @@ button:disabled{opacity:.45;cursor:not-allowed}
 
 .bottom-nav small{
  display:block;
+
  font-size:9px;
+
  margin-top:4px;
 }
 
-/* TOAST */
+/* =========================================================
+TOAST
+========================================================= */
 
 #toast{
  position:fixed;
+
  left:50%;
+
  bottom:98px;
+
  transform:translate(-50%,20px);
+
  z-index:300;
+
  opacity:0;
+
  pointer-events:none;
+
  background:#f5f7fb;
+
  color:#09101a;
+
  border-radius:12px;
+
  padding:11px 15px;
+
  font-size:12px;
+
  font-weight:950;
+
  transition:.25s;
+
  white-space:nowrap;
 }
 
 #toast.show{
  opacity:1;
+
  transform:translate(-50%,0);
 }
 
-/* LEVEL */
+/* =========================================================
+LEVEL
+========================================================= */
 
 #levelup{
  position:fixed;
+
  inset:0;
+
  z-index:200;
+
  display:none;
+
  place-items:center;
+
  background:#03050bd9;
+
  backdrop-filter:blur(8px);
+
  padding:20px;
 }
 
 .levelup-box{
  width:min(350px,100%);
+
  padding:30px;
+
  border-radius:25px;
+
  text-align:center;
+
  background:#101827;
+
  border:1px solid #596b87;
+
  box-shadow:0 30px 100px #000b;
 }
 
 .levelup-icon{
  font-size:55px;
+
  color:var(--gold);
 }
 
 .levelup-box h1{
  color:var(--gold);
+
  font-size:38px;
+
  margin:8px 0;
 }
 
-/* TAGS */
+/* =========================================================
+TAGS
+========================================================= */
 
 .tag{
  display:inline-block;
+
  padding:6px 9px;
+
  border-radius:8px;
+
  font-size:9px;
+
  font-weight:950;
+
  background:#202d43;
+
  color:var(--muted);
+
  margin:3px;
 }
 
 .tag.python{
  background:#102a37;
+
  color:var(--python);
+
  border:1px solid #24536a;
 }
 
-/* LESSON */
+/* =========================================================
+LESSON
+========================================================= */
 
 .lesson-head{
  display:flex;
+
  justify-content:space-between;
  align-items:center;
+
  margin-bottom:12px;
 }
 
 .back{
  background:none;
+
  color:var(--orange);
+
  font-size:12px;
+
  font-weight:900;
 }
 
 .lesson-number{
  color:var(--muted);
+
  font-size:9px;
+
  font-weight:900;
 }
 
 .concept{
- background:linear-gradient(145deg,#101827,#0c1320);
+ background:
+ linear-gradient(
+  145deg,
+  #101827,
+  #0c1320
+ );
+
  border:1px solid #283750;
+
  border-radius:19px;
+
  padding:18px;
+
  margin-bottom:12px;
 }
 
 .concept h1{
  margin:8px 0;
+
  font-size:25px;
 }
 
 .code{
  white-space:pre-wrap;
+
  background:#05080d;
+
  border:1px solid #30405a;
+
  border-radius:12px;
+
  padding:13px;
+
  color:#dce5ef;
+
  font:12px/1.6 "Courier New",monospace;
+
  margin-top:12px;
+
  overflow:auto;
 }
 
 .file-preview{
  white-space:pre-wrap;
+
  min-height:150px;
+
  background:#05080d;
+
  border:1px solid #30405a;
+
  border-radius:12px;
+
  padding:14px;
+
  margin-top:12px;
+
  color:#dce5ef;
+
  font:12px/1.6 monospace;
 }
 
-/* ACHIEVEMENTS */
+/* =========================================================
+ACHIEVEMENTS
+========================================================= */
 
 .achievement{
  display:flex;
+
  align-items:center;
+
  gap:12px;
+
  margin-bottom:9px;
 }
 
 .achievement .badge{
  width:48px;
  height:48px;
+
  flex:none;
+
  display:grid;
  place-items:center;
+
  border-radius:14px;
+
  background:#182238;
+
  color:var(--gold);
+
  font-size:19px;
 }
 
@@ -1102,15 +1778,20 @@ button:disabled{opacity:.45;cursor:not-allowed}
  margin:4px 0 0;
 }
 
-/* ANIMATIONS */
+/* =========================================================
+ANIMATIONS
+========================================================= */
 
 @keyframes rise{
  from{
   opacity:0;
+
   transform:translateY(12px);
  }
+
  to{
   opacity:1;
+
   transform:translateY(0);
  }
 }
@@ -1118,211 +1799,515 @@ button:disabled{opacity:.45;cursor:not-allowed}
 @keyframes pop{
  from{
   opacity:0;
+
   transform:scale(.85);
  }
+
  to{
   opacity:1;
+
   transform:scale(1);
  }
 }
 
 @keyframes float{
- 0%,100%{transform:translateY(0)}
- 50%{transform:translateY(-8px)}
+ 0%,100%{
+  transform:translateY(0);
+ }
+
+ 50%{
+  transform:translateY(-8px);
+ }
 }
 
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media(max-width:430px){
+
+ .topbar{
+  padding:0 8px;
+ }
+
+ .brand{
+  font-size:13px;
+ }
+
+ .resource{
+  padding:6px;
+ }
+
+ .resource b{
+  font-size:9px;
+ }
+
+ .avatar{
+  width:32px;
+  height:32px;
+ }
+
+ #fullscreenBtn,
+ #menuBtn{
+  width:38px;
+  height:38px;
+ }
+
+}
+
+@media(max-width:360px){
+
+ .resource{
+  display:none;
+ }
+
+ .hero h1{
+  font-size:26px;
+ }
+
+}
+
+/* =========================================================
+DESKTOP
+========================================================= */
+
 @media(min-width:561px){
- body{padding:20px 0}
+
+ body{
+  padding:20px 0;
+ }
 
  .app-shell{
   border-radius:25px;
+
   box-shadow:0 30px 100px #000c;
  }
 
  .bottom-nav{
   bottom:20px;
+
   border-radius:0 0 25px 25px;
  }
+
+}
+
+/* =========================================================
+FULLSCREEN DESKTOP / MOBILE
+========================================================= */
+
+@media all and (display-mode:fullscreen){
+
+ body{
+  padding:0;
+ }
+
+ .app-shell{
+  max-width:none;
+
+  width:100vw;
+
+  min-height:100vh;
+
+  height:100vh;
+
+  border-radius:0;
+
+  box-shadow:none;
+ }
+
+ .bottom-nav{
+  max-width:none;
+
+  bottom:0;
+
+  border-radius:0;
+ }
+
+}
+
+/* =========================================================
+SAFE AREA
+========================================================= */
+
+@supports(padding:max(0px)){
+
+ .topbar{
+  padding-top:max(0px,env(safe-area-inset-top));
+ }
+
+ .bottom-nav{
+  padding-bottom:max(0px,env(safe-area-inset-bottom));
+
+  height:calc(
+   82px + env(safe-area-inset-bottom)
+  );
+ }
+
+ #main{
+  padding-bottom:calc(
+   30px + env(safe-area-inset-bottom)
+  );
+ }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =======================================================
+LOGIN
+======================================================= -->
 
 <div id="authScreen">
-<div class="auth-box">
 
-<div class="logo">
-<div class="logo-mark">
-<i class="fa-solid fa-code"></i>
+ <div class="auth-box">
+
+  <div class="logo">
+
+   <div class="logo-mark">
+    <i class="fa-solid fa-code"></i>
+   </div>
+
+   <h1>CODEQUEST</h1>
+
+   <p>
+    Learn coding one step at a time.
+   </p>
+
+  </div>
+
+  <div class="auth-tabs">
+
+   <button id="loginTab" class="active">
+    LOG IN
+   </button>
+
+   <button id="registerTab">
+    SIGN UP
+   </button>
+
+  </div>
+
+  <div id="authForm"></div>
+
+ </div>
+
 </div>
 
-<h1>CODEQUEST</h1>
-<p>Learn coding one step at a time.</p>
-</div>
-
-<div class="auth-tabs">
-<button id="loginTab" class="active">LOG IN</button>
-<button id="registerTab">SIGN UP</button>
-</div>
-
-<div id="authForm"></div>
-
-</div>
-</div>
-
-<!-- LEVEL UP -->
+<!-- =======================================================
+LEVEL UP
+======================================================= -->
 
 <div id="levelup">
-<div class="levelup-box">
 
-<div class="levelup-icon">
-<i class="fa-solid fa-trophy"></i>
-</div>
+ <div class="levelup-box">
 
-<h1>LEVEL UP!</h1>
+  <div class="levelup-icon">
+   <i class="fa-solid fa-trophy"></i>
+  </div>
 
-<p id="levelupText">
-You reached a new level.
-</p>
+  <h1>LEVEL UP!</h1>
 
-<button class="btn primary" onclick="closeLevelUp()">
-<i class="fa-solid fa-arrow-right"></i>
-KEEP GOING
-</button>
+  <p id="levelupText">
+   You reached a new level.
+  </p>
 
-</div>
-</div>
+  <button
+   class="btn primary"
+   onclick="closeLevelUp()"
+  >
+   <i class="fa-solid fa-arrow-right"></i>
+   KEEP GOING
+  </button>
 
-<!-- APP -->
-
-<div class="app-shell">
-
-<header class="topbar">
-
-<button class="icon-btn" id="menuBtn">
-<i class="fa-solid fa-bars"></i>
-</button>
-
-<div class="brand">
-<span class="brand-mark">&lt;/&gt;</span>
-<span>CodeQuest</span>
-</div>
-
-<div class="header-right">
-
-<span class="resource">
-<i class="fa-solid fa-coins"></i>
-<b id="coins">0</b>
-</span>
-
-<span class="resource">
-<i class="fa-solid fa-fire"></i>
-<b id="streak">0</b>
-</span>
-
-<span class="avatar" id="avatar">?</span>
+ </div>
 
 </div>
-</header>
 
-<!-- MENU -->
+<!-- =======================================================
+APP
+======================================================= -->
 
-<aside id="drawer">
+<div class="app-shell" id="appShell">
 
-<div class="drawer-title">
-<i class="fa-solid fa-bars"></i>
-MENU
-</div>
+ <header class="topbar">
 
-<button class="drawer-item active" data-page="home">
-<i class="fa-solid fa-house"></i>
-<span>Home</span>
-</button>
+  <button
+   class="icon-btn"
+   id="menuBtn"
+   aria-label="Open menu"
+   title="Menu"
+  >
+   <i class="fa-solid fa-bars"></i>
+  </button>
 
-<button class="drawer-item" data-page="courses">
-<i class="fa-solid fa-map"></i>
-<span>Map</span>
-</button>
+  <div class="brand">
 
-<button class="drawer-item" data-page="python">
-<i class="fa-brands fa-python"></i>
-<span>Python</span>
-</button>
+   <span class="brand-mark">
+    &lt;/&gt;
+   </span>
 
-<button class="drawer-item" data-page="quiz">
-<i class="fa-solid fa-crosshairs"></i>
-<span>Quiz</span>
-</button>
+   <span>
+    CodeQuest
+   </span>
 
-<button class="drawer-item" data-page="facts">
-<i class="fa-solid fa-book"></i>
-<span>Learn</span>
-</button>
+  </div>
 
-<button class="drawer-item" data-page="playground">
-<i class="fa-solid fa-flask"></i>
-<span>Code Practice</span>
-</button>
+  <div class="header-right">
 
-<button class="drawer-item" data-page="files">
-<i class="fa-solid fa-folder"></i>
-<span>Files</span>
-</button>
+   <!-- FULL SCREEN BUTTON -->
 
-<button class="drawer-item" data-page="progress">
-<i class="fa-solid fa-chart-line"></i>
-<span>My Stats</span>
-</button>
+   <button
+    class="icon-btn"
+    id="fullscreenBtn"
+    aria-label="Enter full screen"
+    title="Full Screen"
+   >
+    <i class="fa-solid fa-expand"></i>
+   </button>
 
-<button class="drawer-item" data-page="achievements">
-<i class="fa-solid fa-trophy"></i>
-<span>Badges</span>
-</button>
+   <span class="resource">
 
-<button class="drawer-item" onclick="logout()">
-<i class="fa-solid fa-right-from-bracket"></i>
-<span>Log Out</span>
-</button>
+    <i class="fa-solid fa-coins"></i>
 
-</aside>
+    <b id="coins">
+     0
+    </b>
 
-<div id="overlay"></div>
+   </span>
 
-<main id="main"></main>
+   <span class="resource">
 
-<!-- BOTTOM MENU -->
+    <i class="fa-solid fa-fire"></i>
 
-<nav class="bottom-nav">
+    <b id="streak">
+     0
+    </b>
 
-<button data-page="home" class="active">
-<i class="fa-solid fa-house"></i>
-<small>Home</small>
-</button>
+   </span>
 
-<button data-page="courses">
-<i class="fa-solid fa-map"></i>
-<small>Map</small>
-</button>
+   <span
+    class="avatar"
+    id="avatar"
+   >
+    ?
+   </span>
 
-<button data-page="python">
-<i class="fa-brands fa-python"></i>
-<small>Python</small>
-</button>
+  </div>
 
-<button data-page="quiz">
-<i class="fa-solid fa-crosshairs"></i>
-<small>Quiz</small>
-</button>
+ </header>
 
-<button data-page="progress">
-<i class="fa-solid fa-chart-line"></i>
-<small>Stats</small>
-</button>
+ <!-- =====================================================
+ MENU
+ ====================================================== -->
 
-</nav>
+ <aside id="drawer">
+
+  <div class="drawer-title">
+
+   <i class="fa-solid fa-bars"></i>
+
+   MENU
+
+  </div>
+
+  <button
+   class="drawer-item active"
+   data-page="home"
+  >
+
+   <i class="fa-solid fa-house"></i>
+
+   <span>
+    Home
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="courses"
+  >
+
+   <i class="fa-solid fa-map"></i>
+
+   <span>
+    Map
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="python"
+  >
+
+   <i class="fa-brands fa-python"></i>
+
+   <span>
+    Python
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="quiz"
+  >
+
+   <i class="fa-solid fa-crosshairs"></i>
+
+   <span>
+    Quiz
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="facts"
+  >
+
+   <i class="fa-solid fa-book"></i>
+
+   <span>
+    Learn
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="playground"
+  >
+
+   <i class="fa-solid fa-flask"></i>
+
+   <span>
+    Code Practice
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="files"
+  >
+
+   <i class="fa-solid fa-folder"></i>
+
+   <span>
+    Files
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="progress"
+  >
+
+   <i class="fa-solid fa-chart-line"></i>
+
+   <span>
+    My Stats
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   data-page="achievements"
+  >
+
+   <i class="fa-solid fa-trophy"></i>
+
+   <span>
+    Badges
+   </span>
+
+  </button>
+
+  <button
+   class="drawer-item"
+   onclick="logout()"
+  >
+
+   <i class="fa-solid fa-right-from-bracket"></i>
+
+   <span>
+    Log Out
+   </span>
+
+  </button>
+
+ </aside>
+
+ <div id="overlay"></div>
+
+ <main id="main"></main>
+
+ <!-- =====================================================
+ BOTTOM MENU
+ ====================================================== -->
+
+ <nav class="bottom-nav">
+
+  <button
+   data-page="home"
+   class="active"
+  >
+
+   <i class="fa-solid fa-house"></i>
+
+   <small>
+    Home
+   </small>
+
+  </button>
+
+  <button data-page="courses">
+
+   <i class="fa-solid fa-map"></i>
+
+   <small>
+    Map
+   </small>
+
+  </button>
+
+  <button data-page="python">
+
+   <i class="fa-brands fa-python"></i>
+
+   <small>
+    Python
+   </small>
+
+  </button>
+
+  <button data-page="quiz">
+
+   <i class="fa-solid fa-crosshairs"></i>
+
+   <small>
+    Quiz
+   </small>
+
+  </button>
+
+  <button data-page="progress">
+
+   <i class="fa-solid fa-chart-line"></i>
+
+   <small>
+    Stats
+   </small>
+
+  </button>
+
+ </nav>
 
 </div>
 
@@ -1338,20 +2323,40 @@ const ACCOUNT_KEY="codequest_accounts_v6";
 const SESSION_KEY="codequest_session_v6";
 
 function getAccounts(){
- return JSON.parse(localStorage.getItem(ACCOUNT_KEY)||"{}");
+
+ return JSON.parse(
+  localStorage.getItem(ACCOUNT_KEY)||"{}"
+ );
+
 }
 
 function saveAccounts(accounts){
- localStorage.setItem(ACCOUNT_KEY,JSON.stringify(accounts));
+
+ localStorage.setItem(
+  ACCOUNT_KEY,
+  JSON.stringify(accounts)
+ );
+
 }
 
 function currentUser(){
- return localStorage.getItem(SESSION_KEY);
+
+ return localStorage.getItem(
+  SESSION_KEY
+ );
+
 }
 
 function showAuthError(text){
- const el=document.querySelector("#authError");
- if(el)el.textContent=text;
+
+ const el=document.querySelector(
+  "#authError"
+ );
+
+ if(el){
+  el.textContent=text;
+ }
+
 }
 
 /* =========================================================
@@ -1360,134 +2365,276 @@ LOGIN
 
 function showLogin(){
 
- document.querySelector("#loginTab").classList.add("active");
- document.querySelector("#registerTab").classList.remove("active");
+ document
+  .querySelector("#loginTab")
+  .classList.add("active");
 
- document.querySelector("#authForm").innerHTML=`
+ document
+  .querySelector("#registerTab")
+  .classList.remove("active");
 
- <div class="input-group">
- <label>Name</label>
- <input class="input" id="username" placeholder="Your name">
- </div>
+ document
+  .querySelector("#authForm")
+  .innerHTML=`
 
- <div class="input-group">
- <label>Password</label>
- <input class="input" id="password" type="password" placeholder="Your password">
- </div>
+   <div class="input-group">
 
- <div class="auth-error" id="authError"></div>
+    <label>
+     Name
+    </label>
 
- <button class="btn primary" onclick="login()">
- <i class="fa-solid fa-right-to-bracket"></i>
- LOG IN
- </button>
+    <input
+     class="input"
+     id="username"
+     placeholder="Your name"
+    >
 
- `;
+   </div>
+
+   <div class="input-group">
+
+    <label>
+     Password
+    </label>
+
+    <input
+     class="input"
+     id="password"
+     type="password"
+     placeholder="Your password"
+    >
+
+   </div>
+
+   <div
+    class="auth-error"
+    id="authError"
+   ></div>
+
+   <button
+    class="btn primary"
+    onclick="login()"
+   >
+
+    <i class="fa-solid fa-right-to-bracket"></i>
+
+    LOG IN
+
+   </button>
+
+  `;
+
 }
 
 function showRegister(){
 
- document.querySelector("#loginTab").classList.remove("active");
- document.querySelector("#registerTab").classList.add("active");
+ document
+  .querySelector("#loginTab")
+  .classList.remove("active");
 
- document.querySelector("#authForm").innerHTML=`
+ document
+  .querySelector("#registerTab")
+  .classList.add("active");
 
- <div class="input-group">
- <label>Name</label>
- <input class="input" id="username" placeholder="Choose your name">
- </div>
+ document
+  .querySelector("#authForm")
+  .innerHTML=`
 
- <div class="input-group">
- <label>Password</label>
- <input class="input" id="password" type="password" placeholder="At least 4 characters">
- </div>
+   <div class="input-group">
 
- <div class="input-group">
- <label>Repeat Password</label>
- <input class="input" id="confirm" type="password" placeholder="Type it again">
- </div>
+    <label>
+     Name
+    </label>
 
- <div class="auth-error" id="authError"></div>
+    <input
+     class="input"
+     id="username"
+     placeholder="Choose your name"
+    >
 
- <button class="btn primary" onclick="register()">
- <i class="fa-solid fa-user-plus"></i>
- CREATE ACCOUNT
- </button>
+   </div>
 
- `;
+   <div class="input-group">
+
+    <label>
+     Password
+    </label>
+
+    <input
+     class="input"
+     id="password"
+     type="password"
+     placeholder="At least 4 characters"
+    >
+
+   </div>
+
+   <div class="input-group">
+
+    <label>
+     Repeat Password
+    </label>
+
+    <input
+     class="input"
+     id="confirm"
+     type="password"
+     placeholder="Type it again"
+    >
+
+   </div>
+
+   <div
+    class="auth-error"
+    id="authError"
+   ></div>
+
+   <button
+    class="btn primary"
+    onclick="register()"
+   >
+
+    <i class="fa-solid fa-user-plus"></i>
+
+    CREATE ACCOUNT
+
+   </button>
+
+  `;
+
 }
 
 function register(){
 
- const username=document.querySelector("#username").value.trim().toLowerCase();
- const password=document.querySelector("#password").value;
- const confirm=document.querySelector("#confirm").value;
+ const username=
+  document
+   .querySelector("#username")
+   .value
+   .trim()
+   .toLowerCase();
+
+ const password=
+  document
+   .querySelector("#password")
+   .value;
+
+ const confirm=
+  document
+   .querySelector("#confirm")
+   .value;
 
  if(username.length<3){
-  showAuthError("Name must have at least 3 letters.");
+
+  showAuthError(
+   "Name must have at least 3 letters."
+  );
+
   return;
  }
 
  if(password.length<4){
-  showAuthError("Password must have at least 4 characters.");
+
+  showAuthError(
+   "Password must have at least 4 characters."
+  );
+
   return;
  }
 
  if(password!==confirm){
-  showAuthError("Passwords do not match.");
+
+  showAuthError(
+   "Passwords do not match."
+  );
+
   return;
  }
 
  const accounts=getAccounts();
 
  if(accounts[username]){
-  showAuthError("That name is already used.");
+
+  showAuthError(
+   "That name is already used."
+  );
+
   return;
  }
 
  accounts[username]=createDefaultState();
+
  accounts[username].password=password;
 
  saveAccounts(accounts);
 
- localStorage.setItem(SESSION_KEY,username);
+ localStorage.setItem(
+  SESSION_KEY,
+  username
+ );
 
  initApp();
 
  toast("Account created.");
+
 }
 
 function login(){
 
- const username=document.querySelector("#username").value.trim().toLowerCase();
- const password=document.querySelector("#password").value;
+ const username=
+  document
+   .querySelector("#username")
+   .value
+   .trim()
+   .toLowerCase();
+
+ const password=
+  document
+   .querySelector("#password")
+   .value;
 
  const accounts=getAccounts();
 
  if(!accounts[username]){
-  showAuthError("Name not found.");
+
+  showAuthError(
+   "Name not found."
+  );
+
   return;
  }
 
  if(accounts[username].password!==password){
-  showAuthError("Wrong password.");
+
+  showAuthError(
+   "Wrong password."
+  );
+
   return;
  }
 
- localStorage.setItem(SESSION_KEY,username);
+ localStorage.setItem(
+  SESSION_KEY,
+  username
+ );
 
  initApp();
+
 }
 
 function logout(){
 
  saveState();
 
- localStorage.removeItem(SESSION_KEY);
+ localStorage.removeItem(
+  SESSION_KEY
+ );
 
- document.querySelector("#authScreen").style.display="grid";
+ document
+  .querySelector("#authScreen")
+  .style.display="grid";
 
  showLogin();
+
 }
 
 /* =========================================================
@@ -1497,21 +2644,40 @@ DEFAULT STATE
 function createDefaultState(){
 
  return{
+
   password:"",
+
   created:Date.now(),
+
   xp:0,
+
   level:0,
+
   coins:50,
+
   streak:0,
+
   completed:0,
-  achievements:["newcoder"],
+
+  achievements:[
+   "newcoder"
+  ],
+
   lessonXP:{},
+
   pythonFiles:{
-   "welcome.txt":"Welcome to CodeQuest Python!\n\nStart learning Python here."
+
+   "welcome.txt":
+    "Welcome to CodeQuest Python!\n\nStart learning Python here."
+
   },
+
   codeRuns:0,
+
   pythonRuns:0,
+
   lastLogin:null
+
  };
 
 }
@@ -1521,12 +2687,20 @@ GAME STATE
 ========================================================= */
 
 let state=null;
+
 let currentPage="home";
+
 let selected=null;
+
 let quizDone=false;
+
 let quizQuestion=null;
+
 let combo=0;
+
 let activeLanguage="python";
+
+let pythonInputState=null;
 
 /* =========================================================
 SAVE / LOAD
@@ -1535,6 +2709,7 @@ SAVE / LOAD
 function saveState(){
 
  const accounts=getAccounts();
+
  const user=currentUser();
 
  if(!user||!state)return;
@@ -1542,50 +2717,84 @@ function saveState(){
  accounts[user]=state;
 
  saveAccounts(accounts);
+
 }
 
 function loadState(){
 
  const accounts=getAccounts();
+
  const user=currentUser();
 
  if(!user||!accounts[user]){
+
   return false;
+
  }
 
  state=accounts[user];
 
- if(state.xp===undefined)state.xp=0;
- if(state.level===undefined)state.level=0;
- if(state.coins===undefined)state.coins=50;
- if(state.streak===undefined)state.streak=0;
- if(state.completed===undefined)state.completed=0;
- if(!state.achievements)state.achievements=[];
- if(!state.lessonXP)state.lessonXP={};
- if(!state.pythonFiles)state.pythonFiles={};
- if(state.codeRuns===undefined)state.codeRuns=0;
- if(state.pythonRuns===undefined)state.pythonRuns=0;
+ if(state.xp===undefined)
+  state.xp=0;
+
+ if(state.level===undefined)
+  state.level=0;
+
+ if(state.coins===undefined)
+  state.coins=50;
+
+ if(state.streak===undefined)
+  state.streak=0;
+
+ if(state.completed===undefined)
+  state.completed=0;
+
+ if(!state.achievements)
+  state.achievements=[];
+
+ if(!state.lessonXP)
+  state.lessonXP={};
+
+ if(!state.pythonFiles)
+  state.pythonFiles={};
+
+ if(state.codeRuns===undefined)
+  state.codeRuns=0;
+
+ if(state.pythonRuns===undefined)
+  state.pythonRuns=0;
 
  updateLoginStreak();
 
  return true;
+
 }
 
 function initApp(){
 
  if(!loadState()){
+
   showLogin();
+
   return;
+
  }
 
- document.querySelector("#authScreen").style.display="none";
+ document
+  .querySelector("#authScreen")
+  .style.display="none";
 
  const user=currentUser();
 
- document.querySelector("#avatar").textContent=
- user.charAt(0).toUpperCase();
+ document
+  .querySelector("#avatar")
+  .textContent=
+   user.charAt(0).toUpperCase();
+
+ updateFullscreenButton();
 
  render();
+
 }
 
 /* =========================================================
@@ -1594,7 +2803,8 @@ STREAK
 
 function updateLoginStreak(){
 
- const today=new Date().toDateString();
+ const today=
+  new Date().toDateString();
 
  if(!state.lastLogin){
 
@@ -1602,113 +2812,185 @@ function updateLoginStreak(){
 
  }else{
 
-  const last=new Date(state.lastLogin);
-  const lastDate=last.toDateString();
+  const last=
+   new Date(state.lastLogin);
+
+  const lastDate=
+   last.toDateString();
 
   if(today!==lastDate){
 
-   const yesterday=new Date();
-   yesterday.setDate(yesterday.getDate()-1);
+   const yesterday=
+    new Date();
 
-   if(lastDate===yesterday.toDateString()){
+   yesterday.setDate(
+    yesterday.getDate()-1
+   );
+
+   if(
+    lastDate===
+    yesterday.toDateString()
+   ){
+
     state.streak++;
+
    }else{
+
     state.streak=1;
+
    }
 
   }
 
  }
 
- state.lastLogin=new Date().toISOString();
+ state.lastLogin=
+  new Date().toISOString();
 
  saveState();
+
 }
 
 /* =========================================================
 XP
 ========================================================= */
 
-function addXP(amount,reason="",rerender=true){
+function addXP(
+ amount,
+ reason="",
+ rerender=true
+){
 
  if(!state)return;
 
  const oldLevel=state.level;
 
  state.xp+=amount;
- state.coins+=Math.max(1,Math.floor(amount/5));
- state.level=Math.floor(state.xp/100);
+
+ state.coins+=
+  Math.max(
+   1,
+   Math.floor(amount/5)
+  );
+
+ state.level=
+  Math.floor(state.xp/100);
 
  saveState();
 
  createXPFloat(amount);
 
  if(state.level>oldLevel){
-  showLevelUp(state.level);
+
+  showLevelUp(
+   state.level
+  );
+
  }
 
  checkAchievements();
 
  if(rerender){
+
   render();
+
  }else{
+
   headerStats();
+
  }
+
 }
 
 function createXPFloat(amount){
 
- const el=document.createElement("div");
+ const el=
+  document.createElement("div");
 
  el.style.position="fixed";
+
  el.style.left="50%";
+
  el.style.top="48%";
+
  el.style.zIndex="300";
+
  el.style.color="var(--gold)";
+
  el.style.fontSize="25px";
+
  el.style.fontWeight="950";
+
  el.style.pointerEvents="none";
 
- el.textContent="+"+amount+" XP";
+ el.textContent=
+  "+"+amount+" XP";
 
  document.body.appendChild(el);
 
- el.animate([
-  {
-   opacity:0,
-   transform:"translate(-50%,20px) scale(.7)"
-  },
-  {
-   opacity:1,
-   transform:"translate(-50%,0) scale(1.1)"
-  },
-  {
-   opacity:0,
-   transform:"translate(-50%,-100px)"
-  }
- ],{
-  duration:1000,
-  easing:"ease"
- });
+ el.animate(
 
- setTimeout(()=>el.remove(),1000);
+  [
+
+   {
+    opacity:0,
+    transform:
+     "translate(-50%,20px) scale(.7)"
+   },
+
+   {
+    opacity:1,
+    transform:
+     "translate(-50%,0) scale(1.1)"
+   },
+
+   {
+    opacity:0,
+    transform:
+     "translate(-50%,-100px)"
+   }
+
+  ],
+
+  {
+   duration:1000,
+   easing:"ease"
+  }
+
+ );
+
+ setTimeout(
+  ()=>el.remove(),
+  1000
+ );
+
 }
 
 function showLevelUp(level){
 
- document.querySelector("#levelupText").textContent=
- "You reached Level "+level+".";
+ document
+  .querySelector("#levelupText")
+  .textContent=
+   "You reached Level "+level+".";
 
- document.querySelector("#levelup").style.display="grid";
+ document
+  .querySelector("#levelup")
+  .style.display="grid";
+
 }
 
 function closeLevelUp(){
 
- document.querySelector("#levelup").style.display="none";
+ document
+  .querySelector("#levelup")
+  .style.display="none";
 
- toast("Level "+state.level+" reached.");
+ toast(
+  "Level "+state.level+" reached."
+ );
 
  render();
+
 }
 
 /* =========================================================
@@ -1717,17 +2999,204 @@ TOAST
 
 function toast(text){
 
- const el=document.querySelector("#toast");
+ const el=
+  document.querySelector("#toast");
 
  el.textContent=text;
+
  el.classList.add("show");
 
- clearTimeout(window.toastTimer);
+ clearTimeout(
+  window.toastTimer
+ );
 
- window.toastTimer=setTimeout(()=>{
-  el.classList.remove("show");
- },1900);
+ window.toastTimer=
+  setTimeout(
+   ()=>{
+    el.classList.remove("show");
+   },
+   1900
+  );
+
 }
+
+/* =========================================================
+FULL SCREEN
+========================================================= */
+
+const appShell=
+ document.querySelector("#appShell");
+
+const fullscreenBtn=
+ document.querySelector("#fullscreenBtn");
+
+/*
+ Detect whether CodeQuest is already in fullscreen.
+*/
+
+function isFullscreen(){
+
+ return Boolean(
+  document.fullscreenElement
+ );
+
+}
+
+/*
+ Update the button icon and text.
+*/
+
+function updateFullscreenButton(){
+
+ if(!fullscreenBtn)return;
+
+ const icon=
+  fullscreenBtn.querySelector("i");
+
+ if(isFullscreen()){
+
+  icon.className=
+   "fa-solid fa-compress";
+
+  fullscreenBtn.setAttribute(
+   "aria-label",
+   "Exit full screen"
+  );
+
+  fullscreenBtn.setAttribute(
+   "title",
+   "Exit Full Screen"
+  );
+
+ }else{
+
+  icon.className=
+   "fa-solid fa-expand";
+
+  fullscreenBtn.setAttribute(
+   "aria-label",
+   "Enter full screen"
+  );
+
+  fullscreenBtn.setAttribute(
+   "title",
+   "Full Screen"
+  );
+
+ }
+
+}
+
+/*
+ Enter fullscreen.
+
+ The app shell itself is requested so the whole
+ CodeQuest app becomes the fullscreen page.
+*/
+
+async function enterFullscreen(){
+
+ try{
+
+  if(
+   !document.fullscreenEnabled
+  ){
+
+   toast(
+    "Full screen is not supported here."
+   );
+
+   return;
+  }
+
+  if(
+   appShell.requestFullscreen
+  ){
+
+   await appShell.requestFullscreen();
+
+  }else{
+
+   toast(
+    "Full screen is not supported here."
+   );
+
+  }
+
+ }catch(error){
+
+  console.log(
+   "Fullscreen error:",
+   error
+  );
+
+  toast(
+   "Full screen could not start."
+  );
+
+ }
+
+}
+
+/*
+ Leave fullscreen.
+*/
+
+async function exitFullscreen(){
+
+ try{
+
+  if(document.exitFullscreen){
+
+   await document.exitFullscreen();
+
+  }
+
+ }catch(error){
+
+  console.log(
+   "Exit fullscreen error:",
+   error
+  );
+
+ }
+
+}
+
+/*
+ Main fullscreen button.
+*/
+
+fullscreenBtn.addEventListener(
+ "click",
+ async ()=>{
+
+  if(isFullscreen()){
+
+   await exitFullscreen();
+
+  }else{
+
+   await enterFullscreen();
+
+  }
+
+  updateFullscreenButton();
+
+ }
+);
+
+/*
+ If the user exits fullscreen using the browser,
+ update the button automatically.
+*/
+
+document.addEventListener(
+ "fullscreenchange",
+ ()=>{
+  updateFullscreenButton();
+ }
+);
 
 /* =========================================================
 FACTS
@@ -1736,45 +3205,69 @@ FACTS
 const facts=[
 
  {
-  title:"Python got its name from a comedy show.",
-  text:"Guido van Rossum named Python after Monty Python.",
+  title:
+   "Python got its name from a comedy show.",
+
+  text:
+   "Guido van Rossum named Python after Monty Python.",
+
   category:"PYTHON"
  },
 
  {
-  title:"Variables hold values.",
-  text:"A variable gives a name to information your program stores.",
+  title:
+   "Variables hold values.",
+
+  text:
+   "A variable gives a name to information your program stores.",
+
   category:"BASICS"
  },
 
  {
-  title:"input() gets text.",
-  text:"Python input() lets the user type something.",
+  title:
+   "input() gets text.",
+
+  text:
+   "Python input() lets the user type something.",
+
   category:"PYTHON"
  },
 
  {
-  title:"print() shows text.",
-  text:"Python print() shows information on the screen.",
+  title:
+   "print() shows text.",
+
+  text:
+   "Python print() shows information on the screen.",
+
   category:"PYTHON"
  },
 
  {
-  title:"Algorithms are steps.",
-  text:"An algorithm is a group of steps used to solve a problem.",
+  title:
+   "Algorithms are steps.",
+
+  text:
+   "An algorithm is a group of steps used to solve a problem.",
+
   category:"BASICS"
  },
 
  {
-  title:"Loops repeat code.",
-  text:"Loops let a program run the same code more than once.",
+  title:
+   "Loops repeat code.",
+
+  text:
+   "Loops let a program run the same code more than once.",
+
   category:"BASICS"
  }
 
 ];
 
 /* =========================================================
-COURSES / MAP
+COURSES
 ========================================================= */
 
 const courses=[
@@ -1884,32 +3377,52 @@ const courses=[
 NAVIGATION
 ========================================================= */
 
-const app=document.querySelector(".app-shell");
-const main=document.querySelector("#main");
+const app=
+ document.querySelector(".app-shell");
+
+const main=
+ document.querySelector("#main");
 
 function openMenu(){
- app.classList.add("drawer-open");
+
+ app.classList.add(
+  "drawer-open"
+ );
+
 }
 
 function closeMenu(){
- app.classList.remove("drawer-open");
+
+ app.classList.remove(
+  "drawer-open"
+ );
+
 }
 
-document.querySelector("#menuBtn").onclick=openMenu;
-document.querySelector("#overlay").onclick=closeMenu;
+document
+ .querySelector("#menuBtn")
+ .onclick=openMenu;
 
-document.querySelectorAll("[data-page]").forEach(button=>{
+document
+ .querySelector("#overlay")
+ .onclick=closeMenu;
 
- button.onclick=()=>{
+document
+ .querySelectorAll("[data-page]")
+ .forEach(button=>{
 
-  currentPage=button.dataset.page;
+  button.onclick=()=>{
 
-  closeMenu();
+   currentPage=
+    button.dataset.page;
 
-  render();
- };
+   closeMenu();
 
-});
+   render();
+
+  };
+
+ });
 
 /* =========================================================
 RENDER
@@ -1917,8 +3430,16 @@ RENDER
 
 function headerStats(){
 
- document.querySelector("#coins").textContent=state.coins;
- document.querySelector("#streak").textContent=state.streak;
+ document
+  .querySelector("#coins")
+  .textContent=
+   state.coins;
+
+ document
+  .querySelector("#streak")
+  .textContent=
+   state.streak;
+
 }
 
 function render(){
@@ -1927,110 +3448,176 @@ function render(){
 
  headerStats();
 
- document.querySelectorAll(".bottom-nav button").forEach(button=>{
-  button.classList.toggle(
-   "active",
-   button.dataset.page===currentPage
-  );
- });
+ document
+  .querySelectorAll(".bottom-nav button")
+  .forEach(button=>{
 
- document.querySelectorAll(".drawer-item[data-page]").forEach(button=>{
-  button.classList.toggle(
-   "active",
-   button.dataset.page===currentPage
-  );
- });
+   button.classList.toggle(
+    "active",
+    button.dataset.page===
+     currentPage
+   );
+
+  });
+
+ document
+  .querySelectorAll(
+   ".drawer-item[data-page]"
+  )
+  .forEach(button=>{
+
+   button.classList.toggle(
+    "active",
+    button.dataset.page===
+     currentPage
+   );
+
+  });
 
  const pages={
+
   home,
+
   courses:coursePage,
+
   python:pythonPage,
+
   quiz:quizArena,
+
   facts:factPage,
+
   playground,
+
   files:fileHarbor,
+
   progress,
+
   achievements
+
  };
 
- (pages[currentPage]||home)();
+ (
+  pages[currentPage]||
+  home
+ )();
+
 }
 
 /* =========================================================
-PLAYER
+PLAYER HUD
 ========================================================= */
 
 function playerHUD(){
 
- const pct=state.xp%100;
+ const pct=
+  state.xp%100;
 
  let rank="NEW CODER";
 
- if(state.level>=10)rank="CODE LEGEND";
- else if(state.level>=7)rank="MASTER CODER";
- else if(state.level>=5)rank="CODE KNIGHT";
- else if(state.level>=3)rank="PYTHON CODER";
- else if(state.level>=1)rank="JUNIOR CODER";
+ if(state.level>=10)
+  rank="CODE LEGEND";
+
+ else if(state.level>=7)
+  rank="MASTER CODER";
+
+ else if(state.level>=5)
+  rank="CODE KNIGHT";
+
+ else if(state.level>=3)
+  rank="PYTHON CODER";
+
+ else if(state.level>=1)
+  rank="JUNIOR CODER";
 
  return`
 
- <div class="player-card">
+  <div class="player-card">
 
- <div class="player-top">
+   <div class="player-top">
 
- <div class="player-avatar">
- <i class="fa-solid fa-user"></i>
- </div>
+    <div class="player-avatar">
 
- <div class="player-info">
+     <i class="fa-solid fa-user"></i>
 
- <small>PLAYER</small>
+    </div>
 
- <b>${escapeHTML(currentUser())}</b>
+    <div class="player-info">
 
- <span class="rank">
- <i class="fa-solid fa-star"></i>
- ${rank}
- </span>
+     <small>
+      PLAYER
+     </small>
 
- </div>
+     <b>
+      ${escapeHTML(currentUser())}
+     </b>
 
- <div style="text-align:right">
+     <span class="rank">
 
- <small style="color:var(--muted)">
- LEVEL
- </small>
+      <i class="fa-solid fa-star"></i>
 
- <div style="
- font-size:25px;
- font-weight:950;
- color:var(--gold)
- ">
- ${state.level}
- </div>
+      ${rank}
 
- </div>
+     </span>
 
- </div>
+    </div>
 
- <div class="xp-row">
- <span>XP</span>
- <span style="color:var(--gold)">
- ${pct}/100
- </span>
- </div>
+    <div style="text-align:right">
 
- <div class="xp-bar">
- <div class="xp-fill" style="width:${pct}%"></div>
- </div>
+     <small
+      style="color:var(--muted)"
+     >
+      LEVEL
+     </small>
 
- <small class="muted">
- ${100-pct} XP until Level ${state.level+1}
- </small>
+     <div
+      style="
+       font-size:25px;
+       font-weight:950;
+       color:var(--gold)
+      "
+     >
+      ${state.level}
+     </div>
 
- </div>
+    </div>
+
+   </div>
+
+   <div class="xp-row">
+
+    <span>
+     XP
+    </span>
+
+    <span
+     style="color:var(--gold)"
+    >
+     ${pct}/100
+    </span>
+
+   </div>
+
+   <div class="xp-bar">
+
+    <div
+     class="xp-fill"
+     style="width:${pct}%"
+    ></div>
+
+   </div>
+
+   <small class="muted">
+
+    ${100-pct}
+    XP until Level
+    ${state.level+1}
+
+   </small>
+
+  </div>
 
  `;
+
 }
 
 /* =========================================================
@@ -2039,179 +3626,267 @@ HOME
 
 function home(){
 
- const fact=facts[Math.floor(Math.random()*facts.length)];
+ const fact=
+  facts[
+   Math.floor(
+    Math.random()*facts.length
+   )
+  ];
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-house"></i>
- HOME
- </div>
+   <div class="eyebrow">
 
- <h1>Welcome back!</h1>
+    <i class="fa-solid fa-house"></i>
 
- <p>
- Learn coding, finish tasks and build your skills.
- </p>
+    HOME
 
- </section>
+   </div>
 
- ${playerHUD()}
+   <h1>
+    Welcome back!
+   </h1>
 
- <div class="section">
- <h2>
- <i class="fa-solid fa-chart-simple"></i>
- My Stats
- </h2>
- </div>
+   <p>
+    Learn coding, finish tasks and build your skills.
+   </p>
 
- <div class="grid two">
+  </section>
 
- <div class="card stat">
- <span>XP</span>
- <b>${state.xp}</b>
- <small>Total XP</small>
- </div>
+  ${playerHUD()}
 
- <div class="card stat">
- <span>GOLD</span>
- <b>${state.coins}</b>
- <small>Coins</small>
- </div>
+  <div class="section">
 
- <div class="card stat">
- <span>STREAK</span>
- <b>${state.streak}</b>
- <small>Days</small>
- </div>
+   <h2>
 
- <div class="card stat">
- <span>TASKS</span>
- <b>${state.completed}</b>
- <small>Finished</small>
- </div>
+    <i class="fa-solid fa-chart-simple"></i>
 
- </div>
+    My Stats
 
- <div class="section">
- <h2>
- <i class="fa-solid fa-list-check"></i>
- Tasks
- </h2>
- </div>
+   </h2>
 
- ${missionCard(
-  "fa-brands fa-python",
-  "Learn Python",
-  "Start your Python lessons.",
-  "+50 XP",
-  "go('python')"
- )}
+  </div>
 
- ${missionCard(
-  "fa-solid fa-crosshairs",
-  "Take the Quiz",
-  "Test what you know.",
-  "+10 XP",
-  "go('quiz')"
- )}
+  <div class="grid two">
 
- ${missionCard(
-  "fa-solid fa-flask",
-  "Write Code",
-  "Write and run code.",
-  "+5 XP",
-  "go('playground')"
- )}
+   <div class="card stat">
 
- ${missionCard(
-  "fa-solid fa-folder",
-  "Open Files",
-  "Learn how programs use files.",
-  "+5 XP",
-  "go('files')"
- )}
+    <span>
+     XP
+    </span>
 
- <div class="section">
+    <b>
+     ${state.xp}
+    </b>
 
- <h2>
- <i class="fa-solid fa-map"></i>
- Map
- </h2>
+    <small>
+     Total XP
+    </small>
 
- <button onclick="go('courses')">
- OPEN →
- </button>
+   </div>
 
- </div>
+   <div class="card stat">
 
- <div class="world-map">
+    <span>
+     GOLD
+    </span>
 
- ${courses.slice(0,5).map((course,index)=>
-  mapNode(course,index)
- ).join("")}
+    <b>
+     ${state.coins}
+    </b>
 
- </div>
+    <small>
+     Coins
+    </small>
 
- <div class="section">
+   </div>
 
- <h2>
- <i class="fa-solid fa-book"></i>
- Learn
- </h2>
+   <div class="card stat">
 
- <button onclick="go('facts')">
- MORE →
- </button>
+    <span>
+     STREAK
+    </span>
 
- </div>
+    <b>
+     ${state.streak}
+    </b>
 
- <div class="card">
+    <small>
+     Days
+    </small>
 
- <div class="eyebrow">
- ${fact.category}
- </div>
+   </div>
 
- <h3 style="margin-top:7px">
- ${fact.title}
- </h3>
+   <div class="card stat">
 
- <p class="muted">
- ${fact.text}
- </p>
+    <span>
+     TASKS
+    </span>
 
- </div>
+    <b>
+     ${state.completed}
+    </b>
+
+    <small>
+     Finished
+    </small>
+
+   </div>
+
+  </div>
+
+  <div class="section">
+
+   <h2>
+
+    <i class="fa-solid fa-list-check"></i>
+
+    Tasks
+
+   </h2>
+
+  </div>
+
+  ${missionCard(
+   "fa-brands fa-python",
+   "Learn Python",
+   "Start your Python lessons.",
+   "+50 XP",
+   "go('python')"
+  )}
+
+  ${missionCard(
+   "fa-solid fa-crosshairs",
+   "Take the Quiz",
+   "Test what you know.",
+   "+10 XP",
+   "go('quiz')"
+  )}
+
+  ${missionCard(
+   "fa-solid fa-flask",
+   "Write Code",
+   "Write and run code.",
+   "+5 XP",
+   "go('playground')"
+  )}
+
+  ${missionCard(
+   "fa-solid fa-folder",
+   "Open Files",
+   "Learn how programs use files.",
+   "+5 XP",
+   "go('files')"
+  )}
+
+  <div class="section">
+
+   <h2>
+
+    <i class="fa-solid fa-map"></i>
+
+    Map
+
+   </h2>
+
+   <button onclick="go('courses')">
+    OPEN →
+   </button>
+
+  </div>
+
+  <div class="world-map">
+
+   ${courses
+    .slice(0,5)
+    .map(
+     (course,index)=>
+      mapNode(course,index)
+    )
+    .join("")
+   }
+
+  </div>
+
+  <div class="section">
+
+   <h2>
+
+    <i class="fa-solid fa-book"></i>
+
+    Learn
+
+   </h2>
+
+   <button onclick="go('facts')">
+    MORE →
+   </button>
+
+  </div>
+
+  <div class="card">
+
+   <div class="eyebrow">
+    ${fact.category}
+   </div>
+
+   <h3 style="margin-top:7px">
+    ${fact.title}
+   </h3>
+
+   <p class="muted">
+    ${fact.text}
+   </p>
+
+  </div>
 
  `;
+
 }
 
-function missionCard(icon,title,desc,reward,action){
+function missionCard(
+ icon,
+ title,
+ desc,
+ reward,
+ action
+){
 
  return`
 
- <button class="quest" onclick="${action}">
+  <button
+   class="quest"
+   onclick="${action}"
+  >
 
- <div class="quest-icon">
- <i class="${icon}"></i>
- </div>
+   <div class="quest-icon">
 
- <div class="quest-info">
+    <i class="${icon}"></i>
 
- <b>${title}</b>
+   </div>
 
- <p>${desc}</p>
+   <div class="quest-info">
 
- </div>
+    <b>
+     ${title}
+    </b>
 
- <span class="reward">
- ${reward}
- </span>
+    <p>
+     ${desc}
+    </p>
 
- </button>
+   </div>
+
+   <span class="reward">
+    ${reward}
+   </span>
+
+  </button>
 
  `;
+
 }
 
 function go(page){
@@ -2219,66 +3894,78 @@ function go(page){
  currentPage=page;
 
  render();
+
 }
 
 /* =========================================================
-IMPORTANT MAP CLICK FIX
+MAP CLICK
 ========================================================= */
 
-function mapNode(course,index){
+function mapNode(
+ course,
+ index
+){
 
- const unlocked=state.level>=course.level;
+ const unlocked=
+  state.level>=course.level;
 
  return`
 
- <div
- class="map-click-area"
- onclick="${
-  unlocked
-  ? `openCourse(${index})`
-  : `toast('Reach Level ${course.level} first.')`
- }"
- >
+  <div
+   class="map-click-area"
+   onclick="${
+    unlocked
+    ? `openCourse(${index})`
+    : `toast('Reach Level ${course.level} first.')`
+   }"
+  >
 
- <div class="
- zone
- ${unlocked?"unlocked":"locked"}
- ${course.type==="python"?"python":""}
- ">
+   <div class="
+    zone
+    ${unlocked?"unlocked":"locked"}
+    ${course.type==="python"?"python":""}
+   ">
 
- <div class="zone-node">
+    <div class="zone-node">
 
- ${
-  unlocked
-  ? `<i class="${course.icon}"></i>`
-  : `<i class="fa-solid fa-lock"></i>`
- }
+     ${
+      unlocked
+      ? `<i class="${course.icon}"></i>`
+      : `<i class="fa-solid fa-lock"></i>`
+     }
 
- </div>
+    </div>
 
- <div class="zone-info">
+    <div class="zone-info">
 
- <b>${course.title}</b>
+     <b>
+      ${course.title}
+     </b>
 
- <small>
- ${
-  unlocked
-  ? course.desc
-  : "Reach Level "+course.level
- }
- </small>
+     <small>
 
- </div>
+      ${
+       unlocked
+       ? course.desc
+       : "Reach Level "+course.level
+      }
 
- <span class="zone-status">
- ${unlocked?"OPEN":"LOCKED"}
- </span>
+     </small>
 
- </div>
+    </div>
 
- </div>
+    <span class="zone-status">
+
+     ${unlocked?"OPEN":"LOCKED"}
+
+    </span>
+
+   </div>
+
+  </div>
 
  `;
+
 }
 
 /* =========================================================
@@ -2289,45 +3976,64 @@ function coursePage(){
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-map"></i>
- MAP
- </div>
+   <div class="eyebrow">
 
- <h1>The Coding Map</h1>
+    <i class="fa-solid fa-map"></i>
 
- <p>
- Click a lesson to start learning.
- </p>
+    MAP
 
- </section>
+   </div>
 
- ${playerHUD()}
+   <h1>
+    The Coding Map
+   </h1>
 
- <div class="section">
- <h2>Lessons</h2>
- </div>
+   <p>
+    Click a lesson to start learning.
+   </p>
 
- <div class="world-map">
+  </section>
 
- ${courses.map((course,index)=>
-  mapNode(course,index)
- ).join("")}
+  ${playerHUD()}
 
- </div>
+  <div class="section">
+
+   <h2>
+    Lessons
+   </h2>
+
+  </div>
+
+  <div class="world-map">
+
+   ${courses
+    .map(
+     (course,index)=>
+      mapNode(course,index)
+    )
+    .join("")
+   }
+
+  </div>
 
  `;
+
 }
 
 function openCourse(index){
 
- const course=courses[index];
+ const course=
+  courses[index];
 
  if(state.level<course.level){
 
-  toast("Reach Level "+course.level+" first.");
+  toast(
+   "Reach Level "+
+   course.level+
+   " first."
+  );
 
   return;
  }
@@ -2338,9 +4044,13 @@ function openCourse(index){
 
  }else{
 
-  openGenericLesson(course,index);
+  openGenericLesson(
+   course,
+   index
+  );
 
  }
+
 }
 
 /* =========================================================
@@ -2349,79 +4059,116 @@ PYTHON
 
 function pythonCourses(){
 
- return courses.filter(c=>c.type==="python");
+ return courses.filter(
+  c=>c.type==="python"
+ );
+
 }
 
 function pythonPage(){
 
- const list=pythonCourses();
+ const list=
+  pythonCourses();
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-brands fa-python"></i>
- PYTHON
- </div>
+   <div class="eyebrow">
 
- <h1>Learn Python</h1>
+    <i class="fa-brands fa-python"></i>
 
- <p>
- Learn Python one simple lesson at a time.
- </p>
+    PYTHON
 
- </section>
+   </div>
 
- <div class="card" style="
- text-align:center;
- background:#0d1826;
- ">
+   <h1>
+    Learn Python
+   </h1>
 
- <div style="
- font-size:65px;
- color:var(--python);
- ">
+   <p>
+    Learn Python one simple lesson at a time.
+   </p>
 
- <i class="fa-brands fa-python"></i>
+  </section>
 
- </div>
+  <div
+   class="card"
+   style="
+    text-align:center;
+    background:#0d1826;
+   "
+  >
 
- <h2>PYTHON LESSONS</h2>
+   <div
+    style="
+     font-size:65px;
+     color:var(--python);
+    "
+   >
 
- <p class="muted">
- Start with the basics and move up slowly.
- </p>
+    <i class="fa-brands fa-python"></i>
 
- </div>
+   </div>
 
- <div class="section">
- <h2>Python Lessons</h2>
- </div>
+   <h2>
+    PYTHON LESSONS
+   </h2>
 
- <div class="world-map">
+   <p class="muted">
+    Start with the basics and move up slowly.
+   </p>
 
- ${list.map(course=>{
+  </div>
 
-  const index=courses.indexOf(course);
+  <div class="section">
 
-  return mapNode(course,index);
+   <h2>
+    Python Lessons
+   </h2>
 
- }).join("")}
+  </div>
 
- </div>
+  <div class="world-map">
 
- <button class="btn python" onclick="openPythonLab()">
- <i class="fa-solid fa-code"></i>
- WRITE PYTHON
- </button>
+   ${list.map(course=>{
 
- <button class="btn" onclick="go('files')">
- <i class="fa-solid fa-folder"></i>
- OPEN FILES
- </button>
+    const index=
+     courses.indexOf(course);
+
+    return mapNode(
+     course,
+     index
+    );
+
+   }).join("")}
+
+  </div>
+
+  <button
+   class="btn python"
+   onclick="openPythonLab()"
+  >
+
+   <i class="fa-solid fa-code"></i>
+
+   WRITE PYTHON
+
+  </button>
+
+  <button
+   class="btn"
+   onclick="go('files')"
+  >
+
+   <i class="fa-solid fa-folder"></i>
+
+   OPEN FILES
+
+  </button>
 
  `;
+
 }
 
 /* =========================================================
@@ -2431,341 +4178,526 @@ PYTHON LESSONS
 const pythonLessons={
 
  "Python":{
-  title:"Your First Python Code",
-  concept:"Python is a programming language. You can use it to make programs, games and tools.",
-  code:`# Your first Python program
+
+  title:
+   "Your First Python Code",
+
+  concept:
+   "Python is a programming language. You can use it to make programs, games and tools.",
+
+  code:
+`# Your first Python program
 print("Hello, CodeQuest!")`,
-  question:"Which function shows text in Python?",
-  answers:["input()","print()","open()","display()"],
+
+  question:
+   "Which function shows text in Python?",
+
+  answers:[
+   "input()",
+   "print()",
+   "open()",
+   "display()"
+  ],
+
   correct:1
+
  },
 
  "Variables":{
-  title:"Variables",
-  concept:"A variable gives a name to a value. You can use variables to keep text and numbers.",
-  code:`name = "Coder"
+
+  title:
+   "Variables",
+
+  concept:
+   "A variable gives a name to a value. You can use variables to keep text and numbers.",
+
+  code:
+`name = "Coder"
 score = 100
 
 print(name)
 print(score)`,
-  question:"What value is stored in score?",
-  answers:["name","100","Coder","Nothing"],
+
+  question:
+   "What value is stored in score?",
+
+  answers:[
+   "name",
+   "100",
+   "Coder",
+   "Nothing"
+  ],
+
   correct:1
+
  },
 
  "Input":{
-  title:"Input",
-  concept:"input() lets the user type something into your program.",
-  code:`name = input("What is your name? ")
+
+  title:
+   "Input",
+
+  concept:
+   "input() lets the user type something into your program.",
+
+  code:
+`name = input("What is your name? ")
 print("Hello,", name)`,
-  question:"Which function lets the user type something?",
-  answers:["print()","open()","input()","write()"],
+
+  question:
+   "Which function lets the user type something?",
+
+  answers:[
+   "print()",
+   "open()",
+   "input()",
+   "write()"
+  ],
+
   correct:2
+
  },
 
  "Output":{
-  title:"Output",
-  concept:"print() shows information in the program output.",
-  code:`name = "Coder"
+
+  title:
+   "Output",
+
+  concept:
+   "print() shows information in the program output.",
+
+  code:
+`name = "Coder"
 score = 95
 
 print("Name:", name)
 print("Score:", score)`,
-  question:"What does print() do?",
-  answers:["Gets input","Shows information","Creates a file","Deletes variables"],
+
+  question:
+   "What does print() do?",
+
+  answers:[
+   "Gets input",
+   "Shows information",
+   "Creates a file",
+   "Deletes variables"
+  ],
+
   correct:1
+
  },
 
  "Files":{
-  title:"Files",
-  concept:"Python can make, read and change files with open().",
-  code:`file = open("notes.txt", "w")
+
+  title:
+   "Files",
+
+  concept:
+   "Python can make, read and change files with open().",
+
+  code:
+`file = open("notes.txt", "w")
 file.write("I am learning Python!")
 file.close()`,
-  question:"What does the 'w' mode mean?",
-  answers:["Watch","Write","Web","Wait"],
+
+  question:
+   "What does the 'w' mode mean?",
+
+  answers:[
+   "Watch",
+   "Write",
+   "Web",
+   "Wait"
+  ],
+
   correct:1
+
  }
 
 };
 
 function openPythonLessonByName(name){
 
- const course=courses.find(c=>c.title===name);
+ const course=
+  courses.find(
+   c=>c.title===name
+  );
 
  if(course){
+
   openPythonLesson(course);
+
  }
+
 }
 
 function openPythonLesson(course){
 
- const lesson=pythonLessons[course.title];
+ const lesson=
+  pythonLessons[course.title];
 
  if(!lesson){
+
   openPythonLab();
+
   return;
+
  }
 
  main.innerHTML=`
 
- <div class="lesson-head">
+  <div class="lesson-head">
 
- <button class="back" onclick="go('python')">
- ← Python
- </button>
+   <button
+    class="back"
+    onclick="go('python')"
+   >
+    ← Python
+   </button>
 
- <span class="lesson-number">
- LESSON ${course.level+1}
- </span>
+   <span class="lesson-number">
+    LESSON ${course.level+1}
+   </span>
 
- </div>
+  </div>
 
- <div class="concept">
+  <div class="concept">
 
- <div class="eyebrow">
- <i class="fa-brands fa-python"></i>
- ${course.title}
- </div>
+   <div class="eyebrow">
 
- <h1>${lesson.title}</h1>
+    <i class="fa-brands fa-python"></i>
 
- <p class="muted">
- ${lesson.concept}
- </p>
+    ${course.title}
 
- <div class="code">
- ${escapeHTML(lesson.code)}
- </div>
+   </div>
 
- </div>
+   <h1>
+    ${lesson.title}
+   </h1>
 
- <div class="battle-card">
+   <p class="muted">
+    ${lesson.concept}
+   </p>
 
- <div class="enemy">
+   <div class="code">
+    ${escapeHTML(lesson.code)}
+   </div>
 
- <div class="enemy-icon">
- <i class="fa-brands fa-python"></i>
- </div>
+  </div>
 
- <div class="enemy-name">
- PYTHON CHALLENGE
- </div>
+  <div class="battle-card">
 
- </div>
+   <div class="enemy">
 
- <h3>Question</h3>
+    <div class="enemy-icon">
 
- <p>${lesson.question}</p>
+     <i class="fa-brands fa-python"></i>
 
- <div id="lessonChoices">
+    </div>
 
- ${lesson.answers.map((answer,i)=>`
+    <div class="enemy-name">
+     PYTHON CHALLENGE
+    </div>
 
- <button
- class="choice"
- onclick="selectLessonAnswer(
- ${i},
- ${lesson.correct},
- '${escapeAttribute(course.title)}'
- )"
- >
+   </div>
 
- ${String.fromCharCode(65+i)}.
- ${answer}
+   <h3>
+    Question
+   </h3>
 
- </button>
+   <p>
+    ${lesson.question}
+   </p>
 
- `).join("")}
+   <div id="lessonChoices">
 
- </div>
+    ${lesson.answers.map(
+     (answer,i)=>`
 
- <div id="lessonResult"></div>
+      <button
+       class="choice"
+       onclick="selectLessonAnswer(
+        ${i},
+        ${lesson.correct},
+        '${escapeAttribute(course.title)}'
+       )"
+      >
 
- </div>
+       ${String.fromCharCode(65+i)}.
+       ${answer}
 
- <div class="card" style="margin-top:10px">
+      </button>
 
- <h3>
- <i class="fa-solid fa-code"></i>
- Try It
- </h3>
+     `
+    ).join("")}
 
- <p class="muted">
- Try the code yourself.
- </p>
+   </div>
 
- <button class="btn python" onclick="openPythonLab()">
- WRITE PYTHON
- </button>
+   <div id="lessonResult"></div>
 
- </div>
+  </div>
+
+  <div
+   class="card"
+   style="margin-top:10px"
+  >
+
+   <h3>
+
+    <i class="fa-solid fa-code"></i>
+
+    Try It
+
+   </h3>
+
+   <p class="muted">
+    Try the code yourself.
+   </p>
+
+   <button
+    class="btn python"
+    onclick="openPythonLab()"
+   >
+    WRITE PYTHON
+   </button>
+
+  </div>
 
  `;
+
 }
 
-function selectLessonAnswer(index,correct,title){
+function selectLessonAnswer(
+ index,
+ correct,
+ title
+){
 
- const buttons=document.querySelectorAll(
- "#lessonChoices .choice"
+ const buttons=
+  document.querySelectorAll(
+   "#lessonChoices .choice"
+  );
+
+ buttons.forEach(
+  b=>b.disabled=true
  );
 
- buttons.forEach(b=>b.disabled=true);
-
  buttons[index].classList.add(
- index===correct?"correct":"wrong"
+  index===correct
+  ?"correct"
+  :"wrong"
  );
 
  if(index!==correct){
 
-  buttons[correct].classList.add("correct");
+  buttons[correct]
+   .classList.add("correct");
 
-  document.querySelector("#lessonResult").innerHTML=`
+  document
+   .querySelector("#lessonResult")
+   .innerHTML=`
 
-  <div class="card"
-  style="margin-top:12px;background:#17101a;box-shadow:none">
+    <div
+     class="card"
+     style="
+      margin-top:12px;
+      background:#17101a;
+      box-shadow:none
+     "
+    >
 
-  <b style="color:var(--red)">
-  WRONG
-  </b>
+     <b style="color:var(--red)">
+      WRONG
+     </b>
 
-  <p class="muted">
-  Look at the green answer.
-  </p>
+     <p class="muted">
+      Look at the green answer.
+     </p>
 
-  </div>
+    </div>
 
   `;
 
   return;
+
  }
 
- document.querySelector("#lessonResult").innerHTML=`
+ document
+  .querySelector("#lessonResult")
+  .innerHTML=`
 
- <div class="card"
- style="margin-top:12px;background:#111e17;box-shadow:none">
+   <div
+    class="card"
+    style="
+     margin-top:12px;
+     background:#111e17;
+     box-shadow:none
+    "
+   >
 
- <b style="color:var(--lime)">
- CORRECT
- </b>
+    <b style="color:var(--lime)">
+     CORRECT
+    </b>
 
- <p class="muted">
- Good job! You got it right.
- </p>
+    <p class="muted">
+     Good job! You got it right.
+    </p>
 
- </div>
+   </div>
 
  `;
 
- const course=courses.find(c=>c.title===title);
+ const course=
+  courses.find(
+   c=>c.title===title
+  );
 
- if(course&&!state.lessonXP[title]){
+ if(
+  course&&
+  !state.lessonXP[title]
+ ){
 
   state.lessonXP[title]=true;
+
   state.completed++;
 
   saveState();
 
-  addXP(course.xp,"Lesson done");
+  addXP(
+   course.xp,
+   "Lesson done"
+  );
+
  }
+
 }
 
 /* =========================================================
 GENERIC LESSONS
 ========================================================= */
 
-function openGenericLesson(course,index){
+function openGenericLesson(
+ course,
+ index
+){
 
  main.innerHTML=`
 
- <div class="lesson-head">
+  <div class="lesson-head">
 
- <button class="back" onclick="go('courses')">
- ← Map
- </button>
+   <button
+    class="back"
+    onclick="go('courses')"
+   >
+    ← Map
+   </button>
 
- <span class="lesson-number">
- LESSON ${index+1}
- </span>
+   <span class="lesson-number">
+    LESSON ${index+1}
+   </span>
 
- </div>
+  </div>
 
- <div class="concept">
+  <div class="concept">
 
- <div class="eyebrow">
- ${course.title}
- </div>
+   <div class="eyebrow">
+    ${course.title}
+   </div>
 
- <h1>${course.desc}</h1>
+   <h1>
+    ${course.desc}
+   </h1>
 
- <p class="muted">
- Finish the question below to get XP.
- </p>
+   <p class="muted">
+    Finish the question below to get XP.
+   </p>
 
- <div class="code">
- let score = 10;
+   <div class="code">
+let score = 10;
 
- if(score > 5){
-     console.log("Good score!");
- }
- </div>
+if(score > 5){
+    console.log("Good score!");
+}
+   </div>
 
- </div>
+  </div>
 
- <div class="battle-card">
+  <div class="battle-card">
 
- <div class="enemy">
+   <div class="enemy">
 
- <div class="enemy-icon">
- <i class="fa-solid fa-robot"></i>
- </div>
+    <div class="enemy-icon">
 
- <div class="enemy-name">
- CODING QUESTION
- </div>
+     <i class="fa-solid fa-robot"></i>
 
- </div>
+    </div>
 
- <h3>Question</h3>
+    <div class="enemy-name">
+     CODING QUESTION
+    </div>
 
- <p>
- What does the if statement check?
- </p>
+   </div>
 
- <button
- class="choice"
- onclick="this.classList.add('correct');genericLessonDone(${index})"
- >
- It checks if score is greater than 5.
- </button>
+   <h3>
+    Question
+   </h3>
 
- <button
- class="choice"
- onclick="this.classList.add('wrong');toast('Try again.')"
- >
- It repeats the code.
- </button>
+   <p>
+    What does the if statement check?
+   </p>
 
- </div>
+   <button
+    class="choice"
+    onclick="
+     this.classList.add('correct');
+     genericLessonDone(${index})
+    "
+   >
+    It checks if score is greater than 5.
+   </button>
+
+   <button
+    class="choice"
+    onclick="
+     this.classList.add('wrong');
+     toast('Try again.')
+    "
+   >
+    It repeats the code.
+   </button>
+
+  </div>
 
  `;
+
 }
 
 function genericLessonDone(index){
 
- const course=courses[index];
+ const course=
+  courses[index];
 
  if(state.lessonXP[index]){
-  toast("You already finished this lesson.");
+
+  toast(
+   "You already finished this lesson."
+  );
+
   return;
+
  }
 
  state.lessonXP[index]=true;
+
  state.completed++;
 
  saveState();
 
- addXP(course.xp,"Lesson done");
+ addXP(
+  course.xp,
+  "Lesson done"
+ );
+
 }
 
 /* =========================================================
@@ -2775,169 +4707,236 @@ CODE PRACTICE
 function openPythonLab(){
 
  currentPage="playground";
+
  activeLanguage="python";
 
  playground();
+
 }
 
 function playground(){
 
- const python=activeLanguage==="python";
+ const python=
+  activeLanguage==="python";
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-flask"></i>
- CODE PRACTICE
- </div>
+   <div class="eyebrow">
 
- <h1>Write Code</h1>
+    <i class="fa-solid fa-flask"></i>
 
- <p>
- Write code, run it and see what it does.
- </p>
+    CODE PRACTICE
 
- </section>
+   </div>
 
- <div class="language-tabs">
+   <h1>
+    Write Code
+   </h1>
 
- <button
- class="${!python?"active":""}"
- onclick="switchLanguage('javascript')"
- >
- <i class="fa-brands fa-js"></i>
- JavaScript
- </button>
+   <p>
+    Write code, run it and see what it does.
+   </p>
 
- <button
- class="${python?"active python-active":""}"
- onclick="switchLanguage('python')"
- >
- <i class="fa-brands fa-python"></i>
- Python
- </button>
+  </section>
 
- </div>
+  <div class="language-tabs">
 
- <div class="editor">
+   <button
+    class="${!python?"active":""}"
+    onclick="switchLanguage('javascript')"
+   >
 
- <div class="editor-top">
+    <i class="fa-brands fa-js"></i>
 
- <span>
- ${python?"main.py":"script.js"}
- </span>
+    JavaScript
 
- <span>
- ${python?"PYTHON":"JAVASCRIPT"}
- </span>
+   </button>
 
- </div>
+   <button
+    class="${python?"active python-active":""}"
+    onclick="switchLanguage('python')"
+   >
 
- <textarea id="editor">${
- python
- ? `name = "Coder"
+    <i class="fa-brands fa-python"></i>
+
+    Python
+
+   </button>
+
+  </div>
+
+  <div class="editor">
+
+   <div class="editor-top">
+
+    <span>
+     ${python?"main.py":"script.js"}
+    </span>
+
+    <span>
+     ${python?"PYTHON":"JAVASCRIPT"}
+    </span>
+
+   </div>
+
+   <textarea id="editor">${
+    python
+    ? `name = "Coder"
 score = 10
 
 print("Hello,", name)
 print("Score:", score)`
- : `let name = "Coder";
+    : `let name = "Coder";
 let score = 10;
 
 if(score >= 10){
  console.log("Hello, " + name + "!");
 }`
- }</textarea>
+   }</textarea>
 
- </div>
+  </div>
 
- <div class="output-title">
- <span>OUTPUT</span>
- <span>
- <i class="fa-solid fa-terminal"></i>
- </span>
- </div>
+  <div class="output-title">
 
- <div class="output" id="output">
- Output will appear here...
- </div>
+   <span>
+    OUTPUT
+   </span>
 
- <div
- id="inputConsole"
- style="display:none;margin-top:10px"
- >
+   <span>
+    <i class="fa-solid fa-terminal"></i>
+   </span>
 
- <div class="muted" style="margin-bottom:6px">
- Your program needs an answer.
- </div>
+  </div>
 
- <input
- id="pythonInput"
- class="input"
- placeholder="Type your answer and press Enter"
- >
+  <div
+   class="output"
+   id="output"
+  >
+   Output will appear here...
+  </div>
 
- </div>
+  <div
+   id="inputConsole"
+   style="display:none;margin-top:10px"
+  >
 
- <button
- class="btn ${python?"python":"primary"}"
- onclick="runCode()"
- >
+   <div
+    class="muted"
+    style="margin-bottom:6px"
+   >
+    Your program needs an answer.
+   </div>
 
- <i class="fa-solid fa-play"></i>
+   <input
+    id="pythonInput"
+    class="input"
+    placeholder="Type your answer and press Enter"
+   >
 
- RUN ${python?"PYTHON":"CODE"}
+  </div>
 
- </button>
+  <button
+   class="btn ${python?"python":"primary"}"
+   onclick="runCode()"
+  >
 
- ${python?`
+   <i class="fa-solid fa-play"></i>
 
- <div class="card" style="margin-top:10px">
+   RUN ${python?"PYTHON":"CODE"}
 
- <h3>
- <i class="fa-brands fa-python"></i>
- Things You Know
- </h3>
+  </button>
 
- <div style="margin-top:8px">
+  ${
+   python
+   ? `
 
- <span class="tag python">Variables</span>
- <span class="tag python">input()</span>
- <span class="tag python">print()</span>
- <span class="tag python">if / else</span>
- <span class="tag python">open()</span>
- <span class="tag python">read()</span>
- <span class="tag python">write()</span>
+    <div
+     class="card"
+     style="margin-top:10px"
+    >
 
- </div>
+     <h3>
 
- </div>
+      <i class="fa-brands fa-python"></i>
 
- `:""}
+      Things You Know
+
+     </h3>
+
+     <div style="margin-top:8px">
+
+      <span class="tag python">
+       Variables
+      </span>
+
+      <span class="tag python">
+       input()
+      </span>
+
+      <span class="tag python">
+       print()
+      </span>
+
+      <span class="tag python">
+       if / else
+      </span>
+
+      <span class="tag python">
+       open()
+      </span>
+
+      <span class="tag python">
+       read()
+      </span>
+
+      <span class="tag python">
+       write()
+      </span>
+
+     </div>
+
+    </div>
+
+   `
+   :""
+  }
 
  `;
 
- const input=document.querySelector("#pythonInput");
+ const input=
+  document.querySelector(
+   "#pythonInput"
+  );
 
  if(input){
 
-  input.addEventListener("keydown",event=>{
+  input.addEventListener(
+   "keydown",
+   event=>{
 
-   if(event.key==="Enter"){
-    submitPythonInput();
+    if(event.key==="Enter"){
+
+     submitPythonInput();
+
+    }
+
    }
-
-  });
+  );
 
  }
+
 }
 
-function switchLanguage(language){
+function switchLanguage(
+ language
+){
 
  activeLanguage=language;
 
  playground();
+
 }
 
 /* =========================================================
@@ -2946,48 +4945,106 @@ RUN CODE
 
 function runCode(){
 
- const editor=document.querySelector("#editor");
- const output=document.querySelector("#output");
+ const editor=
+  document.querySelector(
+   "#editor"
+  );
+
+ const output=
+  document.querySelector(
+   "#output"
+  );
 
  if(!editor||!output)return;
 
  const code=editor.value;
 
- output.classList.remove("error");
- output.textContent="Running...";
+ output.classList.remove(
+  "error"
+ );
+
+ output.textContent=
+  "Running...";
 
  if(activeLanguage==="python"){
-  runPython(code,output);
+
+  runPython(
+   code,
+   output
+  );
+
  }else{
-  runJavaScript(code,output);
+
+  runJavaScript(
+   code,
+   output
+  );
+
  }
+
 }
 
 /* =========================================================
 JAVASCRIPT
 ========================================================= */
 
-function runJavaScript(code,output){
+function runJavaScript(
+ code,
+ output
+){
 
  try{
 
   const logs=[];
 
   const fakeConsole={
-   log:(...args)=>logs.push(args.map(String).join(" ")),
-   error:(...args)=>logs.push("ERROR: "+args.map(String).join(" ")),
-   warn:(...args)=>logs.push("WARNING: "+args.map(String).join(" "))
+
+   log:(...args)=>
+    logs.push(
+     args
+      .map(String)
+      .join(" ")
+    ),
+
+   error:(...args)=>
+    logs.push(
+     "ERROR: "+
+     args
+      .map(String)
+      .join(" ")
+    ),
+
+   warn:(...args)=>
+    logs.push(
+     "WARNING: "+
+     args
+      .map(String)
+      .join(" ")
+    )
+
   };
 
-  new Function("console",code)(fakeConsole);
+  new Function(
+   "console",
+   code
+  )(fakeConsole);
 
   state.codeRuns++;
 
-  addXP(5,"Code run",false);
+  addXP(
+   5,
+   "Code run",
+   false
+  );
 
-  unlockAchievement("code","First Code");
+  unlockAchievement(
+   "code",
+   "First Code"
+  );
 
-  output.classList.remove("error");
+  output.classList.remove(
+   "error"
+  );
 
   output.textContent=
    logs.length
@@ -2996,54 +5053,92 @@ function runJavaScript(code,output){
 
  }catch(error){
 
-  output.classList.add("error");
+  output.classList.add(
+   "error"
+  );
 
   output.textContent=
-   "JavaScript Error: "+error.message;
+   "JavaScript Error: "+
+   error.message;
+
  }
+
 }
 
 /* =========================================================
 PYTHON
 ========================================================= */
 
-let pythonInputState=null;
+function runPython(
+ code,
+ output
+){
 
-function runPython(code,output){
+ const lines=
+  code.split(/\r?\n/);
 
- const lines=code.split(/\r?\n/);
  const vars={};
+
  const logs=[];
 
  try{
 
-  for(let i=0;i<lines.length;i++){
+  for(
+   let i=0;
+   i<lines.length;
+   i++
+  ){
 
-   let line=lines[i].trim();
+   let line=
+    lines[i].trim();
 
-   if(!line||line.startsWith("#"))continue;
+   if(
+    !line||
+    line.startsWith("#")
+   ){
+    continue;
+   }
 
-   if(line.startsWith("print(")&&line.endsWith(")")){
+   if(
+    line.startsWith("print(")&&
+    line.endsWith(")")
+   ){
 
-    const inside=line.slice(6,-1);
+    const inside=
+     line.slice(6,-1);
 
-    const parts=splitPythonArguments(inside);
+    const parts=
+     splitPythonArguments(
+      inside
+     );
 
-    const values=parts.map(
-     part=>evaluatePythonExpression(part,vars)
+    const values=
+     parts.map(
+      part=>
+       evaluatePythonExpression(
+        part,
+        vars
+       )
+     );
+
+    logs.push(
+     values
+      .map(String)
+      .join(" ")
     );
-
-    logs.push(values.map(String).join(" "));
 
     continue;
    }
 
    const inputAssignment=
-    line.match(/^([A-Za-z_]\w*)\s*=\s*input\((.*)\)$/);
+    line.match(
+     /^([A-Za-z_]\w*)\s*=\s*input\((.*)\)$/
+    );
 
    if(inputAssignment){
 
-    const variable=inputAssignment[1];
+    const variable=
+     inputAssignment[1];
 
     const prompt=
      evaluatePythonExpression(
@@ -3061,36 +5156,52 @@ function runPython(code,output){
      lines,
      i
     );
+
    }
 
    const assignment=
-    line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+    line.match(
+     /^([A-Za-z_]\w*)\s*=\s*(.+)$/
+    );
 
    if(assignment){
 
-    vars[assignment[1]]=
+    vars[
+     assignment[1]
+    ]=
      evaluatePythonExpression(
       assignment[2],
       vars
      );
 
     continue;
+
    }
 
    throw new Error(
-    "I do not know this Python code yet: "+line
+    "I do not know this Python code yet: "+
+    line
    );
+
   }
 
-  finishPythonExecution(output,logs);
+  finishPythonExecution(
+   output,
+   logs
+  );
 
  }catch(error){
 
-  output.classList.add("error");
+  output.classList.add(
+   "error"
+  );
 
   output.textContent=
-   "Python Error: "+error.message;
+   "Python Error: "+
+   error.message;
+
  }
+
 }
 
 function waitForPythonInput(
@@ -3104,57 +5215,99 @@ function waitForPythonInput(
  inputLine
 ){
 
- const consoleBox=document.querySelector("#inputConsole");
- const input=document.querySelector("#pythonInput");
+ const consoleBox=
+  document.querySelector(
+   "#inputConsole"
+  );
+
+ const input=
+  document.querySelector(
+   "#pythonInput"
+  );
 
  if(!consoleBox||!input){
-  throw new Error("The input box is not available.");
+
+  throw new Error(
+   "The input box is not available."
+  );
+
  }
 
- consoleBox.style.display="block";
+ consoleBox.style.display=
+  "block";
 
  input.placeholder=
-  String(prompt||"Type something...");
+  String(
+   prompt||
+   "Type something..."
+  );
 
  input.value="";
+
  input.focus();
 
  pythonInputState={
+
   code,
+
   output,
+
   variable,
+
   vars,
+
   logs,
+
   lines,
+
   inputLine
+
  };
 
  output.textContent=
   "Your program is waiting for your answer...";
+
 }
 
 function submitPythonInput(){
 
  if(!pythonInputState)return;
 
- const input=document.querySelector("#pythonInput");
+ const input=
+  document.querySelector(
+   "#pythonInput"
+  );
 
- const value=input.value;
+ const value=
+  input.value;
 
  if(value==="")return;
 
- const data=pythonInputState;
+ const data=
+  pythonInputState;
 
- data.vars[data.variable]=value;
+ data.vars[
+  data.variable
+ ]=value;
 
  pythonInputState=null;
 
- document.querySelector("#inputConsole").style.display="none";
+ document
+  .querySelector(
+   "#inputConsole"
+  )
+  .style.display=
+   "none";
 
- continuePythonExecution(data);
+ continuePythonExecution(
+  data
+ );
+
 }
 
-function continuePythonExecution(data){
+function continuePythonExecution(
+ data
+){
 
  const{
   output,
@@ -3166,103 +5319,184 @@ function continuePythonExecution(data){
 
  try{
 
-  for(let i=inputLine+1;i<lines.length;i++){
+  for(
+   let i=inputLine+1;
+   i<lines.length;
+   i++
+  ){
 
-   let line=lines[i].trim();
+   let line=
+    lines[i].trim();
 
-   if(!line||line.startsWith("#"))continue;
-
-   if(line.startsWith("print(")&&line.endsWith(")")){
-
-    const inside=line.slice(6,-1);
-
-    const parts=splitPythonArguments(inside);
-
-    const values=parts.map(
-     p=>evaluatePythonExpression(p,vars)
-    );
-
-    logs.push(values.map(String).join(" "));
-
+   if(
+    !line||
+    line.startsWith("#")
+   ){
     continue;
    }
 
+   if(
+    line.startsWith("print(")&&
+    line.endsWith(")")
+   ){
+
+    const inside=
+     line.slice(6,-1);
+
+    const parts=
+     splitPythonArguments(
+      inside
+     );
+
+    const values=
+     parts.map(
+      p=>
+       evaluatePythonExpression(
+        p,
+        vars
+       )
+     );
+
+    logs.push(
+     values
+      .map(String)
+      .join(" ")
+    );
+
+    continue;
+
+   }
+
    const assignment=
-    line.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+    line.match(
+     /^([A-Za-z_]\w*)\s*=\s*(.+)$/
+    );
 
    if(assignment){
 
-    vars[assignment[1]]=
+    vars[
+     assignment[1]
+    ]=
      evaluatePythonExpression(
       assignment[2],
       vars
      );
 
     continue;
+
    }
 
    throw new Error(
-    "I do not know this Python code yet: "+line
+    "I do not know this Python code yet: "+
+    line
    );
+
   }
 
-  finishPythonExecution(output,logs);
+  finishPythonExecution(
+   output,
+   logs
+  );
 
  }catch(error){
 
-  output.classList.add("error");
+  output.classList.add(
+   "error"
+  );
 
   output.textContent=
-   "Python Error: "+error.message;
+   "Python Error: "+
+   error.message;
+
  }
+
 }
 
-function finishPythonExecution(output,logs){
+function finishPythonExecution(
+ output,
+ logs
+){
 
  state.pythonRuns++;
 
  saveState();
 
- addXP(5,"Python code run",false);
+ addXP(
+  5,
+  "Python code run",
+  false
+ );
 
  unlockAchievement(
   "python",
   "Python Coder"
  );
 
- output.classList.remove("error");
+ output.classList.remove(
+  "error"
+ );
 
  output.textContent=
   logs.length
   ? logs.join("\n")
   : "Python finished with no output.";
+
 }
 
 /* =========================================================
 PYTHON EXPRESSIONS
 ========================================================= */
 
-function evaluatePythonExpression(expression,vars){
+function evaluatePythonExpression(
+ expression,
+ vars
+){
 
- expression=expression.trim();
+ expression=
+  expression.trim();
 
  if(
-  (expression.startsWith('"')&&expression.endsWith('"'))||
-  (expression.startsWith("'")&&expression.endsWith("'"))
+  (
+   expression.startsWith('"')&&
+   expression.endsWith('"')
+  )||
+  (
+   expression.startsWith("'")&&
+   expression.endsWith("'")
+  )
  ){
 
-  return expression.slice(1,-1);
+  return expression.slice(
+   1,
+   -1
+  );
+
  }
 
- if(Object.prototype.hasOwnProperty.call(vars,expression)){
+ if(
+  Object.prototype.hasOwnProperty.call(
+   vars,
+   expression
+  )
+ ){
+
   return vars[expression];
+
  }
 
- if(expression==="True")return true;
- if(expression==="False")return false;
- if(expression==="None")return null;
+ if(expression==="True")
+  return true;
 
- const lenMatch=expression.match(/^len\((.+)\)$/);
+ if(expression==="False")
+  return false;
+
+ if(expression==="None")
+  return null;
+
+ const lenMatch=
+  expression.match(
+   /^len\((.+)\)$/
+  );
 
  if(lenMatch){
 
@@ -3273,123 +5507,221 @@ function evaluatePythonExpression(expression,vars){
    );
 
   return String(value).length;
+
  }
 
  if(expression.includes("+")){
 
-  const parts=splitOperator(expression,"+");
+  const parts=
+   splitOperator(
+    expression,
+    "+"
+   );
 
-  const values=parts.map(
-   p=>evaluatePythonExpression(p,vars)
-  );
+  const values=
+   parts.map(
+    p=>
+     evaluatePythonExpression(
+      p,
+      vars
+     )
+   );
 
-  if(values.every(v=>typeof v==="number")){
-   return values.reduce((a,b)=>a+b,0);
+  if(
+   values.every(
+    v=>typeof v==="number"
+   )
+  ){
+
+   return values.reduce(
+    (a,b)=>a+b,
+    0
+   );
+
   }
 
-  return values.map(String).join("");
+  return values
+   .map(String)
+   .join("");
+
  }
 
  if(expression.includes("-")){
 
-  const parts=splitOperator(expression,"-");
+  const parts=
+   splitOperator(
+    expression,
+    "-"
+   );
 
   if(parts.length===2){
 
    const a=Number(
-    evaluatePythonExpression(parts[0],vars)
+    evaluatePythonExpression(
+     parts[0],
+     vars
+    )
    );
 
    const b=Number(
-    evaluatePythonExpression(parts[1],vars)
+    evaluatePythonExpression(
+     parts[1],
+     vars
+    )
    );
 
-   if(!isNaN(a)&&!isNaN(b)){
+   if(
+    !isNaN(a)&&
+    !isNaN(b)
+   ){
+
     return a-b;
+
    }
+
   }
+
  }
 
  if(expression.includes("*")){
 
-  const parts=splitOperator(expression,"*");
+  const parts=
+   splitOperator(
+    expression,
+    "*"
+   );
 
   if(parts.length===2){
 
    const a=Number(
-    evaluatePythonExpression(parts[0],vars)
+    evaluatePythonExpression(
+     parts[0],
+     vars
+    )
    );
 
    const b=Number(
-    evaluatePythonExpression(parts[1],vars)
+    evaluatePythonExpression(
+     parts[1],
+     vars
+    )
    );
 
-   if(!isNaN(a)&&!isNaN(b)){
+   if(
+    !isNaN(a)&&
+    !isNaN(b)
+   ){
+
     return a*b;
+
    }
+
   }
+
  }
 
  if(
-  expression!=="" &&
-  !isNaN(Number(expression))
+  expression!==""&&
+  !isNaN(
+   Number(expression)
+  )
  ){
 
   return Number(expression);
+
  }
 
  return expression;
+
 }
 
-function splitPythonArguments(text){
+function splitPythonArguments(
+ text
+){
 
  const result=[];
+
  let current="";
+
  let quote=null;
 
- for(let i=0;i<text.length;i++){
+ for(
+  let i=0;
+  i<text.length;
+  i++
+ ){
 
-  const char=text[i];
+  const char=
+   text[i];
 
   if(
-   (char==="'"||char==='"')&&
+   (
+    char==="'"||
+    char==='"'
+   )&&
    !quote
   ){
 
    quote=char;
+
    current+=char;
+
    continue;
+
   }
 
   if(char===quote){
 
    quote=null;
+
    current+=char;
+
    continue;
+
   }
 
-  if(char===","&&!quote){
+  if(
+   char===","&&
+   !quote
+  ){
 
-   result.push(current.trim());
+   result.push(
+    current.trim()
+   );
+
    current="";
+
    continue;
+
   }
 
   current+=char;
+
  }
 
  if(current.trim()){
-  result.push(current.trim());
+
+  result.push(
+   current.trim()
+  );
+
  }
 
  return result;
+
 }
 
-function splitOperator(text,operator){
+function splitOperator(
+ text,
+ operator
+){
 
  return text
   .split(operator)
-  .map(x=>x.trim());
+  .map(
+   x=>x.trim()
+  );
+
 }
 
 /* =========================================================
@@ -3398,226 +5730,339 @@ FILES
 
 function fileHarbor(){
 
- const filenames=Object.keys(state.pythonFiles);
+ const filenames=
+  Object.keys(
+   state.pythonFiles
+  );
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-folder"></i>
- FILES
- </div>
+   <div class="eyebrow">
 
- <h1>Your Files</h1>
+    <i class="fa-solid fa-folder"></i>
 
- <p>
- Make and save simple text files.
- </p>
+    FILES
 
- </section>
+   </div>
 
- <div class="card">
+   <h1>
+    Your Files
+   </h1>
 
- <h3>
- <i class="fa-solid fa-file-circle-plus"></i>
- New File
- </h3>
+   <p>
+    Make and save simple text files.
+   </p>
 
- <div class="input-group" style="margin-top:12px">
+  </section>
 
- <label>File Name</label>
-
- <input
- class="input"
- id="newFileName"
- placeholder="notes.txt"
- >
-
- </div>
-
- <div class="input-group">
-
- <label>Text</label>
-
- <textarea
- class="input"
- id="newFileContent"
- style="min-height:120px"
- placeholder="Write something..."
- ></textarea>
-
- </div>
-
- <button class="btn python" onclick="createFile()">
- CREATE FILE
- </button>
-
- </div>
-
- <div class="section">
-
- <h2>
- <i class="fa-solid fa-folder-open"></i>
- My Files
- </h2>
-
- <button onclick="go('playground')">
- CODE →
- </button>
-
- </div>
-
- <div class="file-list">
-
- ${
-  filenames.length
-  ? filenames.map(fileCard).join("")
-  : `
   <div class="card">
-  <p class="muted">
-  You have no files yet.
-  </p>
-  </div>
-  `
- }
 
- </div>
+   <h3>
+
+    <i class="fa-solid fa-file-circle-plus"></i>
+
+    New File
+
+   </h3>
+
+   <div
+    class="input-group"
+    style="margin-top:12px"
+   >
+
+    <label>
+     File Name
+    </label>
+
+    <input
+     class="input"
+     id="newFileName"
+     placeholder="notes.txt"
+    >
+
+   </div>
+
+   <div class="input-group">
+
+    <label>
+     Text
+    </label>
+
+    <textarea
+     class="input"
+     id="newFileContent"
+     style="min-height:120px"
+     placeholder="Write something..."
+    ></textarea>
+
+   </div>
+
+   <button
+    class="btn python"
+    onclick="createFile()"
+   >
+    CREATE FILE
+   </button>
+
+  </div>
+
+  <div class="section">
+
+   <h2>
+
+    <i class="fa-solid fa-folder-open"></i>
+
+    My Files
+
+   </h2>
+
+   <button onclick="go('playground')">
+    CODE →
+   </button>
+
+  </div>
+
+  <div class="file-list">
+
+   ${
+    filenames.length
+    ? filenames
+      .map(fileCard)
+      .join("")
+    : `
+
+     <div class="card">
+
+      <p class="muted">
+       You have no files yet.
+      </p>
+
+     </div>
+
+    `
+   }
+
+  </div>
 
  `;
+
 }
 
-function fileCard(filename){
+function fileCard(
+ filename
+){
 
  return`
 
- <div class="file-item">
+  <div class="file-item">
 
- <span style="font-size:18px">
- <i class="fa-solid fa-file-lines"></i>
- </span>
+   <span style="font-size:18px">
 
- <span class="file-name">
- ${escapeHTML(filename)}
- </span>
+    <i class="fa-solid fa-file-lines"></i>
 
- <div class="file-actions">
+   </span>
 
- <button onclick="viewFile('${escapeAttribute(filename)}')">
- <i class="fa-solid fa-eye"></i>
- </button>
+   <span class="file-name">
 
- <button onclick="downloadFile('${escapeAttribute(filename)}')">
- <i class="fa-solid fa-download"></i>
- </button>
+    ${escapeHTML(filename)}
 
- <button onclick="deleteFile('${escapeAttribute(filename)}')">
- <i class="fa-solid fa-trash"></i>
- </button>
+   </span>
 
- </div>
+   <div class="file-actions">
 
- </div>
+    <button
+     onclick="
+      viewFile(
+       '${escapeAttribute(filename)}'
+      )
+     "
+    >
+
+     <i class="fa-solid fa-eye"></i>
+
+    </button>
+
+    <button
+     onclick="
+      downloadFile(
+       '${escapeAttribute(filename)}'
+      )
+     "
+    >
+
+     <i class="fa-solid fa-download"></i>
+
+    </button>
+
+    <button
+     onclick="
+      deleteFile(
+       '${escapeAttribute(filename)}'
+      )
+     "
+    >
+
+     <i class="fa-solid fa-trash"></i>
+
+    </button>
+
+   </div>
+
+  </div>
 
  `;
+
 }
 
 function createFile(){
 
  const name=
-  document.querySelector("#newFileName").value.trim();
+  document
+   .querySelector("#newFileName")
+   .value
+   .trim();
 
  const content=
-  document.querySelector("#newFileContent").value;
+  document
+   .querySelector("#newFileContent")
+   .value;
 
  if(!name){
-  toast("Enter a file name.");
+
+  toast(
+   "Enter a file name."
+  );
+
   return;
+
  }
 
  if(!name.includes(".")){
-  toast("Use a name like notes.txt.");
+
+  toast(
+   "Use a name like notes.txt."
+  );
+
   return;
+
  }
 
- state.pythonFiles[name]=content;
+ state.pythonFiles[name]=
+  content;
 
  saveState();
 
- unlockAchievement("file","File User");
+ unlockAchievement(
+  "file",
+  "File User"
+ );
 
- toast("File created.");
+ toast(
+  "File created."
+ );
 
  render();
+
 }
 
 function viewFile(name){
 
- const content=state.pythonFiles[name]||"";
+ const content=
+  state.pythonFiles[name]||"";
 
  main.innerHTML=`
 
- <div class="lesson-head">
+  <div class="lesson-head">
 
- <button class="back" onclick="go('files')">
- ← Files
- </button>
+   <button
+    class="back"
+    onclick="go('files')"
+   >
+    ← Files
+   </button>
 
- <span class="lesson-number">
- FILE
- </span>
+   <span class="lesson-number">
+    FILE
+   </span>
 
- </div>
+  </div>
 
- <div class="card">
+  <div class="card">
 
- <h2>
- <i class="fa-solid fa-file-lines"></i>
- ${escapeHTML(name)}
- </h2>
+   <h2>
 
- <div class="file-preview">
- ${escapeHTML(content)}
- </div>
+    <i class="fa-solid fa-file-lines"></i>
 
- <button class="btn"
- onclick="downloadFile('${escapeAttribute(name)}')"
- >
- DOWNLOAD
- </button>
+    ${escapeHTML(name)}
 
- </div>
+   </h2>
+
+   <div class="file-preview">
+
+    ${escapeHTML(content)}
+
+   </div>
+
+   <button
+    class="btn"
+    onclick="
+     downloadFile(
+      '${escapeAttribute(name)}'
+     )
+    "
+   >
+    DOWNLOAD
+   </button>
+
+  </div>
 
  `;
+
 }
 
 function deleteFile(name){
 
- if(!confirm("Delete "+name+"?"))return;
+ if(
+  !confirm(
+   "Delete "+name+"?"
+  )
+ )return;
 
  delete state.pythonFiles[name];
 
  saveState();
 
- toast("File deleted.");
+ toast(
+  "File deleted."
+ );
 
  render();
+
 }
 
 function downloadFile(name){
 
- const content=state.pythonFiles[name];
+ const content=
+  state.pythonFiles[name];
 
- const blob=new Blob(
-  [content],
-  {type:"text/plain"}
- );
+ const blob=
+  new Blob(
+   [content],
+   {
+    type:"text/plain"
+   }
+  );
 
- const url=URL.createObjectURL(blob);
+ const url=
+  URL.createObjectURL(blob);
 
- const a=document.createElement("a");
+ const a=
+  document.createElement("a");
 
  a.href=url;
+
  a.download=name;
 
  document.body.appendChild(a);
@@ -3628,7 +6073,10 @@ function downloadFile(name){
 
  URL.revokeObjectURL(url);
 
- toast("File saved.");
+ toast(
+  "File saved."
+ );
+
 }
 
 /* =========================================================
@@ -3639,38 +6087,90 @@ const questions=[
 
  {
   difficulty:"EASY",
+
   xp:10,
-  question:"Which symbol puts a value into a Python variable?",
-  answers:["==","=","=>","!="],
+
+  question:
+   "Which symbol puts a value into a Python variable?",
+
+  answers:[
+   "==",
+   "=",
+   "=>",
+   "!="
+  ],
+
   correct:1,
-  explanation:"The = symbol puts a value into a variable."
+
+  explanation:
+   "The = symbol puts a value into a variable."
+
  },
 
  {
   difficulty:"EASY",
+
   xp:10,
-  question:"Which Python function lets the user type something?",
-  answers:["get()","input()","readUser()","ask()"],
+
+  question:
+   "Which Python function lets the user type something?",
+
+  answers:[
+   "get()",
+   "input()",
+   "readUser()",
+   "ask()"
+  ],
+
   correct:1,
-  explanation:"input() lets the user type information."
+
+  explanation:
+   "input() lets the user type information."
+
  },
 
  {
   difficulty:"EASY",
+
   xp:10,
-  question:"Which Python function shows information?",
-  answers:["display()","show()","print()","console()"],
+
+  question:
+   "Which Python function shows information?",
+
+  answers:[
+   "display()",
+   "show()",
+   "print()",
+   "console()"
+  ],
+
   correct:2,
-  explanation:"print() shows information."
+
+  explanation:
+   "print() shows information."
+
  },
 
  {
   difficulty:"HARD",
+
   xp:30,
-  question:"What will x=5; print(x+3) show?",
-  answers:["53","8","2","Error"],
+
+  question:
+   "What will x=5; print(x+3) show?",
+
+  answers:[
+   "53",
+   "8",
+   "2",
+   "Error"
+  ],
+
   correct:1,
-  explanation:"5 + 3 is 8."
+
+  explanation:
+   "5 + 3 is 8."
+
  }
 
 ];
@@ -3678,136 +6178,172 @@ const questions=[
 function randomQuestion(){
 
  return questions[
-  Math.floor(Math.random()*questions.length)
+  Math.floor(
+   Math.random()*
+   questions.length
+  )
  ];
+
 }
 
 function quizArena(){
 
- quizQuestion=randomQuestion();
+ quizQuestion=
+  randomQuestion();
+
  selected=null;
+
  quizDone=false;
 
  renderQuiz();
+
 }
 
 function renderQuiz(){
 
- const q=quizQuestion;
+ const q=
+  quizQuestion;
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-crosshairs"></i>
- QUIZ
- </div>
+   <div class="eyebrow">
 
- <h1>Code Quiz</h1>
+    <i class="fa-solid fa-crosshairs"></i>
 
- <p>
- Answer the question and earn XP.
- </p>
+    QUIZ
 
- </section>
+   </div>
 
- <div class="battle-card">
+   <h1>
+    Code Quiz
+   </h1>
 
- <div class="enemy">
+   <p>
+    Answer the question and earn XP.
+   </p>
 
- <div class="enemy-icon">
- <i class="fa-solid fa-robot"></i>
- </div>
+  </section>
 
- <div class="enemy-name">
- ${q.difficulty} QUESTION
- </div>
+  <div class="battle-card">
 
- </div>
+   <div class="enemy">
 
- <div class="card"
- style="margin-top:10px;box-shadow:none">
+    <div class="enemy-icon">
 
- <h3>Question</h3>
+     <i class="fa-solid fa-robot"></i>
 
- <h2 style="font-size:17px">
- ${q.question}
- </h2>
+    </div>
 
- ${q.answers.map((answer,index)=>`
+    <div class="enemy-name">
+     ${q.difficulty} QUESTION
+    </div>
 
- <button
- class="choice ${
-  selected===index
-  ? quizDone
-   ? index===q.correct
-    ?"correct"
-    :"wrong"
-   :"selected"
-  :""
- }"
- onclick="answerQuiz(${index})"
- >
+   </div>
 
- ${String.fromCharCode(65+index)}.
- ${answer}
+   <div
+    class="card"
+    style="margin-top:10px;box-shadow:none"
+   >
 
- </button>
+    <h3>
+     Question
+    </h3>
 
- `).join("")}
+    <h2 style="font-size:17px">
+     ${q.question}
+    </h2>
 
- ${
-  quizDone
-  ? `
+    ${q.answers.map(
+     (answer,index)=>`
 
-  <div class="card"
-  style="margin-top:12px;box-shadow:none">
+      <button
+       class="choice ${
+        selected===index
+        ? quizDone
+         ? index===q.correct
+          ?"correct"
+          :"wrong"
+         :"selected"
+        :""
+       }"
+       onclick="
+        answerQuiz(${index})
+       "
+      >
 
-  <b style="color:${
-   selected===q.correct
-   ?"var(--lime)"
-   :"var(--red)"
-  }">
+       ${String.fromCharCode(65+index)}.
+       ${answer}
 
-  ${
-   selected===q.correct
-   ?"CORRECT"
-   :"WRONG"
-  }
+      </button>
 
-  </b>
+     `
+    ).join("")}
 
-  <p class="muted">
-  ${q.explanation}
-  </p>
+    ${
+     quizDone
+     ? `
+
+      <div
+       class="card"
+       style="
+        margin-top:12px;
+        box-shadow:none
+       "
+      >
+
+       <b
+        style="
+         color:${
+          selected===q.correct
+          ?"var(--lime)"
+          :"var(--red)"
+         }
+        "
+       >
+
+        ${
+         selected===q.correct
+         ?"CORRECT"
+         :"WRONG"
+        }
+
+       </b>
+
+       <p class="muted">
+        ${q.explanation}
+       </p>
+
+      </div>
+
+      <button
+       class="btn primary"
+       onclick="quizArena()"
+      >
+       NEXT QUESTION
+      </button>
+
+     `
+     :`
+
+      <button
+       class="btn primary"
+       onclick="submitQuiz()"
+       ${selected===null?"disabled":""}
+      >
+       CHECK ANSWER
+      </button>
+
+     `
+    }
+
+   </div>
 
   </div>
 
-  <button class="btn primary"
-  onclick="quizArena()">
-  NEXT QUESTION
-  </button>
-
-  `
-  :`
-
-  <button
-  class="btn primary"
-  onclick="submitQuiz()"
-  ${selected===null?"disabled":""}
-  >
-  CHECK ANSWER
-  </button>
-
-  `
- }
-
- </div>
-
- </div>
-
  `;
+
 }
 
 function answerQuiz(index){
@@ -3817,6 +6353,7 @@ function answerQuiz(index){
  selected=index;
 
  renderQuiz();
+
 }
 
 function submitQuiz(){
@@ -3825,412 +6362,653 @@ function submitQuiz(){
 
  quizDone=true;
 
- const q=quizQuestion;
+ const q=
+  quizQuestion;
 
  if(selected===q.correct){
 
   combo++;
 
-  const bonus=combo>=3?5:0;
+  const bonus=
+   combo>=3
+   ?5
+   :0;
 
   state.completed++;
 
   saveState();
 
-  addXP(q.xp+bonus,"Quiz done");
+  addXP(
+   q.xp+bonus,
+   "Quiz done"
+  );
 
-  unlockAchievement("quiz","Quiz User");
+  unlockAchievement(
+   "quiz",
+   "Quiz User"
+  );
 
   if(combo>=3){
-   unlockAchievement("combo","3 in a Row");
+
+   unlockAchievement(
+    "combo",
+    "3 in a Row"
+   );
+
   }
 
  }else{
 
   combo=0;
 
-  toast("Wrong answer.");
+  toast(
+   "Wrong answer."
+  );
 
   renderQuiz();
+
  }
+
 }
 
-/* ========================================================= LEARN
+/* =========================================================
+LEARN
 ========================================================= */
 
 function factPage(){
 
  const fact=
-  facts[Math.floor(Math.random()*facts.length)];
+  facts[
+   Math.floor(
+    Math.random()*
+    facts.length
+   )
+  ];
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-book"></i>
- LEARN
- </div>
+   <div class="eyebrow">
 
- <h1>Simple Coding Tips</h1>
+    <i class="fa-solid fa-book"></i>
 
- <p>
- Learn small facts that can help you code.
- </p>
+    LEARN
 
- </section>
+   </div>
 
- <div class="card">
+   <h1>
+    Simple Coding Tips
+   </h1>
 
- <div class="eyebrow">
- ${fact.category}
- </div>
+   <p>
+    Learn small facts that can help you code.
+   </p>
 
- <h2 style="margin-top:8px">
- ${fact.title}
- </h2>
+  </section>
 
- <p class="muted">
- ${fact.text}
- </p>
+  <div class="card">
 
- </div>
+   <div class="eyebrow">
+    ${fact.category}
+   </div>
 
- <button class="btn primary" onclick="readFact()">
- <i class="fa-solid fa-lightbulb"></i>
- I LEARNED THIS
- <br>
- <small>+5 XP</small>
- </button>
+   <h2 style="margin-top:8px">
+    ${fact.title}
+   </h2>
 
- <button class="btn" onclick="factPage()">
- SHOW ANOTHER
- </button>
+   <p class="muted">
+    ${fact.text}
+   </p>
+
+  </div>
+
+  <button
+   class="btn primary"
+   onclick="readFact()"
+  >
+
+   <i class="fa-solid fa-lightbulb"></i>
+
+   I LEARNED THIS
+
+   <br>
+
+   <small>
+    +5 XP
+   </small>
+
+  </button>
+
+  <button
+   class="btn"
+   onclick="factPage()"
+  >
+   SHOW ANOTHER
+  </button>
 
  `;
+
 }
 
 function readFact(){
 
- addXP(5,"Learned something");
+ addXP(
+  5,
+  "Learned something"
+ );
 
- unlockAchievement("fact","Learner");
+ unlockAchievement(
+  "fact",
+  "Learner"
+ );
+
 }
 
-/* ========================================================= STATS
+/* =========================================================
+STATS
 ========================================================= */
 
 function progress(){
 
- const pct=state.xp%100;
+ const pct=
+  state.xp%100;
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-chart-line"></i>
- MY STATS
- </div>
+   <div class="eyebrow">
 
- <h1>My Progress</h1>
+    <i class="fa-solid fa-chart-line"></i>
 
- <p>
- See how much you have learned.
- </p>
+    MY STATS
 
- </section>
+   </div>
 
- ${playerHUD()}
+   <h1>
+    My Progress
+   </h1>
 
- <div class="grid two">
+   <p>
+    See how much you have learned.
+   </p>
 
- <div class="card stat">
- <span>XP</span>
- <b>${state.xp}</b>
- <small>Total</small>
- </div>
+  </section>
 
- <div class="card stat">
- <span>LEVEL</span>
- <b>${state.level}</b>
- <small>Current level</small>
- </div>
+  ${playerHUD()}
 
- <div class="card stat">
- <span>GOLD</span>
- <b>${state.coins}</b>
- <small>Coins</small>
- </div>
+  <div class="grid two">
 
- <div class="card stat">
- <span>TASKS</span>
- <b>${state.completed}</b>
- <small>Finished</small>
- </div>
+   <div class="card stat">
 
- </div>
+    <span>
+     XP
+    </span>
 
- <div class="section">
- <h2>Python</h2>
- </div>
+    <b>
+     ${state.xp}
+    </b>
 
- <div class="card">
+    <small>
+     Total
+    </small>
 
- <p class="muted">
- Python runs:
- <b style="color:var(--python)">
- ${state.pythonRuns}
- </b>
- </p>
+   </div>
 
- <p class="muted">
- Files:
- <b style="color:var(--cyan)">
- ${Object.keys(state.pythonFiles).length}
- </b>
- </p>
+   <div class="card stat">
 
- <button class="btn python"
- onclick="go('python')">
- KEEP LEARNING PYTHON
- </button>
+    <span>
+     LEVEL
+    </span>
 
- </div>
+    <b>
+     ${state.level}
+    </b>
 
- <div class="section">
- <h2>Next Level</h2>
- </div>
+    <small>
+     Current level
+    </small>
 
- <div class="card">
+   </div>
 
- <h2>${getRank()}</h2>
+   <div class="card stat">
 
- <div class="xp-bar">
+    <span>
+     GOLD
+    </span>
 
- <div class="xp-fill"
- style="width:${pct}%">
- </div>
+    <b>
+     ${state.coins}
+    </b>
 
- </div>
+    <small>
+     Coins
+    </small>
 
- <p class="muted">
- Keep learning to reach the next level.
- </p>
+   </div>
 
- </div>
+   <div class="card stat">
+
+    <span>
+     TASKS
+    </span>
+
+    <b>
+     ${state.completed}
+    </b>
+
+    <small>
+     Finished
+    </small>
+
+   </div>
+
+  </div>
+
+  <div class="section">
+
+   <h2>
+    Python
+   </h2>
+
+  </div>
+
+  <div class="card">
+
+   <p class="muted">
+
+    Python runs:
+
+    <b style="color:var(--python)">
+     ${state.pythonRuns}
+    </b>
+
+   </p>
+
+   <p class="muted">
+
+    Files:
+
+    <b style="color:var(--cyan)">
+     ${
+      Object.keys(
+       state.pythonFiles
+      ).length
+     }
+    </b>
+
+   </p>
+
+   <button
+    class="btn python"
+    onclick="go('python')"
+   >
+    KEEP LEARNING PYTHON
+   </button>
+
+  </div>
+
+  <div class="section">
+
+   <h2>
+    Next Level
+   </h2>
+
+  </div>
+
+  <div class="card">
+
+   <h2>
+    ${getRank()}
+   </h2>
+
+   <div class="xp-bar">
+
+    <div
+     class="xp-fill"
+     style="width:${pct}%"
+    ></div>
+
+   </div>
+
+   <p class="muted">
+    Keep learning to reach the next level.
+   </p>
+
+  </div>
 
  `;
+
 }
 
 function getRank(){
 
- if(state.level>=10)return"CODE LEGEND";
- if(state.level>=7)return"MASTER CODER";
- if(state.level>=5)return"CODE KNIGHT";
- if(state.level>=3)return"PYTHON CODER";
- if(state.level>=1)return"JUNIOR CODER";
+ if(state.level>=10)
+  return "CODE LEGEND";
 
- return"NEW CODER";
+ if(state.level>=7)
+  return "MASTER CODER";
+
+ if(state.level>=5)
+  return "CODE KNIGHT";
+
+ if(state.level>=3)
+  return "PYTHON CODER";
+
+ if(state.level>=1)
+  return "JUNIOR CODER";
+
+ return "NEW CODER";
+
 }
 
-/* ========================================================= BADGES
+/* =========================================================
+BADGES
 ========================================================= */
 
 function achievements(){
 
  main.innerHTML=`
 
- <section class="hero">
+  <section class="hero">
 
- <div class="eyebrow">
- <i class="fa-solid fa-trophy"></i>
- BADGES
- </div>
+   <div class="eyebrow">
 
- <h1>My Badges</h1>
+    <i class="fa-solid fa-trophy"></i>
 
- <p>
- Get badges by using different parts of CodeQuest.
- </p>
+    BADGES
 
- </section>
+   </div>
 
- ${achievement(
-  "fa-solid fa-seedling",
-  "New Coder",
-  "Create an account",
-  hasAchievement("newcoder")
- )}
+   <h1>
+    My Badges
+   </h1>
 
- ${achievement(
-  "fa-solid fa-lightbulb",
-  "Learner",
-  "Learn a tip",
-  hasAchievement("fact")
- )}
+   <p>
+    Get badges by using different parts of CodeQuest.
+   </p>
 
- ${achievement(
-  "fa-solid fa-crosshairs",
-  "Quiz User",
-  "Finish a quiz question",
-  hasAchievement("quiz")
- )}
+  </section>
 
- ${achievement(
-  "fa-solid fa-terminal",
-  "First Code",
-  "Run code",
-  hasAchievement("code")
- )}
+  ${achievement(
+   "fa-solid fa-seedling",
+   "New Coder",
+   "Create an account",
+   hasAchievement("newcoder")
+  )}
 
- ${achievement(
-  "fa-brands fa-python",
-  "Python Coder",
-  "Run Python code",
-  hasAchievement("python")
- )}
+  ${achievement(
+   "fa-solid fa-lightbulb",
+   "Learner",
+   "Learn a tip",
+   hasAchievement("fact")
+  )}
 
- ${achievement(
-  "fa-solid fa-folder-open",
-  "File User",
-  "Make a file",
-  hasAchievement("file")
- )}
+  ${achievement(
+   "fa-solid fa-crosshairs",
+   "Quiz User",
+   "Finish a quiz question",
+   hasAchievement("quiz")
+  )}
 
- ${achievement(
-  "fa-solid fa-star",
-  "Level One",
-  "Reach Level 1",
-  state.level>=1
- )}
+  ${achievement(
+   "fa-solid fa-terminal",
+   "First Code",
+   "Run code",
+   hasAchievement("code")
+  )}
 
- ${achievement(
-  "fa-solid fa-shield-halved",
-  "Code Knight",
-  "Reach Level 5",
-  state.level>=5
- )}
+  ${achievement(
+   "fa-brands fa-python",
+   "Python Coder",
+   "Run Python code",
+   hasAchievement("python")
+  )}
 
- ${achievement(
-  "fa-solid fa-crown",
-  "Code Legend",
-  "Reach Level 10",
-  state.level>=10
- )}
+  ${achievement(
+   "fa-solid fa-folder-open",
+   "File User",
+   "Make a file",
+   hasAchievement("file")
+  )}
+
+  ${achievement(
+   "fa-solid fa-star",
+   "Level One",
+   "Reach Level 1",
+   state.level>=1
+  )}
+
+  ${achievement(
+   "fa-solid fa-shield-halved",
+   "Code Knight",
+   "Reach Level 5",
+   state.level>=5
+  )}
+
+  ${achievement(
+   "fa-solid fa-crown",
+   "Code Legend",
+   "Reach Level 10",
+   state.level>=10
+  )}
 
  `;
+
 }
 
 function hasAchievement(id){
 
- return state.achievements.includes(id);
+ return state.achievements.includes(
+  id
+ );
+
 }
 
-function achievement(icon,title,desc,unlocked){
+function achievement(
+ icon,
+ title,
+ desc,
+ unlocked
+){
 
  return`
 
- <div class="card achievement ${unlocked?"":"locked"}">
+  <div
+   class="
+    card
+    achievement
+    ${unlocked?"":"locked"}
+   "
+  >
 
- <div class="badge">
- <i class="${icon}"></i>
- </div>
+   <div class="badge">
 
- <div>
+    <i class="${icon}"></i>
 
- <b>${title}</b>
+   </div>
 
- <p class="muted">
- ${desc}
- </p>
+   <div>
 
- </div>
+    <b>
+     ${title}
+    </b>
 
- <span style="margin-left:auto">
+    <p class="muted">
+     ${desc}
+    </p>
 
- ${
-  unlocked
-  ? '<i class="fa-solid fa-check"></i>'
-  : '<i class="fa-solid fa-lock"></i>'
- }
+   </div>
 
- </span>
+   <span style="margin-left:auto">
 
- </div>
+    ${
+     unlocked
+     ? '<i class="fa-solid fa-check"></i>'
+     : '<i class="fa-solid fa-lock"></i>'
+    }
+
+   </span>
+
+  </div>
 
  `;
+
 }
 
-function unlockAchievement(id,title){
+function unlockAchievement(
+ id,
+ title
+){
 
- if(state.achievements.includes(id))return;
+ if(
+  state.achievements.includes(id)
+ )return;
 
  state.achievements.push(id);
 
  saveState();
 
- toast("BADGE: "+title);
+ toast(
+  "BADGE: "+title
+ );
+
 }
 
 function checkAchievements(){
 
  if(state.level>=1){
-  unlockAchievement("level1","Level One");
+
+  unlockAchievement(
+   "level1",
+   "Level One"
+  );
+
  }
 
  if(state.level>=5){
-  unlockAchievement("explorer","Code Knight");
+
+  unlockAchievement(
+   "explorer",
+   "Code Knight"
+  );
+
  }
 
  if(state.level>=10){
-  unlockAchievement("legend","Code Legend");
+
+  unlockAchievement(
+   "legend",
+   "Code Legend"
+  );
+
  }
+
 }
 
-/* ========================================================= SAFE TEXT
+/* =========================================================
+SAFE TEXT
 ========================================================= */
 
 function escapeHTML(value){
 
  return String(value)
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+  .replace(
+   /&/g,
+   "&amp;"
+  )
+  .replace(
+   /</g,
+   "&lt;"
+  )
+  .replace(
+   />/g,
+   "&gt;"
+  )
+  .replace(
+   /"/g,
+   "&quot;"
+  )
+  .replace(
+   /'/g,
+   "&#039;"
+  );
+
 }
 
 function escapeAttribute(value){
 
  return String(value)
-  .replace(/\\/g,"\\\\")
-  .replace(/'/g,"\\'");
+  .replace(
+   /\\/g,
+   "\\\\"
+  )
+  .replace(
+   /'/g,
+   "\\'"
+  );
+
 }
 
-/* ========================================================= START
+/* =========================================================
+START
 ========================================================= */
 
-document.querySelector("#loginTab").onclick=showLogin;
-document.querySelector("#registerTab").onclick=showRegister;
+document
+ .querySelector("#loginTab")
+ .onclick=showLogin;
+
+document
+ .querySelector("#registerTab")
+ .onclick=showRegister;
 
 if(currentUser()){
+
  initApp();
+
 }else{
+
  showLogin();
+
 }
 
- if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./service-worker.js")
-            .then(() => console.log("CodeQuest is ready"))
-            .catch(error => console.log("Service worker error:", error));
-    });
- }
+/* =========================================================
+SERVICE WORKER
+========================================================= */
+
+if(
+ "serviceWorker" in navigator
+){
+
+ window.addEventListener(
+  "load",
+  ()=>{
+   navigator.serviceWorker
+    .register(
+     "./service-worker.js"
+    )
+    .then(
+     ()=>{
+      console.log(
+       "CodeQuest is ready"
+      );
+     }
+    )
+    .catch(
+     error=>{
+      console.log(
+       "Service worker error:",
+       error
+      );
+     }
+    );
+  }
+ );
+
+}
+
 </script>
-
- 
-
 
 </body>
 </html>
