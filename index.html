@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#060912">
  <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#050711">
+<meta name="mobile-web-app-capable" content="yes">
 <title>CodeQuest: Learn to Code</title>
 
 <link rel="stylesheet"
@@ -4219,13 +4220,17 @@ if(currentUser()){
  showLogin();
 }
 
+ if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(() => console.log("CodeQuest is ready"))
+            .catch(error => console.log("Service worker error:", error));
+    });
+ }
 </script>
 
- <script>
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./service-worker.js");
-}
- </script>
+ 
+
 
 </body>
 </html>
