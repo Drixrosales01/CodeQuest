@@ -2506,11 +2506,197 @@ button:disabled{
   font-size:9px;
  }
 }
+
+ /* =========================================================
+   3-DAY COUNTDOWN LOCK
+========================================================= */
+
+#lockScreen{
+ position:fixed;
+ inset:0;
+ z-index:99999;
+
+ display:none;
+ place-items:center;
+
+ padding:20px;
+
+ background:
+ radial-gradient(circle at 20% 10%,#ffffff 0,transparent 25%),
+ radial-gradient(circle at 80% 20%,#dff3ff 0,transparent 30%),
+ linear-gradient(135deg,#eaf7ff,#fff3df);
+}
+
+.lock-box{
+ width:min(400px,100%);
+
+ padding:30px 24px;
+
+ background:white;
+
+ border:4px solid var(--red);
+
+ border-radius:28px;
+
+ text-align:center;
+
+ box-shadow:
+ 0 10px 0 #d79b9b,
+ 0 25px 60px #18324d30;
+}
+
+.lock-icon{
+ width:80px;
+ height:80px;
+
+ margin:0 auto 15px;
+
+ display:grid;
+ place-items:center;
+
+ border-radius:24px;
+
+ background:var(--red3);
+
+ border:3px solid var(--red);
+
+ color:var(--red);
+
+ font-size:32px;
+
+ box-shadow:
+ 0 6px 0 #dca3a3;
+}
+
+.lock-box h1{
+ margin:8px 0;
+
+ color:var(--blue2);
+
+ font-size:30px;
+
+ font-weight:1000;
+}
+
+.lock-box p{
+ color:var(--muted);
+
+ font-size:13px;
+
+ line-height:1.5;
+}
+
+.countdown-card{
+ margin:18px 0;
+
+ padding:15px;
+
+ background:#f4faff;
+
+ border:2px solid #c9dfef;
+
+ border-radius:18px;
+}
+
+.countdown-label{
+ color:var(--muted);
+
+ font-size:9px;
+
+ font-weight:1000;
+
+ letter-spacing:1.5px;
+}
+
+#countdown{
+ margin-top:7px;
+
+ color:var(--red);
+
+ font-size:30px;
+
+ font-weight:1000;
+
+ font-family:monospace;
+
+ letter-spacing:2px;
+}
+
+/* Small countdown shown in the top bar */
+
+#topCountdown{
+ background:#fff0f0;
+
+ border:2px solid #ffcaca;
+
+ color:var(--red);
+
+ border-radius:11px;
+
+ padding:7px 8px;
+
+ font-size:9px;
+
+ font-weight:1000;
+
+ box-shadow:0 3px 0 #e8c1c1;
+
+ white-space:nowrap;
+}
+
+@media(max-width:380px){
+
+ #topCountdown{
+  display:none;
+ }
+
+ .lock-box{
+  padding:25px 18px;
+ }
+
+ #countdown{
+  font-size:25px;
+ }
+ }
 </style>
 </head>
 
 <body>
+<!-- 3-DAY LOCK SCREEN -->
 
+<div id="lockScreen">
+
+ <div class="lock-box">
+
+  <div class="lock-icon">
+   <i class="fa-solid fa-lock"></i>
+  </div>
+
+  <h1>Site Locked</h1>
+
+  <p>
+   Your 3-day access time has ended.
+  </p>
+
+  <div class="countdown-card">
+
+   <div class="countdown-label">
+    ACCESS ENDED
+   </div>
+
+   <div id="countdown">
+    00:00:00
+   </div>
+
+  </div>
+
+  <p>
+   The countdown has finished, so Duolincode is now locked.
+  </p>
+
+ </div>
+
+</div>
 <!-- LOGIN -->
 
 <div id="authScreen">
@@ -2574,7 +2760,10 @@ KEEP GOING
 </div>
 
 <div class="header-right">
-
+<span id="topCountdown">
+ <i class="fa-solid fa-clock"></i>
+ <b id="topCountdownText">3d 00:00:00</b>
+</span>
 <span class="resource">
 <i class="fa-solid fa-coins"></i>
 <b id="coins">0</b>
@@ -2691,7 +2880,198 @@ MENU
 <div id="toast"></div>
 
 <script>
+/* =========================================================
+   3-DAY SITE COUNTDOWN
+========================================================= */
 
+const COUNTDOWN_KEY = "duolincode_3day_end_v1";
+
+let countdownTimer = null;
+let siteLocked = false;
+
+/*
+   Get or create the end time.
+
+   IMPORTANT:
+   The end time is saved in localStorage.
+   Reloading the page does NOT reset it.
+*/
+
+function getCountdownEnd(){
+
+ const saved = localStorage.getItem(COUNTDOWN_KEY);
+
+ if(saved){
+
+  const end = Number(saved);
+
+  if(!isNaN(end)){
+   return end;
+  }
+
+ }
+
+ // 3 days in milliseconds
+ const threeDays = 3 * 24 * 60 * 60 * 1000;
+
+ const end = Date.now() + threeDays;
+
+ localStorage.setItem(
+  COUNTDOWN_KEY,
+  String(end)
+ );
+
+ return end;
+}
+
+
+const COUNTDOWN_END = getCountdownEnd();
+
+
+function formatCountdown(milliseconds){
+
+ if(milliseconds <= 0){
+  return "00:00:00";
+ }
+
+ const totalSeconds =
+  Math.floor(milliseconds / 1000);
+
+ const days =
+  Math.floor(totalSeconds / 86400);
+
+ const hours =
+  Math.floor(
+   (totalSeconds % 86400) / 3600
+  );
+
+ const minutes =
+  Math.floor(
+   (totalSeconds % 3600) / 60
+  );
+
+ const seconds =
+  totalSeconds % 60;
+
+ const h=String(hours).padStart(2,"0");
+ const m=String(minutes).padStart(2,"0");
+ const s=String(seconds).padStart(2,"0");
+
+ return `${days}d ${h}:${m}:${s}`;
+}
+
+
+function lockSite(){
+
+ if(siteLocked)return;
+
+ siteLocked=true;
+
+ clearInterval(countdownTimer);
+
+ const lockScreen=
+  document.querySelector("#lockScreen");
+
+ if(lockScreen){
+  lockScreen.style.display="grid";
+ }
+
+ /*
+   Disable the normal app.
+ */
+ document.querySelector(".app-shell").style.display="none";
+
+ document.querySelector("#authScreen").style.display="none";
+
+ const countdown=
+  document.querySelector("#countdown");
+
+ if(countdown){
+  countdown.textContent="00:00:00";
+ }
+
+ const topCountdown=
+  document.querySelector("#topCountdownText");
+
+ if(topCountdown){
+  topCountdown.textContent="LOCKED";
+ }
+}
+
+
+function updateCountdown(){
+
+ const remaining=
+  COUNTDOWN_END-Date.now();
+
+ if(remaining<=0){
+
+  lockSite();
+
+  return;
+ }
+
+ const text=
+  formatCountdown(remaining);
+
+ const countdown=
+  document.querySelector("#countdown");
+
+ if(countdown){
+  countdown.textContent=text;
+ }
+
+ const topCountdown=
+  document.querySelector("#topCountdownText");
+
+ if(topCountdown){
+
+  const totalSeconds=
+   Math.floor(remaining/1000);
+
+  const days=
+   Math.floor(totalSeconds/86400);
+
+  const hours=
+   Math.floor(
+    (totalSeconds%86400)/3600
+   );
+
+  const minutes=
+   Math.floor(
+    (totalSeconds%3600)/60
+   );
+
+  const seconds=
+   totalSeconds%60;
+
+  topCountdown.textContent=
+   `${days}d ${String(hours).padStart(2,"0")}:${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+ }
+}
+
+
+function startCountdown(){
+
+ updateCountdown();
+
+ countdownTimer=
+  setInterval(updateCountdown,1000);
+}
+
+
+/*
+   Check immediately when the page loads.
+*/
+if(Date.now()>=COUNTDOWN_END){
+
+ lockSite();
+
+}else{
+
+ startCountdown();
+
+}
 /* =========================================================
 ACCOUNT
 ========================================================= */
