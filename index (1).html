@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZORIA NEXUS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Bangers&family=Fredoka:wght@400;500;600;700&family=Sniglet:wght@400;800&family=Nunito:wght@800;900;1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        comic: {
+                            bgDark: '#0a1d4a', bgMid: '#1b3f94', bgLight: '#2c61d6', border: '#091533',
+                            pillBlue: '#2c67ed', pillHover: '#1d52ce', pillLight: '#e0f2fe',
+                            gold: '#ffc107', goldBorder: '#d97706',
+                            green: '#22c55e', greenLight: '#dcffe4', greenBorder: '#15803d',
+                            red: '#ef4444', redLight: '#ffe4e6', redBorder: '#b91c1c',
+                            cardBg: '#ffffff', statPurple: '#6366f1', statPurpleDark: '#4338ca'
+                        }
+                    },
+                    fontFamily: { comic: ['Baloo 2', 'Fredoka', 'Sniglet', 'sans-serif'], display: ['Nunito', 'sans-serif'], bangers: ['Bangers', 'cursive'] },
+                    boxShadow: {
+                        'comic-sm': '0 3px 0 0 #091533', 'comic': '0 6px 0 0 #091533', 'comic-lg': '0 8px 0 0 #091533',
+                        'comic-green': '0 6px 0 0 #15803d', 'comic-red': '0 6px 0 0 #b91c1c',
+                        'inner-comic': 'inset 0 3px 0 0 rgba(255,255,255,0.4), inset 0 -3px 0 0 rgba(0,0,0,0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Fredoka', 'Sniglet', cursive, sans-serif;
+            background-color: #081638;
+            background-image: radial-gradient(circle at 50% 20%, #204db5 0%, #0c2152 70%, #050d24 100%);
+            color: #1e293b; user-select: none; -webkit-user-select: none;
+            min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow-x: hidden;
+        }
+        .comic-border { border: 3.5px solid #091533; }
+        .comic-border-thick { border: 5px solid #091533; }
+
+        .sparkle { position: absolute; pointer-events: none; z-index: 2; animation: floatSparkle 3s ease-in-out infinite alternate; }
+        @keyframes floatSparkle { 0% { transform: translateY(0) rotate(0deg) scale(1); } 100% { transform: translateY(-8px) rotate(12deg) scale(1.1); } }
+        @keyframes popIn { 0% { transform: scale(0.92); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .animate-pop { animation: popIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+        .animate-shake { animation: shake 0.35s ease-in-out; }
+        @keyframes heartPop { 0% { transform: scale(1); } 40% { transform: scale(1.5) rotate(-10deg); opacity: 0.4; } 100% { transform: scale(1); opacity: 0.3; } }
+        .heart-lost { animation: heartPop 0.4s ease-out forwards; }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(0.8); opacity: 0; } 20% { opacity: 1; transform: translateY(-10px) scale(1.1); } 100% { transform: translateY(-60px) scale(1); opacity: 0; } }
+        .float-reward { position: absolute; font-weight: 900; pointer-events: none; animation: floatUp 1.1s ease-out forwards; z-index: 40; white-space: nowrap; }
+        @keyframes pulseWarn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .timer-warn { animation: pulseWarn 0.6s ease-in-out infinite; color: #ef4444 !important; }
+        @keyframes comboPop { 0% { transform: scale(0) rotate(-8deg); opacity: 0; } 60% { transform: scale(1.15) rotate(3deg); } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+        .combo-pop { animation: comboPop 0.35s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+        @keyframes levelGlow { 0%, 100% { box-shadow: 0 0 0px rgba(255,193,7,0.6); } 50% { box-shadow: 0 0 22px rgba(255,193,7,0.9); } }
+        .level-glow { animation: levelGlow 1.6s ease-in-out infinite; }
+
+        /* Gentle idle bob for the mascot & speech bubble */
+        @keyframes mascotBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(-1deg); } }
+        .mascot-bob { animation: mascotBob 3.2s ease-in-out infinite; }
+        @keyframes mascotWiggle { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(-6deg) scale(1.05); } 75% { transform: rotate(6deg) scale(1.05); } }
+        .mascot-wiggle { animation: mascotWiggle 0.4s ease-in-out 2; }
+
+        /* Drifting ambient glow orbs behind the app frame */
+        @keyframes driftOrb { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-15px) scale(1.15); } }
+        .orb { position: fixed; border-radius: 50%; filter: blur(60px); pointer-events: none; z-index: 0; opacity: 0.4; animation: driftOrb 11s ease-in-out infinite; }
+        .orb-1 { width: 280px; height: 280px; background: #2c67ed; top: 8%; left: 6%; }
+        .orb-2 { width: 240px; height: 240px; background: #38bdf8; bottom: 10%; right: 8%; animation-delay: 2.5s; }
+        .orb-3 { width: 200px; height: 200px; background: #a855f7; top: 50%; left: 50%; animation-delay: 5s; opacity: 0.25; }
+
+        /* Shine sweep for primary buttons/cards on hover */
+        .shine-sweep { position: relative; overflow: hidden; isolation: isolate; }
+        .shine-sweep::after {
+            content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+            transform: skewX(-20deg); transition: left 0.6s ease; z-index: 1; pointer-events: none;
+        }
+        .shine-sweep:hover::after { left: 130%; }
+
+        /* Soft floating stars scattered across the shell */
+        @keyframes twinkle { 0%, 100% { opacity: 0.25; transform: scale(0.85); } 50% { opacity: 0.9; transform: scale(1.15); } }
+        .twinkle { animation: twinkle 2.4s ease-in-out infinite; }
+
+        /* Animated gradient border ring used on the XP progress bar track */
+        @keyframes gradientSlide { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        .xp-fill-animated { background: linear-gradient(90deg, #38bdf8, #ffc107, #38bdf8); background-size: 200% 100%; animation: gradientSlide 2.5s linear infinite; }
+
+        /* Card lift on hover for menu buttons */
+        .lift-card { transition: transform 0.22s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.22s ease; }
+        .lift-card:hover { transform: translateY(-3px); }
+
+        /* Glassy top header */
+        .glass-header { background: linear-gradient(180deg, rgba(10,29,74,0.95), rgba(10,29,74,0.75)); backdrop-filter: blur(6px); }
+
+        /* Smooth screen transitions */
+        @keyframes screenFadeIn { 0% { opacity: 0; transform: translateY(10px) scale(0.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .app-screen.screen-active { animation: screenFadeIn 0.45s cubic-bezier(0.16,1,0.3,1) forwards; }
+        * { scroll-behavior: smooth; }
+        button, .opt-btn, .lift-card { transition-timing-function: cubic-bezier(0.16,1,0.3,1); }
+        #appShell { box-shadow: 0 16px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06); }
+
+        ::-webkit-scrollbar { width: 0px; height: 0px; background: transparent; }
+        * { scrollbar-width: none; -ms-overflow-style: none; }
+        *::-webkit-scrollbar { display: none; }
+
+        .speech-bubble-tail::after { content: ''; position: absolute; bottom: -12px; right: 30px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 14px solid #091533; }
+        .speech-bubble-tail::before { content: ''; position: absolute; bottom: -7px; right: 32px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 12px solid #ffffff; z-index: 1; }
+
+        #confettiCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
+
+        .opt-btn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .opt-btn:active { transform: translateY(3px) scale(0.98); }
+
+        .progress-fill { transition: width 0.4s cubic-bezier(0.65,0,0.35,1); }
+
+        /* Responsive desktop layout: widen the frame and add side panel breathing room */
+        @media (min-width: 820px) {
+            body { padding: 24px; }
+            #appShell { max-width: 460px; height: 88vh; }
+            .desktop-hint { display: flex !important; }
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4">
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Ambient drifting glow orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Desktop side hint (keyboard controls) -->
+    <div class="desktop-hint hidden fixed left-6 bottom-6 z-20 text-cyan-200/70 text-xs font-bold flex-col space-y-1 max-w-[180px]">
+        <span class="text-white font-black uppercase tracking-wide mb-1">⌨️ Keyboard</span>
+        <span>A / B / C / D — answer</span>
+        <span>P — pause</span>
+        <span>Enter — continue</span>
+    </div>
+
+    <div id="appShell" class="relative z-10 w-full max-w-[440px] h-[92vh] max-h-[840px] bg-gradient-to-b from-comic-bgMid via-comic-bgDark to-comic-bgDark rounded-[36px] comic-border-thick shadow-[0_12px_30px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden text-slate-800">
+
+        <!-- (decorative clouds removed for a cleaner, more immersive look) -->
+
+        <div class="sparkle twinkle top-10 left-5 text-white/80 text-xl font-black">?</div>
+        <div class="sparkle twinkle top-24 right-6 text-comic-gold text-2xl font-black" style="animation-delay:0.8s;">✦</div>
+        <div class="sparkle twinkle bottom-28 left-6 text-cyan-300 text-xl font-black" style="animation-delay:1.5s;">★</div>
+        <div class="sparkle twinkle bottom-14 right-8 text-white/80 text-2xl font-black" style="animation-delay:2.1s;">?</div>
+
+        <!-- ============ SCREEN 1: AUTH ============ -->
+        <div id="screenAuth" class="app-screen w-full h-full flex flex-col items-center justify-between p-5 z-10 overflow-y-auto">
+            <div class="w-full flex flex-col items-center mt-2">
+                <div class="relative w-32 h-32 mb-2 flex items-center justify-center">
+                    <span class="absolute -top-1 -left-2 text-white text-2xl font-black animate-pulse">✦</span>
+                    <span class="absolute -top-2 -right-2 text-comic-gold text-3xl font-black animate-bounce">✦</span>
+                    <img src="logo.png" id="mainLogoImg" alt="Quizoria Logo" class="w-full h-full object-contain filter drop-shadow-[0_6px_0_#091533]"
+                        onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'w-28 h-28 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-full comic-border shadow-comic flex items-center justify-center text-5xl\'>🧠</div>';">
+                </div>
+                <div class="w-full max-w-[280px] flex items-center justify-center mb-1">
+                    <div class="text-center">
+                        <h1 class="text-3xl font-black text-white italic drop-shadow-[0_4px_0_#091533] uppercase tracking-wide">QUIZORIA</h1>
+                        <h2 class="text-2xl font-black text-cyan-300 drop-shadow-[0_3px_0_#091533] -mt-2 uppercase tracking-widest">NEXUS</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full bg-white rounded-[28px] p-5 comic-border shadow-comic-lg my-auto relative z-10">
+                <div class="flex bg-slate-100 rounded-full p-1 mb-5 comic-border">
+                    <button id="tabLoginBtn" type="button" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-full font-black text-xs sm:text-sm transition-all duration-200 text-slate-500 hover:text-comic-pillBlue">LOG IN</button>
+                    <button id="tabSignupBtn" type="button" onclick="switchAuthTab('signup')" class="flex-1 py-2 rounded-full font-black text-xs sm:text-sm transition-all duration-200 bg-comic-pillBlue text-white comic-border shadow-comic-sm">SIGN UP</button>
+                </div>
+
+                <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wide mb-1">NAME:</label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-comic-pillBlue text-base"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" id="authNameInput" required placeholder="Create your name" class="w-full bg-cyan-50/50 border-2 border-slate-900 rounded-xl py-2.5 pl-10 pr-3 text-sm font-extrabold text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-comic-pillBlue transition-all">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-black text-slate-700 uppercase tracking-wide mb-1">PASSWORD:</label>
+                        <div class="relative">
+                            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-comic-pillBlue text-base"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="authPasswordInput" required minlength="7" placeholder="At least 7 characters" class="w-full bg-cyan-50/50 border-2 border-slate-900 rounded-xl py-2.5 pl-10 pr-10 text-sm font-extrabold text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-comic-pillBlue transition-all">
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"><i id="passwordEyeIcon" class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <p id="passwordError" class="text-[11px] text-comic-red font-extrabold mt-1 hidden">Password must be at least 7 characters long!</p>
+                    </div>
+                    <p id="authError" class="text-[11px] text-comic-red font-extrabold text-center hidden"></p>
+                    <button type="submit" id="authSubmitBtn" class="shine-sweep w-full bg-comic-pillBlue hover:bg-comic-pillHover text-white font-black text-base py-3 rounded-full comic-border shadow-comic hover:translate-y-0.5 active:translate-y-1 transition-all uppercase tracking-wider mt-2">SIGN UP</button>
+                </form>
+            </div>
+
+            <div class="text-center text-xs text-cyan-200 font-extrabold tracking-wide mb-1">⚡ Ready to test your IT knowledge? ⚡</div>
+        </div>
+
+        <!-- ============ SCREEN 2: MAIN MENU ============ -->
+        <div id="screenMainMenu" class="app-screen w-full h-full flex flex-col hidden z-10">
+            <div class="glass-header w-full p-3 border-b-4 border-slate-900 flex items-center justify-between shadow-md">
+                <div class="flex items-center space-x-1.5">
+                    <span class="text-comic-gold text-xl">👑</span>
+                    <span class="font-black text-base text-white tracking-wide italic">QUIZORIA <span class="text-cyan-300">NEXUS</span></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button type="button" id="soundToggleBtn" onclick="toggleAudioMute()" class="w-9 h-9 bg-slate-800 hover:bg-slate-700 rounded-xl comic-border flex items-center justify-center text-comic-gold transition-transform active:scale-95">
+                        <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+                    </button>
+                    <button type="button" onclick="showProfileModal()" class="w-9 h-9 bg-white rounded-full comic-border flex items-center justify-center text-slate-900 font-black hover:scale-105 transition-transform shadow-comic-sm">
+                        <i class="fa-solid fa-user text-base"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Level bar -->
+            <div class="px-4 pt-3">
+                <div class="flex items-center justify-between mb-1">
+                    <span id="levelBadgeText" class="text-[11px] font-black text-comic-gold uppercase tracking-wide">Level 1</span>
+                    <span id="levelXpText" class="text-[10px] font-bold text-cyan-200">0 / 100 XP</span>
+                </div>
+                <div class="w-full h-3 bg-slate-900 rounded-full comic-border overflow-hidden">
+                    <div id="levelProgressFill" class="progress-fill xp-fill-animated h-full" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center space-x-3 py-3 px-4">
+                <div class="bg-slate-900 border-2 border-slate-700 rounded-2xl px-4 py-1.5 flex items-center space-x-2 shadow-inner">
+                    <span class="text-comic-gold text-lg animate-pulse">⚡</span>
+                    <span class="text-xs text-slate-300 font-black uppercase">XP</span>
+                    <span id="userXpDisplay" class="font-black text-base text-white">55</span>
+                </div>
+                <span class="text-white font-black text-xl">+</span>
+                <div class="bg-slate-900 border-2 border-slate-700 rounded-2xl px-4 py-1.5 flex items-center space-x-2 shadow-inner">
+                    <div class="w-5 h-5 bg-comic-gold rounded-full border-2 border-comic-goldBorder flex items-center justify-center text-[10px] font-black text-slate-900">🪙</div>
+                    <span id="userCoinsDisplay" class="font-black text-base text-white">10</span>
+                </div>
+                <div id="streakPill" class="bg-slate-900 border-2 border-orange-500/60 rounded-2xl px-3 py-1.5 flex items-center space-x-1.5 shadow-inner">
+                    <span class="text-orange-400 text-base">🔥</span>
+                    <span id="dailyStreakDisplay" class="font-black text-sm text-white">0</span>
+                </div>
+            </div>
+
+            <div class="flex-1 px-4 py-2 overflow-y-auto space-y-3.5 flex flex-col justify-between">
+                <div class="space-y-3">
+                    <button type="button" onclick="openCategoryModal()" class="shine-sweep lift-card w-full text-left bg-white text-slate-900 rounded-2xl p-3.5 comic-border shadow-comic active:scale-95 transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-11 h-11 bg-cyan-100 rounded-xl border-2 border-slate-900 flex items-center justify-center text-comic-pillBlue text-2xl group-hover:rotate-6 transition-transform">📖</div>
+                                <div>
+                                    <h2 class="font-black text-base sm:text-lg text-slate-900 tracking-wide uppercase">CATEGORIES</h2>
+                                    <p class="text-xs font-bold text-slate-500">Test your knowledge across IT topics.</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-slate-900 font-black text-lg group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </button>
+
+                    <button type="button" onclick="showStatsModal()" class="shine-sweep lift-card w-full text-left bg-gradient-to-br from-comic-statPurple to-indigo-700 text-white rounded-2xl p-3.5 comic-border shadow-comic active:scale-95 transition-all cursor-pointer group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-11 h-11 bg-indigo-900/60 rounded-xl border-2 border-slate-900 flex items-center justify-center text-cyan-300 text-2xl group-hover:rotate-6 transition-transform">📊</div>
+                                <div>
+                                    <h2 class="font-black text-base sm:text-lg tracking-wide uppercase">STATS</h2>
+                                    <p class="text-xs font-bold text-indigo-100">Track your progress.</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-white font-black text-lg group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="relative w-full h-72 mt-2 overflow-visible">
+                    <!-- Glow puddle beneath the mascot -->
+                    <div class="absolute right-0 bottom-2 w-48 h-9 bg-cyan-400/30 rounded-full blur-xl"></div>
+
+                    <!-- Speech bubble, floating upper-left of the mascot -->
+                    <div class="absolute top-0 left-0 w-[54%] z-20 mascot-bob" style="animation-delay:0.3s;">
+                        <div class="relative bg-white text-slate-900 p-3 rounded-2xl comic-border shadow-comic text-center font-black text-xs uppercase speech-bubble-tail">
+                            <span class="text-comic-pillBlue text-sm block">WELCOME!</span>
+                            <span id="mascotGreetingText">Ready for tech challenges?</span>
+                        </div>
+                    </div>
+
+                    <!-- Boy mascot: large, anchored bottom-right -->
+                    <div class="absolute -bottom-3 -right-4 h-full w-[78%] flex items-end justify-end mascot-bob">
+                        <img src="boy.png" id="boyCharacterImg" alt="Waving Boy Mascot" class="max-h-[19rem] object-contain filter drop-shadow-[0_10px_0_rgba(9,21,51,0.5)] hover:scale-105 hover:rotate-1 transition-transform duration-300 cursor-pointer"
+                            onclick="mascotPoke()"
+                            onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'w-48 h-64 bg-gradient-to-t from-cyan-400 to-blue-600 rounded-t-full comic-border flex items-center justify-center text-8xl shadow-comic\'>🧑‍💻</div>';">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SCREEN 3: QUIZ ============ -->
+        <div id="screenQuiz" class="app-screen w-full h-full flex flex-col hidden z-10 relative">
+            <div class="glass-header w-full p-3 border-b-4 border-slate-900 flex items-center justify-between">
+                <button type="button" onclick="handleQuizBackNavigation()" title="Exit Quiz" class="w-10 h-10 bg-slate-800 hover:bg-slate-700 active:scale-90 text-cyan-300 rounded-xl comic-border flex items-center justify-center text-lg transition-transform shadow-comic-sm">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="text-center flex items-center space-x-2">
+                    <h2 class="font-black text-xl text-white tracking-widest italic uppercase">QUIZ</h2>
+                    <button type="button" onclick="togglePause()" title="Pause" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:scale-90 text-comic-gold rounded-lg comic-border flex items-center justify-center text-sm transition-transform">
+                        <i id="pauseIcon" class="fa-solid fa-pause"></i>
+                    </button>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="bg-slate-900 border-2 border-slate-700 rounded-xl px-2.5 py-1 flex items-center space-x-1 text-xs">
+                        <span class="text-comic-gold">⚡</span><span id="quizLiveXp" class="font-black text-white">55</span>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-slate-700 rounded-xl px-2.5 py-1 flex items-center space-x-1 text-xs">
+                        <span class="text-comic-gold">🪙</span><span id="quizLiveCoins" class="font-black text-white">10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="px-4 pt-2.5">
+                <div class="w-full h-2.5 bg-slate-900 rounded-full comic-border overflow-hidden">
+                    <div id="quizProgressFill" class="progress-fill h-full bg-gradient-to-r from-comic-pillBlue to-cyan-300" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div class="flex-1 p-4 flex flex-col justify-between overflow-y-auto relative">
+                <div>
+                    <div class="flex items-center justify-between mb-2 px-1">
+                        <span id="questionProgressText" class="text-xs font-black text-cyan-200 tracking-wider">QUESTION 1 OF 5</span>
+                        <div class="flex items-center space-x-2">
+                            <div id="comboBadge" class="hidden bg-comic-gold text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full comic-border">🔥 x1</div>
+                            <div id="heartsContainer" class="flex space-x-1 text-blue-400 text-lg">
+                                <i class="fa-solid fa-heart drop-shadow"></i>
+                                <i class="fa-solid fa-heart drop-shadow"></i>
+                                <i class="fa-solid fa-heart drop-shadow"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timer ring -->
+                    <div class="flex justify-center mb-2">
+                        <div id="timerText" class="bg-slate-900 border-2 border-slate-700 rounded-full w-11 h-11 flex items-center justify-center text-white font-black text-sm shadow-inner">15</div>
+                    </div>
+
+                    <div class="bg-white text-slate-900 rounded-[24px] p-5 comic-border shadow-comic mb-4 min-h-[110px] flex items-center justify-center text-center relative">
+                        <h3 id="questionText" class="font-black text-base sm:text-lg text-slate-800 leading-snug">Which symbol starts a single-line comment in JavaScript?</h3>
+                    </div>
+
+                    <div id="optionsContainer" class="space-y-2.5"></div>
+
+                    <button type="button" onclick="handleSkipQuestion()" id="skipBtn" class="w-full mt-3 text-center text-[11px] font-black text-cyan-200/70 hover:text-cyan-200 uppercase tracking-wider py-1">
+                        ⏭ Skip Question <span class="text-slate-400">(−5 XP)</span>
+                    </button>
+                </div>
+
+                <div id="feedbackBanner" class="mt-3 transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none">
+                    <div id="correctFeedback" class="hidden bg-comic-greenLight border-4 border-comic-greenBorder rounded-2xl p-3 shadow-comic-green text-center animate-pop">
+                        <div class="flex items-center justify-center space-x-2 text-comic-greenBorder font-black text-xl sm:text-2xl uppercase tracking-wider">
+                            <span class="w-8 h-8 bg-comic-green text-white rounded-full flex items-center justify-center text-base comic-border">✓</span>
+                            <span>CORRECT!</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 mt-1 font-black text-sm text-slate-800">
+                            <span id="correctXpText" class="text-amber-700">+20 ⚡</span>
+                            <span class="text-slate-400">|</span>
+                            <span id="correctCoinText" class="text-amber-700">+5 🪙</span>
+                        </div>
+                    </div>
+                    <div id="incorrectFeedback" class="hidden bg-comic-redLight border-4 border-comic-redBorder rounded-2xl p-3 shadow-comic-red text-center animate-shake">
+                        <div class="flex items-center justify-center space-x-2 text-comic-redBorder font-black text-xl sm:text-2xl uppercase tracking-wider">
+                            <span class="w-8 h-8 bg-comic-red text-white rounded-full flex items-center justify-center text-base comic-border">✕</span>
+                            <span id="incorrectLabel">INCORRECT!</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 mt-1 font-black text-sm text-slate-800">
+                            <span class="text-rose-800">-10 ⚡</span><span class="text-slate-400">|</span><span class="text-rose-800">-5 🪙</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pause overlay -->
+            <div id="pauseOverlay" class="hidden absolute inset-0 bg-comic-bgDark/95 z-30 flex flex-col items-center justify-center space-y-4 text-center p-6">
+                <div class="text-5xl">⏸️</div>
+                <h3 class="text-white font-black text-2xl uppercase tracking-widest">Paused</h3>
+                <button type="button" onclick="togglePause()" class="bg-comic-green text-white font-black px-8 py-3 rounded-full comic-border shadow-comic-green uppercase tracking-wider text-sm hover:translate-y-0.5 active:translate-y-1 transition-all">▶ Resume</button>
+                <button type="button" onclick="handleQuizBackNavigation()" class="text-cyan-200 font-bold text-xs uppercase tracking-wider underline">Exit to menu</button>
+            </div>
+        </div>
+
+        <!-- ============ SCREEN 4: RESULTS ============ -->
+        <div id="screenResults" class="app-screen w-full h-full flex flex-col items-center justify-between p-5 hidden z-10 overflow-y-auto">
+            <div class="text-center mt-2">
+                <div class="inline-block bg-comic-gold text-slate-900 font-black text-xs px-4 py-1 rounded-full border-2 border-slate-900 uppercase tracking-widest shadow-comic-sm mb-2">QUIZ COMPLETED!</div>
+                <h1 id="resultsTitle" class="text-3xl font-black text-white italic drop-shadow-[0_4px_0_#091533]">VICTORY! 🎉</h1>
+            </div>
+
+            <div class="w-full bg-white text-slate-900 rounded-[28px] p-5 comic-border shadow-comic-lg my-auto space-y-3.5 text-center">
+                <div class="relative w-20 h-20 mx-auto bg-amber-100 rounded-full comic-border flex items-center justify-center shadow-inner">
+                    <span id="resultsScoreEmoji" class="text-4xl">🏆</span>
+                </div>
+                <div>
+                    <div id="resultsScoreText" class="text-3xl font-black text-slate-800">4 / 5</div>
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Correct Answers</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-1">
+                    <div class="bg-amber-50 border-2 border-slate-900 rounded-xl p-2.5 shadow-comic-sm">
+                        <div id="resultsXpEarned" class="text-xl font-black text-amber-600">+80</div>
+                        <div class="text-[10px] font-black text-slate-500 uppercase">XP Earned</div>
+                    </div>
+                    <div class="bg-yellow-50 border-2 border-slate-900 rounded-xl p-2.5 shadow-comic-sm">
+                        <div id="resultsCoinsEarned" class="text-xl font-black text-yellow-600">+20</div>
+                        <div class="text-[10px] font-black text-slate-500 uppercase">Coins Earned</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-indigo-50 border-2 border-slate-900 rounded-xl p-2 shadow-comic-sm">
+                        <div id="resultsBestCombo" class="text-base font-black text-indigo-600">x1</div>
+                        <div class="text-[9px] font-black text-slate-500 uppercase">Best Combo</div>
+                    </div>
+                    <div class="bg-emerald-50 border-2 border-slate-900 rounded-xl p-2 shadow-comic-sm">
+                        <div id="resultsBestScoreNote" class="text-base font-black text-emerald-600">—</div>
+                        <div class="text-[9px] font-black text-slate-500 uppercase">Category Best</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full space-y-2">
+                <button type="button" onclick="openReviewModal()" class="w-full bg-comic-statPurple hover:bg-indigo-600 text-white font-black text-sm py-2.5 rounded-full comic-border shadow-comic hover:translate-y-0.5 active:translate-y-1 transition-all uppercase tracking-wider">
+                    🔍 Review Answers
+                </button>
+                <button type="button" onclick="replayQuiz()" class="shine-sweep w-full bg-comic-green hover:bg-emerald-600 text-white font-black text-base py-3 rounded-full comic-border shadow-comic hover:translate-y-0.5 active:translate-y-1 transition-all uppercase tracking-wider">🔄 Play Again</button>
+                <button type="button" onclick="showMainMenu()" class="shine-sweep w-full bg-comic-pillBlue hover:bg-comic-pillHover text-white font-black text-base py-3 rounded-full comic-border shadow-comic hover:translate-y-0.5 active:translate-y-1 transition-all uppercase tracking-wider">🏠 Main Menu</button>
+            </div>
+        </div>
+
+        <!-- ============ MODALS ============ -->
+        <div id="modalCategories" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl space-y-4 animate-pop">
+                <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2">
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="closeCategoryModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-lg border-2 border-slate-900 flex items-center justify-center text-sm font-black transition-colors"><i class="fa-solid fa-arrow-left"></i></button>
+                        <h3 class="font-black text-lg text-slate-900 tracking-wide uppercase">SELECT TOPIC</h3>
+                    </div>
+                    <button type="button" onclick="closeCategoryModal()" class="text-slate-400 hover:text-slate-700 font-black text-xl p-1">✕</button>
+                </div>
+                <div id="categoryListContainer" class="space-y-2.5 max-h-[320px] overflow-y-auto pr-1"></div>
+                <button type="button" onclick="closeCategoryModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-black py-2.5 rounded-full border-2 border-slate-900 uppercase tracking-wider text-xs">← Back To Menu</button>
+            </div>
+        </div>
+
+        <div id="modalStats" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl space-y-4 animate-pop max-h-[85vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2">
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="closeStatsModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-lg border-2 border-slate-900 flex items-center justify-center text-sm font-black transition-colors"><i class="fa-solid fa-arrow-left"></i></button>
+                        <h3 class="font-black text-lg text-slate-900 tracking-wide uppercase">PROGRESS STATS</h3>
+                    </div>
+                    <button type="button" onclick="closeStatsModal()" class="text-slate-400 hover:text-slate-700 font-black text-xl p-1">✕</button>
+                </div>
+
+                <div class="space-y-2.5">
+                    <div class="flex justify-between items-center p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl">
+                        <span class="font-black text-xs text-slate-700">⚡ Total XP:</span><span id="statTotalXp" class="font-black text-comic-pillBlue text-sm">55</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl">
+                        <span class="font-black text-xs text-slate-700">🪙 Total Coins:</span><span id="statTotalCoins" class="font-black text-amber-600 text-sm">10</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl">
+                        <span class="font-black text-xs text-slate-700">🎮 Quizzes Completed:</span><span id="statQuizzesDone" class="font-black text-slate-800 text-sm">0</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl">
+                        <span class="font-black text-xs text-slate-700">🎯 Accuracy Rate:</span><span id="statAccuracy" class="font-black text-comic-green text-sm">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl">
+                        <span class="font-black text-xs text-slate-700">🔥 Daily Streak:</span><span id="statDailyStreak" class="font-black text-orange-500 text-sm">0 days</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl">
+                        <span class="font-black text-xs text-slate-700">🏅 Best Combo Ever:</span><span id="statBestComboEver" class="font-black text-indigo-600 text-sm">x1</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-black text-xs text-slate-500 uppercase tracking-wider mb-1.5">Per-Category Best Scores</h4>
+                    <div id="categoryStatsContainer" class="space-y-1.5"></div>
+                </div>
+
+                <button type="button" onclick="closeStatsModal()" class="w-full bg-comic-pillBlue text-white font-black py-2.5 rounded-full comic-border shadow-comic uppercase tracking-wider text-xs">← Back To Menu</button>
+            </div>
+        </div>
+
+        <div id="modalProfile" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl text-center space-y-4 animate-pop relative">
+                <button type="button" onclick="closeProfileModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700 font-black text-xl">✕</button>
+                <div id="profileAvatarCircle" class="w-16 h-16 bg-cyan-300 rounded-full comic-border mx-auto flex items-center justify-center text-slate-900 font-black text-2xl shadow-comic mt-2">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div>
+                    <h3 id="profileModalName" class="font-black text-xl text-slate-900">Hero</h3>
+                    <p id="profileModalTitle" class="text-xs font-bold text-slate-500">Level 1 · IT Quiz Apprentice</p>
+                </div>
+
+                <div class="flex justify-center flex-wrap gap-2 pt-1">
+                    <button type="button" onclick="setAvatarColor('cyan-300')" class="w-7 h-7 rounded-full bg-cyan-300 border-2 border-slate-900"></button>
+                    <button type="button" onclick="setAvatarColor('rose-300')" class="w-7 h-7 rounded-full bg-rose-300 border-2 border-slate-900"></button>
+                    <button type="button" onclick="setAvatarColor('amber-300')" class="w-7 h-7 rounded-full bg-amber-300 border-2 border-slate-900"></button>
+                    <button type="button" onclick="setAvatarColor('emerald-300')" class="w-7 h-7 rounded-full bg-emerald-300 border-2 border-slate-900"></button>
+                    <button type="button" onclick="setAvatarColor('violet-300')" class="w-7 h-7 rounded-full bg-violet-300 border-2 border-slate-900"></button>
+                </div>
+
+                <div class="pt-2 space-y-2">
+                    <button type="button" onclick="handleLogout()" class="w-full bg-comic-red hover:bg-rose-600 text-white font-black py-2.5 rounded-full comic-border shadow-comic uppercase tracking-wider text-xs">🚪 Log Out</button>
+                    <button type="button" onclick="closeProfileModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-black py-2.5 rounded-full border-2 border-slate-900 uppercase tracking-wider text-xs">← Back To Menu</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalConfirmExit" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl text-center space-y-3.5 animate-pop">
+                <div class="text-3xl">⚠️</div>
+                <h3 class="font-black text-lg text-slate-900">Exit Active Quiz?</h3>
+                <p class="text-xs font-bold text-slate-600">Your current progress will be lost and returned to the main menu.</p>
+                <div class="flex space-x-2 pt-1">
+                    <button type="button" onclick="confirmExitQuizYes()" class="flex-1 bg-comic-red text-white font-black py-2 rounded-full comic-border shadow-comic uppercase tracking-wider text-xs">Yes, Exit</button>
+                    <button type="button" onclick="closeConfirmExitModal()" class="flex-1 bg-slate-100 text-slate-900 font-black py-2 rounded-full border-2 border-slate-900 uppercase tracking-wider text-xs">Keep Playing</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Answers Modal -->
+        <div id="modalReview" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl space-y-3 animate-pop max-h-[85vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2 sticky -top-5 bg-white pt-1">
+                    <h3 class="font-black text-lg text-slate-900 tracking-wide uppercase">REVIEW</h3>
+                    <button type="button" onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-700 font-black text-xl p-1">✕</button>
+                </div>
+                <div id="reviewListContainer" class="space-y-3"></div>
+                <button type="button" onclick="closeReviewModal()" class="w-full bg-comic-pillBlue text-white font-black py-2.5 rounded-full comic-border shadow-comic uppercase tracking-wider text-xs">Close</button>
+            </div>
+        </div>
+
+        <!-- Level Up Toast -->
+        <div id="levelUpToast" class="hidden fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-comic-gold text-slate-900 font-black px-5 py-3 rounded-2xl comic-border shadow-comic-lg text-center level-glow">
+            <div class="text-xs uppercase tracking-widest">Level Up!</div>
+            <div id="levelUpText" class="text-xl">Level 2</div>
+        </div>
+
+    </div>
+
+    <script>
+        const REGISTRY_KEY = 'QUIZORIA_NEXUS_USERS_REGISTRY';
+        const SESSION_KEY = 'QUIZORIA_NEXUS_CURRENT_SESSION';
+        const QUESTIONS_PER_ROUND = 5;
+        const QUESTION_TIME_LIMIT = 15;
+
+        function createFreshUserState(username) {
+            return {
+                username: username,
+                isLoggedIn: true,
+                xp: 0,
+                coins: 0,
+                quizzesCompleted: 0,
+                totalQuestionsAnswered: 0,
+                correctAnswers: 0,
+                soundMuted: false,
+                avatarColor: 'cyan-300',
+                dailyStreak: 0,
+                lastPlayedDate: null,
+                bestComboEver: 1,
+                categoryBest: {}, // { key: { best: n, total: n, attempts: n } }
+            };
+        }
+
+        let userState = createFreshUserState('');
+        userState.isLoggedIn = false;
+
+        let authMode = 'signup';
+        let currentCategoryKey = 'javascript';
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let activeQuizScore = 0;
+        let activeQuizXpEarned = 0;
+        let activeQuizCoinsEarned = 0;
+        let remainingLives = 3;
+        let isAnsweringBlocked = false;
+        let comboStreak = 0;
+        let bestComboThisRound = 1;
+        let quizAnswerLog = []; // { question, options, correct, chosen, wasSkipped }
+        let questionTimer = null;
+        let timeLeft = QUESTION_TIME_LIMIT;
+        let isPaused = false;
+
+        const QUIZ_BANK = {
+            javascript: {
+                title: "JavaScript", icon: "⚡",
+                questions: [
+                    { question: "Which symbol starts a single-line comment in JavaScript?", options: ["//", "#", "<!-- -->", "/* */"], answer: 0 },
+                    { question: "What will 5 + 3 * 2 evaluate to?", options: ["16", "11", "15", "12"], answer: 1 },
+                    { question: "Which keyword declares a block-scoped constant variable?", options: ["var", "let", "const", "define"], answer: 2 },
+                    { question: "Which function converts a JSON string into an object?", options: ["JSON.stringify()", "JSON.parse()", "JSON.toObject()", "JSON.decode()"], answer: 1 },
+                    { question: "What does '===' check in JavaScript?", options: ["Value only", "Type only", "Value and type", "Neither"], answer: 2 },
+                    { question: "Which method adds an item to the end of an array?", options: ["push()", "pop()", "shift()", "unshift()"], answer: 0 },
+                    { question: "What is the result of typeof null?", options: ["'null'", "'undefined'", "'object'", "'number'"], answer: 2 },
+                    { question: "Which company originally created JavaScript?", options: ["Microsoft", "Netscape", "Google", "Apple"], answer: 1 }
+                ]
+            },
+            python: {
+                title: "Python", icon: "🐍",
+                questions: [
+                    { question: "How do you write a comment in Python?", options: ["//", "/* */", "#", "<!-- -->"], answer: 2 },
+                    { question: "Which data structure is ordered and immutable in Python?", options: ["List", "Dictionary", "Set", "Tuple"], answer: 3 },
+                    { question: "Which keyword is used to create a function in Python?", options: ["function", "def", "func", "create"], answer: 1 },
+                    { question: "What does len([1,2,3]) return?", options: ["2", "3", "4", "Error"], answer: 1 },
+                    { question: "Which of these is a mutable data type?", options: ["Tuple", "String", "List", "Integer"], answer: 2 },
+                    { question: "What symbol is used for exponentiation in Python?", options: ["^", "**", "exp()", "pow"], answer: 1 }
+                ]
+            },
+            html_css: {
+                title: "HTML & CSS", icon: "🌐",
+                questions: [
+                    { question: "What does HTML stand for?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyperlink Management Language", "Home Tool Markup Language"], answer: 0 },
+                    { question: "Which CSS property changes the text color?", options: ["font-color", "text-color", "color", "style-color"], answer: 2 },
+                    { question: "Which tag is used for the largest heading?", options: ["<h6>", "<heading>", "<h1>", "<head>"], answer: 2 },
+                    { question: "Which CSS property controls spacing outside an element?", options: ["padding", "margin", "border", "spacing"], answer: 1 },
+                    { question: "What does CSS stand for?", options: ["Creative Style Sheets", "Cascading Style Sheets", "Computer Style System", "Colorful Style Sheets"], answer: 1 }
+                ]
+            },
+            networking: {
+                title: "Networking", icon: "🌐",
+                questions: [
+                    { question: "What does IP stand for in networking?", options: ["Internet Protocol", "Internal Process", "Interface Point", "Internet Path"], answer: 0 },
+                    { question: "Which port does HTTPS use by default?", options: ["80", "21", "443", "25"], answer: 2 },
+                    { question: "What does DNS translate domain names into?", options: ["MAC addresses", "IP addresses", "Port numbers", "URLs"], answer: 1 },
+                    { question: "Which device connects multiple networks together?", options: ["Switch", "Hub", "Router", "Repeater"], answer: 2 },
+                    { question: "What does 'LAN' stand for?", options: ["Local Area Network", "Large Access Node", "Linked Area Node", "Long Access Network"], answer: 0 }
+                ]
+            },
+            security: {
+                title: "Cybersecurity", icon: "🛡️",
+                questions: [
+                    { question: "What does 'phishing' typically try to steal?", options: ["CPU cycles", "Personal credentials", "Disk space", "Bandwidth only"], answer: 1 },
+                    { question: "What does the 'S' in HTTPS stand for?", options: ["Server", "Secure", "System", "Session"], answer: 1 },
+                    { question: "What is two-factor authentication also known as?", options: ["2FA", "TFA-2", "Dual Login", "SecondPass"], answer: 0 },
+                    { question: "A firewall primarily controls what?", options: ["Screen brightness", "Network traffic", "File compression", "Battery usage"], answer: 1 },
+                    { question: "What type of malware demands payment to restore access?", options: ["Spyware", "Ransomware", "Adware", "Worm"], answer: 1 }
+                ]
+            }
+        };
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function toggleAudioMute() {
+            userState.soundMuted = !userState.soundMuted;
+            saveState();
+            updateSoundIcon();
+        }
+
+        function updateSoundIcon() {
+            const soundIcon = document.getElementById('soundIcon');
+            if (soundIcon) soundIcon.className = userState.soundMuted ? "fa-solid fa-volume-xmark" : "fa-solid fa-volume-high";
+        }
+
+        function playSoundEffect(type) {
+            if (userState.soundMuted) return;
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'incorrect') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.25);
+                    gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'click') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(340, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+                } else if (type === 'tick') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+                } else if (type === 'complete') {
+                    [523, 659, 784, 1046].forEach((freq, i) => {
+                        const o2 = audioCtx.createOscillator(); const g2 = audioCtx.createGain();
+                        o2.connect(g2); g2.connect(audioCtx.destination);
+                        o2.type = 'sine';
+                        const t0 = audioCtx.currentTime + i * 0.12;
+                        o2.frequency.setValueAtTime(freq, t0);
+                        g2.gain.setValueAtTime(0.18, t0);
+                        g2.gain.exponentialRampToValueAtTime(0.01, t0 + 0.35);
+                        o2.start(t0); o2.stop(t0 + 0.35);
+                    });
+                } else if (type === 'levelup') {
+                    [660, 880, 1100].forEach((freq, i) => {
+                        const o2 = audioCtx.createOscillator(); const g2 = audioCtx.createGain();
+                        o2.connect(g2); g2.connect(audioCtx.destination);
+                        o2.type = 'triangle';
+                        const t0 = audioCtx.currentTime + i * 0.1;
+                        o2.frequency.setValueAtTime(freq, t0);
+                        g2.gain.setValueAtTime(0.2, t0);
+                        g2.gain.exponentialRampToValueAtTime(0.01, t0 + 0.28);
+                        o2.start(t0); o2.stop(t0 + 0.28);
+                    });
+                }
+            } catch (e) {}
+        }
+
+        // ---------- Lifecycle ----------
+        window.onload = function() {
+            const session = localStorage.getItem(SESSION_KEY);
+            if (session) {
+                const data = loadUserData(session);
+                if (data) {
+                    userState = data;
+                    userState.isLoggedIn = true;
+                } else {
+                    localStorage.removeItem(SESSION_KEY);
+                }
+            }
+            updateSoundIcon();
+            applyAvatarColor();
+            if (userState.isLoggedIn && userState.username) {
+                checkDailyStreak();
+                showMainMenu();
+            } else {
+                showAuthScreen();
+            }
+            renderCategoriesList();
+        };
+
+        document.addEventListener('keydown', function(e) {
+            const quizVisible = !document.getElementById('screenQuiz').classList.contains('hidden');
+            if (!quizVisible || isPaused) return;
+            const key = e.key.toLowerCase();
+            if (['a','b','c','d'].includes(key)) {
+                const idx = ['a','b','c','d'].indexOf(key);
+                const btn = document.getElementById(`optionBtn_${idx}`);
+                if (btn) selectOption(idx);
+            } else if (key === 'p') {
+                togglePause();
+            }
+        });
+
+        // ---------- Multi-account storage ----------
+        function getRegistry() {
+            try { return JSON.parse(localStorage.getItem(REGISTRY_KEY)) || {}; } catch (e) { return {}; }
+        }
+        function saveRegistry(reg) {
+            localStorage.setItem(REGISTRY_KEY, JSON.stringify(reg));
+        }
+        function userDataKey(usernameLower) {
+            return `QUIZORIA_NEXUS_USER_DATA_${usernameLower}`;
+        }
+        function loadUserData(usernameLower) {
+            const raw = localStorage.getItem(userDataKey(usernameLower));
+            if (!raw) return null;
+            try { return JSON.parse(raw); } catch (e) { return null; }
+        }
+
+        function saveState() {
+            if (!userState.username) return;
+            localStorage.setItem(userDataKey(userState.username.toLowerCase()), JSON.stringify(userState));
+        }
+
+        function checkDailyStreak() {
+            const today = new Date().toDateString();
+            if (userState.lastPlayedDate === today) return;
+            const yesterday = new Date(Date.now() - 86400000).toDateString();
+            if (userState.lastPlayedDate === yesterday) {
+                userState.dailyStreak += 1;
+            } else if (userState.lastPlayedDate !== null) {
+                userState.dailyStreak = 1;
+            } else {
+                userState.dailyStreak = 0;
+            }
+            userState.lastPlayedDate = today;
+            saveState();
+        }
+
+        // ---------- Level system ----------
+        function getLevelInfo(xp) {
+            let level = 1, threshold = 100, prevThreshold = 0;
+            while (xp >= threshold) {
+                level += 1;
+                prevThreshold = threshold;
+                threshold = Math.round(threshold * 1.5);
+            }
+            const span = threshold - prevThreshold;
+            const progress = span > 0 ? Math.min(100, Math.round(((xp - prevThreshold) / span) * 100)) : 100;
+            return { level, xpIntoLevel: xp - prevThreshold, xpForNext: span, progress, nextThreshold: threshold };
+        }
+
+        function updateLevelUI() {
+            const info = getLevelInfo(userState.xp);
+            document.getElementById('levelBadgeText').innerText = `Level ${info.level}`;
+            document.getElementById('levelXpText').innerText = `${info.xpIntoLevel} / ${info.xpForNext} XP`;
+            document.getElementById('levelProgressFill').style.width = `${info.progress}%`;
+            return info.level;
+        }
+
+        function checkLevelUp(prevXp, newXp) {
+            const prevLevel = getLevelInfo(Math.max(0, prevXp)).level;
+            const newLevel = getLevelInfo(Math.max(0, newXp)).level;
+            if (newLevel > prevLevel) showLevelUpToast(newLevel);
+        }
+
+        function showLevelUpToast(level) {
+            playSoundEffect('levelup');
+            const toast = document.getElementById('levelUpToast');
+            document.getElementById('levelUpText').innerText = `Level ${level}`;
+            toast.classList.remove('hidden');
+            toast.classList.add('animate-pop');
+            setTimeout(() => { toast.classList.add('hidden'); toast.classList.remove('animate-pop'); }, 1800);
+        }
+
+        const mascotGreetings = [
+            "Ready for tech challenges?",
+            "Let's add those skills!",
+            "You've got this, champ!",
+            "Pick a topic I'll cheer you on!",
+            "Nice streak going!",
+            "Knowledge is power, let's go!"
+        ];
+
+        function mascotPoke() {
+            playSoundEffect('click');
+            const img = document.getElementById('boyCharacterImg');
+            img.classList.remove('mascot-wiggle');
+            void img.offsetWidth;
+            img.classList.add('mascot-wiggle');
+            const greetEl = document.getElementById('mascotGreetingText');
+            if (greetEl) greetEl.innerText = mascotGreetings[Math.floor(Math.random() * mascotGreetings.length)];
+            spawnFloatingReward('✦', 'text-comic-gold text-2xl', img);
+        }
+
+        function updateTopBarDisplays() {
+            document.getElementById('userXpDisplay').innerText = userState.xp;
+            document.getElementById('userCoinsDisplay').innerText = userState.coins;
+            document.getElementById('dailyStreakDisplay').innerText = userState.dailyStreak;
+            updateLevelUI();
+        }
+
+        function hideAllScreens() {
+            document.querySelectorAll('.app-screen').forEach(s => { s.classList.add('hidden'); s.classList.remove('screen-active'); });
+            closeAllModals();
+        }
+
+        function revealScreen(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('hidden');
+            void el.offsetWidth;
+            el.classList.add('screen-active');
+        }
+
+        function closeAllModals() {
+            document.getElementById('modalCategories').classList.add('hidden');
+            document.getElementById('modalStats').classList.add('hidden');
+            document.getElementById('modalProfile').classList.add('hidden');
+            document.getElementById('modalConfirmExit').classList.add('hidden');
+            document.getElementById('modalReview').classList.add('hidden');
+        }
+
+        function showAuthScreen() {
+            hideAllScreens();
+            revealScreen('screenAuth');
+        }
+
+        function showMainMenu() {
+            clearQuestionTimer();
+            hideAllScreens();
+            updateTopBarDisplays();
+            document.getElementById('profileModalName').innerText = userState.username;
+            const lvl = getLevelInfo(userState.xp).level;
+            document.getElementById('profileModalTitle').innerText = `Level ${lvl} · IT Quiz Apprentice`;
+            document.getElementById('mascotGreetingText').innerText = `Welcome, ${userState.username}!`;
+            revealScreen('screenMainMenu');
+        }
+
+        function switchAuthTab(mode) {
+            playSoundEffect('click');
+            authMode = mode;
+            document.getElementById('passwordError').classList.add('hidden');
+            document.getElementById('authError').classList.add('hidden');
+            const loginBtn = document.getElementById('tabLoginBtn');
+            const signupBtn = document.getElementById('tabSignupBtn');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            if (mode === 'login') {
+                loginBtn.className = "flex-1 py-2 rounded-full font-black text-xs sm:text-sm transition-all duration-200 bg-comic-pillBlue text-white comic-border shadow-comic-sm";
+                signupBtn.className = "flex-1 py-2 rounded-full font-black text-xs sm:text-sm transition-all duration-200 text-slate-500 hover:text-comic-pillBlue";
+                submitBtn.innerText = "LOG IN";
+            } else {
+                signupBtn.className = "flex-1 py-2 rounded-full font-black text-xs sm:text-sm transition-all duration-200 bg-comic-pillBlue text-white comic-border shadow-comic-sm";
+                loginBtn.className = "flex-1 py-2 rounded-full font-black text-xs sm:text-sm transition-all duration-200 text-slate-500 hover:text-comic-pillBlue";
+                submitBtn.innerText = "SIGN UP";
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('authPasswordInput');
+            const eyeIcon = document.getElementById('passwordEyeIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text'; eyeIcon.className = "fa-solid fa-eye-slash";
+            } else {
+                passwordInput.type = 'password'; eyeIcon.className = "fa-solid fa-eye";
+            }
+        }
+
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const nameInputRaw = document.getElementById('authNameInput').value.trim();
+            const passInput = document.getElementById('authPasswordInput').value;
+            const passwordError = document.getElementById('passwordError');
+            const authError = document.getElementById('authError');
+
+            passwordError.classList.add('hidden');
+            authError.classList.add('hidden');
+            authError.innerText = '';
+
+            if (!nameInputRaw) return;
+            if (passInput.length < 7) { passwordError.classList.remove('hidden'); return; }
+
+            const usernameLower = nameInputRaw.toLowerCase();
+            const registry = getRegistry();
+
+            if (authMode === 'signup') {
+                if (registry[usernameLower]) {
+                    authError.innerText = `"${nameInputRaw}" is already taken — try logging in instead.`;
+                    authError.classList.remove('hidden');
+                    return;
+                }
+                registry[usernameLower] = { password: passInput, displayName: nameInputRaw };
+                saveRegistry(registry);
+
+                userState = createFreshUserState(nameInputRaw);
+                localStorage.setItem(userDataKey(usernameLower), JSON.stringify(userState));
+            } else {
+                const entry = registry[usernameLower];
+                if (!entry) {
+                    authError.innerText = `No account found for "${nameInputRaw}" — try signing up instead.`;
+                    authError.classList.remove('hidden');
+                    return;
+                }
+                if (entry.password !== passInput) {
+                    authError.innerText = 'Incorrect password. Please try again.';
+                    authError.classList.remove('hidden');
+                    return;
+                }
+                const savedData = loadUserData(usernameLower);
+                userState = savedData || createFreshUserState(entry.displayName || nameInputRaw);
+                userState.isLoggedIn = true;
+            }
+
+            localStorage.setItem(SESSION_KEY, usernameLower);
+            saveState();
+            checkDailyStreak();
+            applyAvatarColor();
+            showMainMenu();
+        }
+
+        // ---------- Avatar ----------
+        function setAvatarColor(colorClass) {
+            userState.avatarColor = colorClass;
+            saveState();
+            applyAvatarColor();
+        }
+        function applyAvatarColor() {
+            const el = document.getElementById('profileAvatarCircle');
+            if (!el) return;
+            el.className = `w-16 h-16 bg-${userState.avatarColor} rounded-full comic-border mx-auto flex items-center justify-center text-slate-900 font-black text-2xl shadow-comic mt-2`;
+        }
+
+        // ---------- Categories ----------
+        function renderCategoriesList() {
+            const container = document.getElementById('categoryListContainer');
+            container.innerHTML = '';
+            Object.keys(QUIZ_BANK).forEach(key => {
+                const cat = QUIZ_BANK[key];
+                const bestData = userState.categoryBest[key];
+                const bestLabel = bestData ? `Best: ${bestData.best}/${QUESTIONS_PER_ROUND}` : 'Not played yet';
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-2.5 bg-slate-50 border-2 border-slate-900 rounded-xl hover:bg-cyan-50 cursor-pointer transition-all shadow-comic-sm active:translate-y-0.5";
+                item.onclick = () => selectCategoryAndStart(key);
+                item.innerHTML = `
+                    <div class="flex items-center space-x-2.5">
+                        <span class="text-xl">${cat.icon}</span>
+                        <div>
+                            <h4 class="font-black text-slate-900 text-xs uppercase">${cat.title}</h4>
+                            <span class="text-[10px] font-bold text-slate-500">${bestLabel}</span>
+                        </div>
+                    </div>
+                    <span class="bg-comic-pillBlue text-white text-[11px] font-black px-2.5 py-1 rounded-full uppercase">Start</span>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function openCategoryModal() { playSoundEffect('click'); document.getElementById('modalCategories').classList.remove('hidden'); }
+        function closeCategoryModal() { document.getElementById('modalCategories').classList.add('hidden'); }
+
+        function showStatsModal() {
+            playSoundEffect('click');
+            document.getElementById('statTotalXp').innerText = userState.xp;
+            document.getElementById('statTotalCoins').innerText = userState.coins;
+            document.getElementById('statQuizzesDone').innerText = userState.quizzesCompleted;
+            const accuracy = userState.totalQuestionsAnswered > 0 ? Math.round((userState.correctAnswers / userState.totalQuestionsAnswered) * 100) : 0;
+            document.getElementById('statAccuracy').innerText = `${accuracy}%`;
+            document.getElementById('statDailyStreak').innerText = `${userState.dailyStreak} days`;
+            document.getElementById('statBestComboEver').innerText = `x${userState.bestComboEver}`;
+
+            const catContainer = document.getElementById('categoryStatsContainer');
+            catContainer.innerHTML = '';
+            Object.keys(QUIZ_BANK).forEach(key => {
+                const cat = QUIZ_BANK[key];
+                const data = userState.categoryBest[key];
+                const row = document.createElement('div');
+                row.className = "flex justify-between items-center p-2 bg-slate-50 border-2 border-slate-900 rounded-lg text-xs";
+                row.innerHTML = `
+                    <span class="font-black text-slate-700">${cat.icon} ${cat.title}</span>
+                    <span class="font-black text-comic-pillBlue">${data ? `${data.best}/${QUESTIONS_PER_ROUND}` : '—'}</span>
+                `;
+                catContainer.appendChild(row);
+            });
+
+            document.getElementById('modalStats').classList.remove('hidden');
+        }
+        function closeStatsModal() { document.getElementById('modalStats').classList.add('hidden'); }
+
+        function showProfileModal() { playSoundEffect('click'); document.getElementById('modalProfile').classList.remove('hidden'); }
+        function closeProfileModal() { document.getElementById('modalProfile').classList.add('hidden'); }
+
+        function handleLogout() {
+            localStorage.removeItem(SESSION_KEY);
+            userState.isLoggedIn = false;
+            closeProfileModal();
+            document.getElementById('authForm').reset();
+            document.getElementById('passwordError').classList.add('hidden');
+            document.getElementById('authError').classList.add('hidden');
+            showAuthScreen();
+        }
+
+        function handleQuizBackNavigation() {
+            document.getElementById('modalConfirmExit').classList.remove('hidden');
+        }
+        function closeConfirmExitModal() { document.getElementById('modalConfirmExit').classList.add('hidden'); }
+        function confirmExitQuizYes() {
+            clearQuestionTimer();
+            closeConfirmExitModal();
+            showMainMenu();
+        }
+
+        function selectCategoryAndStart(categoryKey) {
+            playSoundEffect('click');
+            currentCategoryKey = categoryKey;
+            closeCategoryModal();
+            startQuiz();
+        }
+
+        // ---------- Quiz flow ----------
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function buildRoundQuestions(categoryKey) {
+            const pool = QUIZ_BANK[categoryKey].questions;
+            const shuffled = shuffleArray(pool);
+            let selected = shuffled.slice(0, QUESTIONS_PER_ROUND);
+            // pad by reusing (shuffled again) if the category has fewer than required
+            while (selected.length < QUESTIONS_PER_ROUND) {
+                const extra = shuffleArray(pool);
+                selected = selected.concat(extra.slice(0, QUESTIONS_PER_ROUND - selected.length));
+            }
+            // also shuffle each question's options while tracking the correct answer
+            return selected.map(q => {
+                const optionIndices = shuffleArray(q.options.map((_, i) => i));
+                const newOptions = optionIndices.map(i => q.options[i]);
+                const newAnswer = optionIndices.indexOf(q.answer);
+                return { question: q.question, options: newOptions, answer: newAnswer };
+            });
+        }
+
+        function startQuiz() {
+            hideAllScreens();
+            currentQuizQuestions = buildRoundQuestions(currentCategoryKey);
+            currentQuestionIndex = 0;
+            activeQuizScore = 0;
+            activeQuizXpEarned = 0;
+            activeQuizCoinsEarned = 0;
+            remainingLives = 3;
+            isAnsweringBlocked = false;
+            comboStreak = 0;
+            bestComboThisRound = 1;
+            quizAnswerLog = [];
+            isPaused = false;
+            document.getElementById('pauseOverlay').classList.add('hidden');
+            document.getElementById('pauseIcon').className = 'fa-solid fa-pause';
+
+            document.getElementById('quizLiveXp').innerText = userState.xp;
+            document.getElementById('quizLiveCoins').innerText = userState.coins;
+
+            renderQuestion();
+            revealScreen('screenQuiz');
+        }
+
+        function updateQuizProgressBar() {
+            const pct = Math.round((currentQuestionIndex / currentQuizQuestions.length) * 100);
+            document.getElementById('quizProgressFill').style.width = `${pct}%`;
+        }
+
+        function renderQuestion() {
+            isAnsweringBlocked = false;
+            resetFeedbackBanner();
+            updateHeartsUI();
+            updateQuizProgressBar();
+            updateComboBadge();
+
+            const questionObj = currentQuizQuestions[currentQuestionIndex];
+            document.getElementById('questionProgressText').innerText = `QUESTION ${currentQuestionIndex + 1} OF ${currentQuizQuestions.length}`;
+            document.getElementById('questionText').innerText = questionObj.question;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            const prefixes = ['A', 'B', 'C', 'D'];
+
+            questionObj.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = `optionBtn_${idx}`;
+                btn.onclick = () => selectOption(idx);
+                btn.className = "opt-btn w-full bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-sm py-2.5 px-3.5 rounded-full comic-border shadow-comic transition-all flex items-center justify-between group active:translate-y-0.5";
+                btn.innerHTML = `
+                    <div class="flex items-center space-x-2.5 text-left">
+                        <span class="text-comic-pillBlue font-black">${prefixes[idx]}.</span>
+                        <span>${optText}</span>
+                    </div>
+                    <div id="optionStatusIcon_${idx}" class="w-5 h-5 rounded-full border-2 border-slate-300 flex items-center justify-center text-[10px] opacity-0"></div>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            startQuestionTimer();
+        }
+
+        function updateComboBadge() {
+            const badge = document.getElementById('comboBadge');
+            if (comboStreak >= 2) {
+                badge.classList.remove('hidden');
+                badge.innerText = `🔥 x${comboStreak}`;
+                badge.classList.remove('combo-pop');
+                void badge.offsetWidth;
+                badge.classList.add('combo-pop');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function updateHeartsUI() {
+            const container = document.getElementById('heartsContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                if (i < remainingLives) {
+                    container.innerHTML += `<i class="fa-solid fa-heart drop-shadow"></i>`;
+                } else {
+                    container.innerHTML += `<i class="fa-regular fa-heart opacity-30 heart-lost"></i>`;
+                }
+            }
+        }
+
+        function resetFeedbackBanner() {
+            const banner = document.getElementById('feedbackBanner');
+            document.getElementById('correctFeedback').classList.add('hidden');
+            document.getElementById('incorrectFeedback').classList.add('hidden');
+            banner.className = "mt-3 transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none";
+        }
+
+        // ---------- Timer ----------
+        function startQuestionTimer() {
+            clearQuestionTimer();
+            timeLeft = QUESTION_TIME_LIMIT;
+            const timerEl = document.getElementById('timerText');
+            timerEl.innerText = timeLeft;
+            timerEl.classList.remove('timer-warn');
+            questionTimer = setInterval(() => {
+                if (isPaused) return;
+                timeLeft -= 1;
+                timerEl.innerText = timeLeft;
+                if (timeLeft <= 5) { timerEl.classList.add('timer-warn'); playSoundEffect('tick'); }
+                if (timeLeft <= 0) {
+                    clearQuestionTimer();
+                    handleTimeUp();
+                }
+            }, 1000);
+        }
+
+        function clearQuestionTimer() {
+            if (questionTimer) { clearInterval(questionTimer); questionTimer = null; }
+        }
+
+        function handleTimeUp() {
+            if (isAnsweringBlocked) return;
+            isAnsweringBlocked = true;
+            const questionObj = currentQuizQuestions[currentQuestionIndex];
+            playSoundEffect('incorrect');
+            const correctBtn = document.getElementById(`optionBtn_${questionObj.answer}`);
+            if (correctBtn) correctBtn.classList.add('border-comic-greenBorder', 'bg-emerald-50');
+
+            comboStreak = 0;
+            remainingLives = Math.max(0, remainingLives - 1);
+            userState.totalQuestionsAnswered += 1;
+            const prevXp = userState.xp;
+            userState.xp = Math.max(0, userState.xp - 5);
+            checkLevelUp(prevXp, userState.xp);
+            saveState();
+
+            document.getElementById('incorrectLabel').innerText = "TIME'S UP!";
+            document.getElementById('quizLiveXp').innerText = userState.xp;
+            showFeedbackBanner(false);
+
+            quizAnswerLog.push({ question: questionObj.question, options: questionObj.options, correct: questionObj.answer, chosen: -1, wasSkipped: false, wasTimeout: true });
+
+            setTimeout(() => advanceQuestion(), 1600);
+        }
+
+        function handleSkipQuestion() {
+            if (isAnsweringBlocked) return;
+            isAnsweringBlocked = true;
+            clearQuestionTimer();
+            playSoundEffect('click');
+            const questionObj = currentQuizQuestions[currentQuestionIndex];
+            comboStreak = 0;
+            const prevXp = userState.xp;
+            userState.xp = Math.max(0, userState.xp - 5);
+            checkLevelUp(prevXp, userState.xp);
+            userState.totalQuestionsAnswered += 1;
+            saveState();
+            document.getElementById('quizLiveXp').innerText = userState.xp;
+
+            quizAnswerLog.push({ question: questionObj.question, options: questionObj.options, correct: questionObj.answer, chosen: -1, wasSkipped: true, wasTimeout: false });
+
+            setTimeout(() => advanceQuestion(), 250);
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const overlay = document.getElementById('pauseOverlay');
+            const icon = document.getElementById('pauseIcon');
+            if (isPaused) {
+                overlay.classList.remove('hidden');
+                icon.className = 'fa-solid fa-play';
+            } else {
+                overlay.classList.add('hidden');
+                icon.className = 'fa-solid fa-pause';
+            }
+        }
+
+        // ---------- Floating rewards ----------
+        function spawnFloatingReward(text, colorClass, anchorEl) {
+            const rect = anchorEl.getBoundingClientRect();
+            const shellRect = document.getElementById('appShell').getBoundingClientRect();
+            const el = document.createElement('div');
+            el.className = `float-reward ${colorClass}`;
+            el.innerText = text;
+            el.style.left = `${rect.left - shellRect.left + rect.width / 2 - 20}px`;
+            el.style.top = `${rect.top - shellRect.top}px`;
+            document.getElementById('appShell').appendChild(el);
+            setTimeout(() => el.remove(), 1150);
+        }
+
+        function selectOption(selectedIndex) {
+            if (isAnsweringBlocked) return;
+            isAnsweringBlocked = true;
+            clearQuestionTimer();
+
+            const questionObj = currentQuizQuestions[currentQuestionIndex];
+            const isCorrect = (selectedIndex === questionObj.answer);
+            const selectedBtn = document.getElementById(`optionBtn_${selectedIndex}`);
+            const selectedStatusIcon = document.getElementById(`optionStatusIcon_${selectedIndex}`);
+
+            userState.totalQuestionsAnswered += 1;
+            quizAnswerLog.push({ question: questionObj.question, options: questionObj.options, correct: questionObj.answer, chosen: selectedIndex, wasSkipped: false, wasTimeout: false });
+
+            const prevXp = userState.xp;
+
+            if (isCorrect) {
+                playSoundEffect('correct');
+                triggerConfetti();
+
+                comboStreak += 1;
+                bestComboThisRound = Math.max(bestComboThisRound, comboStreak);
+                if (comboStreak > userState.bestComboEver) userState.bestComboEver = comboStreak;
+
+                const comboMultiplier = 1 + Math.min(comboStreak - 1, 4) * 0.25; // up to 2x at combo 5+
+                const xpGain = Math.round(20 * comboMultiplier);
+                const coinGain = Math.round(5 * comboMultiplier);
+
+                selectedBtn.className = "opt-btn w-full bg-comic-greenLight border-4 border-comic-greenBorder text-slate-900 font-extrabold text-sm py-2.5 px-3.5 rounded-full shadow-comic-green transition-all flex items-center justify-between";
+                selectedStatusIcon.className = "w-5 h-5 rounded-full bg-comic-green text-white flex items-center justify-center text-[10px] opacity-100 font-black";
+                selectedStatusIcon.innerText = "✓";
+
+                activeQuizScore += 1;
+                activeQuizXpEarned += xpGain;
+                activeQuizCoinsEarned += coinGain;
+                userState.xp += xpGain;
+                userState.coins += coinGain;
+                userState.correctAnswers += 1;
+
+                document.getElementById('correctXpText').innerText = `+${xpGain} ⚡`;
+                document.getElementById('correctCoinText').innerText = `+${coinGain} 🪙`;
+
+                spawnFloatingReward(`+${xpGain} XP`, 'text-comic-gold text-lg', selectedBtn);
+                showFeedbackBanner(true);
+                updateComboBadge();
+            } else {
+                playSoundEffect('incorrect');
+                comboStreak = 0;
+                updateComboBadge();
+
+                selectedBtn.className = "opt-btn w-full bg-comic-redLight border-4 border-comic-redBorder text-slate-900 font-extrabold text-sm py-2.5 px-3.5 rounded-full shadow-comic-red transition-all flex items-center justify-between";
+                selectedStatusIcon.className = "w-5 h-5 rounded-full bg-comic-red text-white flex items-center justify-center text-[10px] opacity-100 font-black";
+                selectedStatusIcon.innerText = "✕";
+
+                const correctBtn = document.getElementById(`optionBtn_${questionObj.answer}`);
+                if (correctBtn) correctBtn.classList.add('border-comic-greenBorder', 'bg-emerald-50');
+
+                remainingLives = Math.max(0, remainingLives - 1);
+                userState.xp = Math.max(0, userState.xp - 10);
+                userState.coins = Math.max(0, userState.coins - 5);
+                document.getElementById('incorrectLabel').innerText = "INCORRECT!";
+
+                showFeedbackBanner(false);
+                updateHeartsUI();
+            }
+
+            checkLevelUp(prevXp, userState.xp);
+            document.getElementById('quizLiveXp').innerText = userState.xp;
+            document.getElementById('quizLiveCoins').innerText = userState.coins;
+            saveState();
+
+            setTimeout(() => advanceQuestion(), 1600);
+        }
+
+        function advanceQuestion() {
+            if (remainingLives <= 0 || currentQuestionIndex >= currentQuizQuestions.length - 1) {
+                finishQuiz();
+            } else {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function showFeedbackBanner(isCorrect) {
+            const banner = document.getElementById('feedbackBanner');
+            banner.className = "mt-3 transition-all duration-300 opacity-100 transform translate-y-0";
+            if (isCorrect) document.getElementById('correctFeedback').classList.remove('hidden');
+            else document.getElementById('incorrectFeedback').classList.remove('hidden');
+        }
+
+        function finishQuiz() {
+            clearQuestionTimer();
+            hideAllScreens();
+            userState.quizzesCompleted += 1;
+
+            const prevBest = userState.categoryBest[currentCategoryKey];
+            const isNewBest = !prevBest || activeQuizScore > prevBest.best;
+            userState.categoryBest[currentCategoryKey] = {
+                best: isNewBest ? activeQuizScore : prevBest.best,
+                total: currentQuizQuestions.length,
+                attempts: (prevBest ? prevBest.attempts : 0) + 1
+            };
+            saveState();
+
+            document.getElementById('resultsScoreText').innerText = `${activeQuizScore} / ${currentQuizQuestions.length}`;
+            document.getElementById('resultsXpEarned').innerText = `+${activeQuizXpEarned}`;
+            document.getElementById('resultsCoinsEarned').innerText = `+${activeQuizCoinsEarned}`;
+            document.getElementById('resultsBestCombo').innerText = `x${bestComboThisRound}`;
+            document.getElementById('resultsBestScoreNote').innerText = isNewBest ? '🎉 New Best!' : `${userState.categoryBest[currentCategoryKey].best}/${QUESTIONS_PER_ROUND}`;
+
+            const scorePercent = (activeQuizScore / currentQuizQuestions.length);
+            const titleEl = document.getElementById('resultsTitle');
+            const emojiEl = document.getElementById('resultsScoreEmoji');
+
+            if (scorePercent === 1) {
+                titleEl.innerText = "PERFECT! 🌟";
+                emojiEl.innerText = "💎";
+                playSoundEffect('complete');
+                triggerConfetti(true);
+            } else if (scorePercent >= 0.8) {
+                titleEl.innerText = "VICTORY! 🎉";
+                emojiEl.innerText = "🏆";
+                playSoundEffect('complete');
+                triggerConfetti();
+            } else if (scorePercent >= 0.5) {
+                titleEl.innerText = "GOOD JOB! ⚡";
+                emojiEl.innerText = "⭐";
+                playSoundEffect('complete');
+            } else {
+                titleEl.innerText = "KEEP TRYING! 💪";
+                emojiEl.innerText = "🎯";
+            }
+
+            revealScreen('screenResults');
+        }
+
+        function replayQuiz() {
+            playSoundEffect('click');
+            startQuiz();
+        }
+
+        // ---------- Review Modal ----------
+        function openReviewModal() {
+            playSoundEffect('click');
+            const container = document.getElementById('reviewListContainer');
+            container.innerHTML = '';
+            const prefixes = ['A', 'B', 'C', 'D'];
+
+            quizAnswerLog.forEach((entry, i) => {
+                const wasCorrect = entry.chosen === entry.correct;
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-xl border-2 ${wasCorrect ? 'border-comic-greenBorder bg-comic-greenLight' : 'border-comic-redBorder bg-comic-redLight'}`;
+
+                let statusLabel = wasCorrect ? '✓ Correct' : (entry.wasSkipped ? '⏭ Skipped' : (entry.wasTimeout ? '⏱ Time Up' : '✕ Wrong'));
+                let chosenLine = (entry.chosen >= 0) ? `Your answer: ${prefixes[entry.chosen]}. ${entry.options[entry.chosen]}` : `Your answer: —`;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="font-black text-[10px] text-slate-500 uppercase">Q${i + 1}</span>
+                        <span class="font-black text-[10px] uppercase ${wasCorrect ? 'text-comic-greenBorder' : 'text-comic-redBorder'}">${statusLabel}</span>
+                    </div>
+                    <p class="font-black text-xs text-slate-900 mb-1.5">${entry.question}</p>
+                    <p class="text-[11px] font-bold text-slate-700">${chosenLine}</p>
+                    ${!wasCorrect ? `<p class="text-[11px] font-bold text-emerald-700">Correct: ${prefixes[entry.correct]}. ${entry.options[entry.correct]}</p>` : ''}
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById('modalReview').classList.remove('hidden');
+        }
+        function closeReviewModal() { document.getElementById('modalReview').classList.add('hidden'); }
+
+        // ---------- Confetti ----------
+        function triggerConfetti(big) {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#ffc107', '#38bdf8', '#22c55e', '#ef4444', '#a855f7'];
+            const count = big ? 60 : 35;
+
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: canvas.width / 2, y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * (big ? 14 : 10),
+                    vy: (Math.random() - 0.7) * (big ? 15 : 12),
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 8 + 4, gravity: 0.25, alpha: 1
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.vy += p.gravity; p.alpha -= 0.02;
+                    if (p.alpha > 0) {
+                        alive = true;
+                        ctx.globalAlpha = p.alpha;
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+                if (alive) requestAnimationFrame(draw);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            draw();
+        }
+    </script>
+</body>
+</html>
