@@ -34,14 +34,33 @@
     </script>
     <style>
         body {
-            font-family: 'Fredoka', 'Sniglet', cursive, sans-serif;
+            font-family: 'Baloo 2', 'Fredoka', 'Sniglet', cursive, sans-serif;
             background-color: #081638;
             background-image: radial-gradient(circle at 50% 20%, #204db5 0%, #0c2152 70%, #050d24 100%);
             color: #1e293b; user-select: none; -webkit-user-select: none;
             min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; overflow-x: hidden;
         }
+        /* Bold comic-book display font for titles and headers */
+        .font-bangers { font-family: 'Bangers', cursive; letter-spacing: 0.03em; }
+        .comic-title-text {
+            font-family: 'Bangers', cursive;
+            -webkit-text-stroke: 1.5px #091533;
+            paint-order: stroke fill;
+            letter-spacing: 0.04em;
+        }
+        /* Subtle halftone-dot texture for extra comic-panel feel */
+        .halftone-bg { background-image: radial-gradient(rgba(255,255,255,0.06) 1.4px, transparent 1.4px); background-size: 14px 14px; }
         .comic-border { border: 3.5px solid #091533; }
         .comic-border-thick { border: 5px solid #091533; }
+
+        /* Puffy cartoon clouds drifting around the frame corners */
+        @keyframes cloudDrift { 0%, 100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(6px) translateY(-4px); } }
+        .cloud-deco { position: absolute; pointer-events: none; z-index: 1; filter: drop-shadow(0 4px 0 rgba(9,21,51,0.25)); animation: cloudDrift 7s ease-in-out infinite; opacity: 0.95; }
+        .cloud-1 { top: -16px; left: -22px; width: 108px; }
+        .cloud-2 { top: -12px; right: -24px; width: 118px; animation-delay: 1.2s; transform: scaleX(-1); }
+        .cloud-3 { bottom: -16px; left: -18px; width: 96px; animation-delay: 2.4s; }
+        .cloud-4 { bottom: -14px; right: -20px; width: 106px; animation-delay: 3.6s; transform: scaleX(-1); }
+        .cloud-fallback { background: rgba(255,255,255,0.95); border-radius: 50px; box-shadow: 0 4px 0 rgba(9,21,51,0.2); height: 62px; }
 
         .sparkle { position: absolute; pointer-events: none; z-index: 2; animation: floatSparkle 3s ease-in-out infinite alternate; }
         @keyframes floatSparkle { 0% { transform: translateY(0) rotate(0deg) scale(1); } 100% { transform: translateY(-8px) rotate(12deg) scale(1.1); } }
@@ -83,8 +102,7 @@
         .shine-sweep:hover::after { left: 130%; }
 
         /* Soft floating stars scattered across the shell */
-        @keyframes twinkle { 0%, 100% { opacity: 0.25; transform: scale(0.85); } 50% { opacity: 0.9; transform: scale(1.15); } }
-        .twinkle { animation: twinkle 2.4s ease-in-out infinite; }
+        
 
         /* Animated gradient border ring used on the XP progress bar track */
         @keyframes gradientSlide { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
@@ -124,9 +142,58 @@
             #appShell { max-width: 460px; height: 88vh; }
             .desktop-hint { display: flex !important; }
         }
+
+        /* Dynamic decorative stars */
+.dynamic-star {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    font-weight: 900;
+    line-height: 1;
+    will-change: transform, opacity;
+    animation:
+        starFloat var(--float-duration) ease-in-out infinite,
+        starTwinkle var(--twinkle-duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: var(--opacity);
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+}
+
+.star {
+  position: absolute;
+  top: 70%;
+}
+
+
+@keyframes starFloat {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform:
+            translate(var(--float-x), var(--float-y))
+            rotate(var(--rotation))
+            scale(var(--scale));
+    }
+}
+
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: var(--opacity);
+    }
+
+    50% {
+        opacity: 0.25;
+    }
+}
+
     </style>
 </head>
 <body class="p-2 sm:p-4">
+
+    <audio id="bgmAudio" src="BGM.mp3" loop preload="auto"></audio>
+
 
     <canvas id="confettiCanvas"></canvas>
 
@@ -145,26 +212,49 @@
 
     <div id="appShell" class="relative z-10 w-full max-w-[440px] h-[92vh] max-h-[840px] bg-gradient-to-b from-comic-bgMid via-comic-bgDark to-comic-bgDark rounded-[36px] comic-border-thick shadow-[0_12px_30px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden text-slate-800">
 
-        <!-- (decorative clouds removed for a cleaner, more immersive look) -->
+        <!-- Puffy cartoon clouds -->
+        <img src="clouds.png" alt="" class="cloud-deco" style="top:4%; width:92px; opacity:0.9; animation: cloudFloatRight 26s linear infinite;" ...>
+        <img src="clouds.png" alt="" class="cloud-deco" style="top:0.1%; width:800px; opacity:0.6; animation: cloudFloatLeft 42s linear infinite; animation-delay:-12s;">
+        <img src="clouds.png" alt="" class="cloud-deco" style="top:26%; width:110px; opacity:0.6; animation: cloudFloatRight 10s linear infinite; animation-delay:-14s;" ...>
+        <img src="clouds.png" alt="" class="cloud-deco" style="top:58%; width:84px; opacity:0.8; animation: cloudFloatLeft 50s linear infinite; animation-delay:-3s;" ...>
+        <img src="clouds.png" alt="" class="cloud-deco" style="top:72%; width:1000px; opacity:0.55; animation: cloudFloatRight 46s linear infinite; animation-delay:-20s;" ...>
+        <img src="clouds.png" alt="" class="cloud-deco" style="top:88%; width:76px; opacity:0.85; animation: cloudFloatLeft 24s linear infinite; animation-delay:-10s;" ...>
+
+<div class="sparkle twinkle top-8 left-1/2 text-white/70 text-sm font-black" style="animation-delay:0.9s;">✧</div>
+<div class="sparkle twinkle top-1/4 left-6 text-comic-gold text-xl font-black" style="animation-delay:2.2s;">★</div>
+<div class="sparkle twinkle top-1/4 right-1/3 text-cyan-300 text-base font-black" style="animation-delay:1.3s;">✦</div>
+<div class="sparkle twinkle bottom-1/4 left-1/2 text-white/80 text-lg font-black" style="animation-delay:0.7s;">✧</div>
+<div class="sparkle twinkle bottom-24 right-1/3 text-comic-gold text-sm font-black" style="animation-delay:1.8s;">★</div>
+<div class="sparkle twinkle top-20 right-1/2 text-cyan-200 text-xl font-black" style="animation-delay:2.5s;">✦</div>
+<div class="sparkle twinkle bottom-1/2 left-10 text-comic-gold text-base font-black" style="animation-delay:0.4s;">✧</div>
+
+        <!-- Halftone comic-book texture overlay -->
+        <div class="absolute inset-0 halftone-bg pointer-events-none z-[1]"></div>
 
         <div class="sparkle twinkle top-10 left-5 text-white/80 text-xl font-black">?</div>
         <div class="sparkle twinkle top-24 right-6 text-comic-gold text-2xl font-black" style="animation-delay:0.8s;">✦</div>
         <div class="sparkle twinkle bottom-28 left-6 text-cyan-300 text-xl font-black" style="animation-delay:1.5s;">★</div>
         <div class="sparkle twinkle bottom-14 right-8 text-white/80 text-2xl font-black" style="animation-delay:2.1s;">?</div>
+        <div class="sparkle twinkle top-40 left-1/2 text-comic-gold text-lg font-black" style="animation-delay:1.1s;">✧</div>
+        <div class="sparkle twinkle bottom-40 right-1/3 text-cyan-200 text-lg font-black" style="animation-delay:2.8s;">★</div>
+
+        <div id="dynamicStars" class="absolute inset-0 pointer-events-none z-[2] overflow-hidden"></div>
+
 
         <!-- ============ SCREEN 1: AUTH ============ -->
         <div id="screenAuth" class="app-screen w-full h-full flex flex-col items-center justify-between p-5 z-10 overflow-y-auto">
             <div class="w-full flex flex-col items-center mt-2">
                 <div class="relative w-32 h-32 mb-2 flex items-center justify-center">
                     <span class="absolute -top-1 -left-2 text-white text-2xl font-black animate-pulse">✦</span>
-                    <span class="absolute -top-2 -right-2 text-comic-gold text-3xl font-black animate-bounce">✦</span>
+                    <span class="absolute -top-2 -right-2 text-comic-gold text-3xl font-black animate-pulse">✦</span>
                     <img src="logo.png" id="mainLogoImg" alt="Quizoria Logo" class="w-full h-full object-contain filter drop-shadow-[0_6px_0_#091533]"
                         onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'w-28 h-28 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-full comic-border shadow-comic flex items-center justify-center text-5xl\'>🧠</div>';">
                 </div>
                 <div class="w-full max-w-[280px] flex items-center justify-center mb-1">
                     <div class="text-center">
-                        <h1 class="text-3xl font-black text-white italic drop-shadow-[0_4px_0_#091533] uppercase tracking-wide">QUIZORIA</h1>
-                        <h2 class="text-2xl font-black text-cyan-300 drop-shadow-[0_3px_0_#091533] -mt-2 uppercase tracking-widest">NEXUS</h2>
+                        <h1 class="comic-title-text text-8xl text-white drop-shadow-[0_12px_0_#091533] uppercase">QUIZORIA</h1> 
+<h2 class="comic-title-text text-6xl text-comic-gold drop-shadow-[0_8px_0_#091533] -mt-5 uppercase">NEXUS</h2>
+
                     </div>
                 </div>
             </div>
@@ -205,7 +295,7 @@
             <div class="glass-header w-full p-3 border-b-4 border-slate-900 flex items-center justify-between shadow-md">
                 <div class="flex items-center space-x-1.5">
                     <span class="text-comic-gold text-xl">👑</span>
-                    <span class="font-black text-base text-white tracking-wide italic">QUIZORIA <span class="text-cyan-300">NEXUS</span></span>
+                    <span class="font-bangers text-lg text-white">QUIZORIA <span class="text-cyan-300">NEXUS</span></span>
                 </div>
                 <div class="flex items-center space-x-2">
                     <button type="button" id="soundToggleBtn" onclick="toggleAudioMute()" class="w-9 h-9 bg-slate-800 hover:bg-slate-700 rounded-xl comic-border flex items-center justify-center text-comic-gold transition-transform active:scale-95">
@@ -252,7 +342,7 @@
                             <div class="flex items-center space-x-3">
                                 <div class="w-11 h-11 bg-cyan-100 rounded-xl border-2 border-slate-900 flex items-center justify-center text-comic-pillBlue text-2xl group-hover:rotate-6 transition-transform">📖</div>
                                 <div>
-                                    <h2 class="font-black text-base sm:text-lg text-slate-900 tracking-wide uppercase">CATEGORIES</h2>
+                                    <h2 class="font-bangers text-lg sm:text-xl text-slate-900 uppercase">CATEGORIES</h2>
                                     <p class="text-xs font-bold text-slate-500">Test your knowledge across IT topics.</p>
                                 </div>
                             </div>
@@ -265,7 +355,7 @@
                             <div class="flex items-center space-x-3">
                                 <div class="w-11 h-11 bg-indigo-900/60 rounded-xl border-2 border-slate-900 flex items-center justify-center text-cyan-300 text-2xl group-hover:rotate-6 transition-transform">📊</div>
                                 <div>
-                                    <h2 class="font-black text-base sm:text-lg tracking-wide uppercase">STATS</h2>
+                                    <h2 class="font-bangers text-lg sm:text-xl uppercase">STATS</h2>
                                     <p class="text-xs font-bold text-indigo-100">Track your progress.</p>
                                 </div>
                             </div>
@@ -287,11 +377,50 @@
                     </div>
 
                     <!-- Boy mascot: large, anchored bottom-right -->
-                    <div class="absolute -bottom-3 -right-4 h-full w-[78%] flex items-end justify-end mascot-bob">
-                        <img src="boy.png" id="boyCharacterImg" alt="Waving Boy Mascot" class="max-h-[19rem] object-contain filter drop-shadow-[0_10px_0_rgba(9,21,51,0.5)] hover:scale-105 hover:rotate-1 transition-transform duration-300 cursor-pointer"
-                            onclick="mascotPoke()"
-                            onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'w-48 h-64 bg-gradient-to-t from-cyan-400 to-blue-600 rounded-t-full comic-border flex items-center justify-center text-8xl shadow-comic\'>🧑‍💻</div>';">
-                    </div>
+                    <!-- Boy mascot -->
+<div class="absolute -bottom-3 -right-4 h-full w-[78%] flex items-end justify-end mascot-bob">
+
+    <!-- Hello text above boy's head -->
+    <div class="absolute top-0.5 right-0 z-30 w-[260px] h-[120px]"> 
+    <svg viewBox="0 0 300 150" class="w-full h-full overflow-visible"> 
+        <!-- Shifted Y values up slightly more (120->110, 0->-10, 65->55) -->
+        <path 
+            id="textCurve" 
+            d="M 90,110 Q 150,-10 320,55" 
+            fill="transparent" 
+        /> 
+ 
+        <text 
+            class="font-bangers font-black fill-white" 
+            font-size="52" 
+            style=" 
+                letter-spacing: 4px; 
+                paint-order: stroke; 
+                stroke: #091533; 
+                stroke-width: 5px; 
+            " 
+        > 
+            <textPath 
+                href="#textCurve" 
+                startOffset="50%" 
+                text-anchor="middle" 
+            > 
+                HELLO! 
+            </textPath> 
+        </text> 
+    </svg> 
+</div>
+
+
+
+        <img src="boy.png"
+         id="boyCharacterImg"
+         alt="Waving Boy Mascot"
+         class="max-h-[19rem] object-contain filter drop-shadow-[0_10px_0_rgba(9,21,51,0.5)] hover:scale-105 hover:rotate-1 transition-transform duration-300 cursor-pointer"
+         onclick="mascotPoke()"
+         onerror="this.onerror=null; this.parentNode.innerHTML='<div class=\'w-48 h-64 bg-gradient-to-t from-cyan-400 to-blue-600 rounded-t-full comic-border flex items-center justify-center text-8xl shadow-comic\'>🧑‍💻</div>';">
+</div>
+
                 </div>
             </div>
         </div>
@@ -303,7 +432,7 @@
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
                 <div class="text-center flex items-center space-x-2">
-                    <h2 class="font-black text-xl text-white tracking-widest italic uppercase">QUIZ</h2>
+                    <h2 class="font-bangers text-2xl text-white uppercase">QUIZ</h2>
                     <button type="button" onclick="togglePause()" title="Pause" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 active:scale-90 text-comic-gold rounded-lg comic-border flex items-center justify-center text-sm transition-transform">
                         <i id="pauseIcon" class="fa-solid fa-pause"></i>
                     </button>
@@ -357,9 +486,9 @@
 
                 <div id="feedbackBanner" class="mt-3 transition-all duration-300 opacity-0 transform translate-y-4 pointer-events-none">
                     <div id="correctFeedback" class="hidden bg-comic-greenLight border-4 border-comic-greenBorder rounded-2xl p-3 shadow-comic-green text-center animate-pop">
-                        <div class="flex items-center justify-center space-x-2 text-comic-greenBorder font-black text-xl sm:text-2xl uppercase tracking-wider">
-                            <span class="w-8 h-8 bg-comic-green text-white rounded-full flex items-center justify-center text-base comic-border">✓</span>
-                            <span>CORRECT!</span>
+                        <div class="flex items-center justify-center space-x-2 text-comic-greenBorder font-bangers text-2xl sm:text-3xl uppercase">
+                            <span class="w-8 h-8 bg-comic-green text-white rounded-full flex items-center justify-center text-base comic-border font-black">✓</span>
+                            <span class="comic-title-text">CORRECT!</span>
                         </div>
                         <div class="flex items-center justify-center space-x-4 mt-1 font-black text-sm text-slate-800">
                             <span id="correctXpText" class="text-amber-700">+20 ⚡</span>
@@ -368,9 +497,9 @@
                         </div>
                     </div>
                     <div id="incorrectFeedback" class="hidden bg-comic-redLight border-4 border-comic-redBorder rounded-2xl p-3 shadow-comic-red text-center animate-shake">
-                        <div class="flex items-center justify-center space-x-2 text-comic-redBorder font-black text-xl sm:text-2xl uppercase tracking-wider">
-                            <span class="w-8 h-8 bg-comic-red text-white rounded-full flex items-center justify-center text-base comic-border">✕</span>
-                            <span id="incorrectLabel">INCORRECT!</span>
+                        <div class="flex items-center justify-center space-x-2 text-comic-redBorder font-bangers text-2xl sm:text-3xl uppercase">
+                            <span class="w-8 h-8 bg-comic-red text-white rounded-full flex items-center justify-center text-base comic-border font-black">✕</span>
+                            <span id="incorrectLabel" class="comic-title-text">INCORRECT!</span>
                         </div>
                         <div class="flex items-center justify-center space-x-4 mt-1 font-black text-sm text-slate-800">
                             <span class="text-rose-800">-10 ⚡</span><span class="text-slate-400">|</span><span class="text-rose-800">-5 🪙</span>
@@ -382,7 +511,7 @@
             <!-- Pause overlay -->
             <div id="pauseOverlay" class="hidden absolute inset-0 bg-comic-bgDark/95 z-30 flex flex-col items-center justify-center space-y-4 text-center p-6">
                 <div class="text-5xl">⏸️</div>
-                <h3 class="text-white font-black text-2xl uppercase tracking-widest">Paused</h3>
+                <h3 class="comic-title-text text-white text-3xl uppercase">Paused</h3>
                 <button type="button" onclick="togglePause()" class="bg-comic-green text-white font-black px-8 py-3 rounded-full comic-border shadow-comic-green uppercase tracking-wider text-sm hover:translate-y-0.5 active:translate-y-1 transition-all">▶ Resume</button>
                 <button type="button" onclick="handleQuizBackNavigation()" class="text-cyan-200 font-bold text-xs uppercase tracking-wider underline">Exit to menu</button>
             </div>
@@ -391,8 +520,8 @@
         <!-- ============ SCREEN 4: RESULTS ============ -->
         <div id="screenResults" class="app-screen w-full h-full flex flex-col items-center justify-between p-5 hidden z-10 overflow-y-auto">
             <div class="text-center mt-2">
-                <div class="inline-block bg-comic-gold text-slate-900 font-black text-xs px-4 py-1 rounded-full border-2 border-slate-900 uppercase tracking-widest shadow-comic-sm mb-2">QUIZ COMPLETED!</div>
-                <h1 id="resultsTitle" class="text-3xl font-black text-white italic drop-shadow-[0_4px_0_#091533]">VICTORY! 🎉</h1>
+                <div class="inline-block bg-comic-gold text-slate-900 font-bangers text-sm px-4 py-1 rounded-full border-2 border-slate-900 uppercase tracking-wider shadow-comic-sm mb-2">QUIZ COMPLETED!</div>
+                <h1 id="resultsTitle" class="comic-title-text text-4xl text-white">VICTORY! 🎉</h1>
             </div>
 
             <div class="w-full bg-white text-slate-900 rounded-[28px] p-5 comic-border shadow-comic-lg my-auto space-y-3.5 text-center">
@@ -442,7 +571,7 @@
                 <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2">
                     <div class="flex items-center space-x-2">
                         <button type="button" onclick="closeCategoryModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-lg border-2 border-slate-900 flex items-center justify-center text-sm font-black transition-colors"><i class="fa-solid fa-arrow-left"></i></button>
-                        <h3 class="font-black text-lg text-slate-900 tracking-wide uppercase">SELECT TOPIC</h3>
+                        <h3 class="font-bangers text-xl text-slate-900 uppercase">SELECT TOPIC</h3>
                     </div>
                     <button type="button" onclick="closeCategoryModal()" class="text-slate-400 hover:text-slate-700 font-black text-xl p-1">✕</button>
                 </div>
@@ -456,7 +585,7 @@
                 <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2">
                     <div class="flex items-center space-x-2">
                         <button type="button" onclick="closeStatsModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 text-slate-900 rounded-lg border-2 border-slate-900 flex items-center justify-center text-sm font-black transition-colors"><i class="fa-solid fa-arrow-left"></i></button>
-                        <h3 class="font-black text-lg text-slate-900 tracking-wide uppercase">PROGRESS STATS</h3>
+                        <h3 class="font-bangers text-xl text-slate-900 uppercase">PROGRESS STATS</h3>
                     </div>
                     <button type="button" onclick="closeStatsModal()" class="text-slate-400 hover:text-slate-700 font-black text-xl p-1">✕</button>
                 </div>
@@ -498,7 +627,7 @@
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <div>
-                    <h3 id="profileModalName" class="font-black text-xl text-slate-900">Hero</h3>
+                    <h3 id="profileModalName" class="font-bangers text-2xl text-slate-900">Hero</h3>
                     <p id="profileModalTitle" class="text-xs font-bold text-slate-500">Level 1 · IT Quiz Apprentice</p>
                 </div>
 
@@ -518,9 +647,9 @@
         </div>
 
         <div id="modalConfirmExit" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl text-center space-y-3.5 animate-pop">
+            <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl text-center space-y-3.5 animate-pop rotate-1">
                 <div class="text-3xl">⚠️</div>
-                <h3 class="font-black text-lg text-slate-900">Exit Active Quiz?</h3>
+                <h3 class="font-bangers text-xl text-slate-900">Exit Active Quiz?</h3>
                 <p class="text-xs font-bold text-slate-600">Your current progress will be lost and returned to the main menu.</p>
                 <div class="flex space-x-2 pt-1">
                     <button type="button" onclick="confirmExitQuizYes()" class="flex-1 bg-comic-red text-white font-black py-2 rounded-full comic-border shadow-comic uppercase tracking-wider text-xs">Yes, Exit</button>
@@ -533,7 +662,7 @@
         <div id="modalReview" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
             <div class="w-full max-w-xs bg-white text-slate-900 rounded-[28px] p-5 comic-border-thick shadow-2xl space-y-3 animate-pop max-h-[85vh] overflow-y-auto">
                 <div class="flex items-center justify-between border-b-2 border-slate-200 pb-2 sticky -top-5 bg-white pt-1">
-                    <h3 class="font-black text-lg text-slate-900 tracking-wide uppercase">REVIEW</h3>
+                    <h3 class="font-bangers text-xl text-slate-900 uppercase">REVIEW</h3>
                     <button type="button" onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-700 font-black text-xl p-1">✕</button>
                 </div>
                 <div id="reviewListContainer" class="space-y-3"></div>
@@ -542,9 +671,9 @@
         </div>
 
         <!-- Level Up Toast -->
-        <div id="levelUpToast" class="hidden fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-comic-gold text-slate-900 font-black px-5 py-3 rounded-2xl comic-border shadow-comic-lg text-center level-glow">
-            <div class="text-xs uppercase tracking-widest">Level Up!</div>
-            <div id="levelUpText" class="text-xl">Level 2</div>
+        <div id="levelUpToast" class="hidden fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-comic-gold text-slate-900 px-5 py-3 rounded-2xl comic-border shadow-comic-lg text-center level-glow -rotate-2">
+            <div class="text-xs font-black uppercase tracking-widest">Level Up!</div>
+            <div id="levelUpText" class="comic-title-text text-2xl">Level 2</div>
         </div>
 
     </div>
@@ -737,11 +866,15 @@
             updateSoundIcon();
             applyAvatarColor();
             if (userState.isLoggedIn && userState.username) {
-                checkDailyStreak();
-                showMainMenu();
-            } else {
-                showAuthScreen();
-            }
+    checkDailyStreak();
+    showMainMenu();
+
+    // Try to resume BGM for an existing session.
+    startBackgroundMusic();
+} else {
+    showAuthScreen();
+}
+
             renderCategoriesList();
         };
 
@@ -832,7 +965,7 @@
 
         const mascotGreetings = [
             "Ready for tech challenges?",
-            "Let's add those skills!",
+            "Let's sharpen those skills!",
             "You've got this, champ!",
             "Pick a topic I'll cheer you on!",
             "Nice streak going!",
@@ -972,6 +1105,14 @@
             checkDailyStreak();
             applyAvatarColor();
             showMainMenu();
+
+            localStorage.setItem(SESSION_KEY, usernameLower);
+saveState();
+checkDailyStreak();
+applyAvatarColor();
+startBackgroundMusic();
+showMainMenu();
+
         }
 
         // ---------- Avatar ----------
@@ -1498,6 +1639,100 @@
             }
             draw();
         }
+
+        function toggleAudioMute() {
+    userState.soundMuted = !userState.soundMuted;
+
+    const bgm = document.getElementById('bgmAudio');
+
+    if (userState.soundMuted) {
+        bgm.pause();
+    } else {
+        startBackgroundMusic();
+    }
+
+    saveState();
+    updateSoundIcon();
+}
+
+function startBackgroundMusic() {
+    const bgm = document.getElementById('bgmAudio');
+
+    if (!bgm || userState.soundMuted) return;
+
+    bgm.volume = 0.25;
+
+    const playPromise = bgm.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            // Browser blocked autoplay.
+            // Music will start after the user's next interaction.
+        });
+    }
+}
+
+function createDynamicStars() {
+    const container = document.getElementById('dynamicStars');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const starCharacters = ['★', '✦', '✧', '✶', '✷', '✸', '⋆'];
+    const starColors = [
+        '#ffc107', // gold
+        '#ffffff', // white
+        '#67e8f9', // cyan
+        '#38bdf8', // blue
+        '#a5f3fc'  // light cyan
+    ];
+
+    const starCount = window.innerWidth >= 820 ? 28 : 20;
+
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('span');
+
+        star.className = 'dynamic-star';
+
+        // Random appearance
+        const size = Math.random() * 16 + 7;
+        const left = Math.random() * 96;
+        const top = Math.random() * 96;
+
+        const floatX = (Math.random() - 0.5) * 18;
+        const floatY = (Math.random() - 0.5) * 20;
+
+        const rotation = (Math.random() - 0.5) * 35;
+        const scale = Math.random() * 0.35 + 1.05;
+
+        const floatDuration = Math.random() * 4 + 4;
+        const twinkleDuration = Math.random() * 2 + 2;
+        const delay = Math.random() * -6;
+        const opacity = Math.random() * 0.45 + 0.35;
+
+        star.innerText =
+            starCharacters[Math.floor(Math.random() * starCharacters.length)];
+
+        star.style.left = `${left}%`;
+        star.style.top = `${top}%`;
+        star.style.fontSize = `${size}px`;
+        star.style.color =
+            starColors[Math.floor(Math.random() * starColors.length)];
+
+        star.style.setProperty('--float-x', `${floatX}px`);
+        star.style.setProperty('--float-y', `${floatY}px`);
+        star.style.setProperty('--rotation', `${rotation}deg`);
+        star.style.setProperty('--scale', scale);
+        star.style.setProperty('--float-duration', `${floatDuration}s`);
+        star.style.setProperty('--twinkle-duration', `${twinkleDuration}s`);
+        star.style.setProperty('--delay', `${delay}s`);
+        star.style.setProperty('--opacity', opacity);
+
+        container.appendChild(star);
+    }
+}
+
+
     </script>
 </body>
 </html>
